@@ -15,6 +15,7 @@ summariser.
 """
 import json, os, re, sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "yt-edit"))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # standalone copy carries its own deadair.py
 from deadair import load, parse_ts  # noqa: E402  (same parser, one implementation)
 
 STOP = set("the a an of for to in on and or is are was were be been with this that it as at by from "

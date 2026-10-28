@@ -19,7 +19,10 @@ about the words on screen, not a claim about why the video worked.
 import json, os, re, statistics, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-FORMULAS = json.load(open(os.path.join(HERE, "..", "yt-script", "hooks.json")))["hooks"]
+# a standalone copy of this skill (e.g. a claude.ai upload) carries its own hooks.json
+_HOOKS = os.path.join(HERE, "hooks.json")
+if not os.path.exists(_HOOKS): _HOOKS = os.path.join(HERE, "..", "yt-script", "hooks.json")
+FORMULAS = json.load(open(_HOOKS))["hooks"]
 
 # Persian and Arabic digits to ASCII, Arabic yeh/kaf to Persian, so Persian titles match too
 NORM = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩يك", "01234567890123456789یک")

@@ -64,6 +64,7 @@ def main():
     said = {}
     if tr and os.path.exists(tr):
         sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "yt-edit"))
+        sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # standalone copy carries its own deadair.py
         from deadair import load as load_cues
         cues = load_cues(tr)
         for c in cliffs:
