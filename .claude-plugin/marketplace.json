@@ -1,0 +1,14 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "qrfarhangi",
+  "description": "Claude Code plugins for the qrfarhangi YouTube channel",
+  "owner": { "name": "goooai66-stack" },
+  "plugins": [
+    {
+      "name": "ruqyah-youtube",
+      "description": "All YouTube skills for a Persian ruqyah shar'iyyah channel, in one plugin.",
+      "source": "./plugins/ruqyah-youtube",
+      "category": "productivity"
+    }
+  ]
+}

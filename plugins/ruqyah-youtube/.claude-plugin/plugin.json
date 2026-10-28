@@ -1,0 +1,10 @@
+{
+  "name": "ruqyah-youtube",
+  "description": "مجموعه‌ی کامل اسکیل‌های یوتیوب برای کانال فارسی رقیه شرعیه: اسکریپت و هوک امتیازدار، عنوان و تامبنیل، سئو، چپتر، شورتس، تحلیل ریتنشن، تحلیل کانال و رقبا، استراتژی و تقویم محتوا — با خطوط قرمز شرعی و قوانین یوتیوب.",
+  "version": "1.0.0",
+  "author": { "name": "goooai66-stack" },
+  "homepage": "https://github.com/goooai66-stack/qrfarhangi",
+  "repository": "https://github.com/goooai66-stack/qrfarhangi",
+  "license": "MIT",
+  "keywords": ["youtube", "ruqyah", "رقیه", "persian", "farsi", "seo", "shorts", "script"]
+}
