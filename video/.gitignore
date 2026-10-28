@@ -1,0 +1,3 @@
+# rendered output: large binaries, rebuilt from source/ (see source/README.md)
+*.mp4
+source/frames/

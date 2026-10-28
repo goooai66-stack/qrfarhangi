@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Cairo"; src: url(fonts/Cairo.ttf) format("truetype"); font-weight: 200 1000; }
+@font-face { font-family: "Reem Kufi"; src: url(fonts/ReemKufi.ttf) format("truetype"); font-weight: 400 700; }
+@font-face { font-family: "Amiri"; src: url(fonts/f4.woff) format("woff"); font-weight: 400; }
+@font-face { font-family: "Amiri"; src: url(fonts/f5.woff) format("woff"); font-weight: 700; }
+:root {
+  --paper: #e9e8e0;
+  --card: #fbfaf5;
+  --ink: #17191a;
+  --mute: #6b6f6a;
+  --hi: #f6d03f;
+  --red: #d63a2a;
+  --green: #11604c;
+  --green-2: #1d7d63;
+  --gold: #c39a3c;
+  --talisman: #e8dcb8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+body { font-family: "Cairo", sans-serif; color: var(--ink); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+canvas.layer { position: absolute; inset: 0; width: 1080px; height: 1920px; pointer-events: none; }
+.scene { position: absolute; inset: 0; transform-origin: 540px 820px; }
+.a { position: absolute; left: 0; top: 0; will-change: transform; }
+.card { background: var(--card); box-shadow: 0 22px 34px rgba(20, 22, 20, .22), 0 3px 6px rgba(20, 22, 20, .12); }
+.tag { font-weight: 900; font-size: 44px; line-height: 1.25; padding: 6px 26px 10px; color: #fff; background: var(--ink); white-space: nowrap; }
+.tag.green { background: var(--green); }
+.tag.red { background: var(--red); }
+.hl { position: relative; display: inline-block; white-space: nowrap; }
+.hl::before { content: ""; position: absolute; inset: 12% -10px 6% -10px; background: var(--hi); transform-origin: right center;
+  transform: scaleX(var(--hl, 0)) skewX(-6deg); z-index: -1; border-radius: 4px; }
+.big { font-weight: 900; line-height: 1.15; white-space: nowrap; }
+.serif { font-family: "Amiri", serif; }
+.kufi { font-family: "Reem Kufi", sans-serif; }
+svg { overflow: visible; display: block; }
+.draw { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+#cap { position: absolute; left: 70px; right: 70px; top: 1440px; display: flex; justify-content: center; text-align: center; }
+#cap .line { font-weight: 800; font-size: 50px; line-height: 1.55; color: var(--ink); }
+#cap .line span.box { background: #fff; padding: 2px 18px 8px; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+  box-shadow: 0 6px 0 rgba(0,0,0,.12); }
+#cap b { background: var(--hi); font-weight: 900; padding: 0 6px; }
+#chap { position: absolute; top: 210px; left: 0; right: 0; display: flex; justify-content: center; gap: 22px; }
+#chap .dot { width: 78px; height: 78px; border-radius: 50%; display: grid; place-items: center; font-family: "Reem Kufi"; font-weight: 700; font-size: 44px;
+  border: 4px solid var(--ink); color: var(--ink); background: transparent; }
+#chap .bar { width: 46px; height: 4px; background: var(--ink); align-self: center; opacity: .35; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas class="layer" id="paper" width="1080" height="1920"></canvas>
+
+  <!-- ===== Scene A: intro ===== -->
+  <div class="scene" id="sA">
+    <div class="a" id="watch">
+      <svg width="420" height="470" viewBox="-210 -250 420 470">
+        <rect x="-34" y="-246" width="68" height="44" rx="8" fill="#17191a"/>
+        <rect x="-16" y="-210" width="32" height="26" fill="#17191a"/>
+        <circle r="200" fill="#fbfaf5" stroke="#17191a" stroke-width="14"/>
+        <circle id="watchArc" class="draw" r="168" stroke="#f6d03f" stroke-width="34" pathLength="1" transform="rotate(-90)"
+          stroke-dasharray="1" stroke-dashoffset="0"/>
+        <g id="watchTicks" stroke="#17191a" stroke-width="6" stroke-linecap="round"></g>
+      </svg>
+      <div style="position:absolute;left:0;right:0;top:132px;text-align:center" class="big kufi"><span id="watchNum" style="font-size:150px">٣٠</span></div>
+      <div style="position:absolute;left:0;right:0;top:318px;text-align:center;font-weight:800;font-size:44px">ثانية</div>
+    </div>
+
+    <div class="a" id="stamp3"><div class="tag red" style="font-size:64px;padding:8px 40px 14px">٣ فروق</div></div>
+
+    <div class="a card" id="cardR" style="width:440px;height:560px;padding:34px 30px">
+      <div style="display:flex;justify-content:center;margin-top:30px"><svg width="300" height="230" viewBox="0 0 300 230" id="bookMini"></svg></div>
+      <div style="position:absolute;left:0;right:0;bottom:40px;display:flex;justify-content:center"><div class="tag green serif" style="font-size:50px;font-weight:700">الرُّقية الشرعية</div></div>
+    </div>
+    <div class="a card" id="cardL" style="width:440px;height:560px;padding:34px 30px;background:#efe6c8">
+      <div style="display:flex;justify-content:center;margin-top:24px"><svg width="310" height="260" viewBox="0 0 310 260" id="taliMini"></svg></div>
+      <div style="position:absolute;left:0;right:0;bottom:40px;display:flex;justify-content:center"><div class="tag" style="font-size:50px">كتابة الحُجُب</div></div>
+    </div>
+    <div class="a" id="vs"><div class="big kufi" style="width:130px;height:130px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:62px;box-shadow:0 10px 18px rgba(0,0,0,.2)">أم</div></div>
+
+    <div class="a" id="secret">
+      <div class="card" style="padding:26px 46px 34px;transform:rotate(-3deg)">
+        <div class="big" style="font-size:78px"><span class="hl" id="hlSecret">لا يُخبرك بها أحد</span></div>
+      </div>
+    </div>
+    <div class="a" id="shh">
+      <svg width="200" height="200" viewBox="-100 -100 200 200">
+        <circle r="92" fill="none" stroke="#d63a2a" stroke-width="12"/>
+        <path class="draw" d="M-62,0 L62,0" stroke="#d63a2a" stroke-width="16"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ===== Scene B: difference 1 ===== -->
+  <div class="scene" id="sB">
+    <div class="a" id="n1"><div class="big kufi" style="font-size:420px;color:var(--green);text-shadow:10px 12px 0 rgba(0,0,0,.14)">١</div></div>
+    <div class="a" id="n1lab"><div class="tag" style="font-size:58px">الوضوح</div></div>
+
+    <div class="a" id="book"><svg width="760" height="560" viewBox="0 0 760 560" id="bookBig"></svg></div>
+    <div class="a" id="bookLab"><div class="big" style="font-size:70px"><span class="hl" id="hlAyat">آياتٌ من القرآن</span></div></div>
+
+    <div class="a card" id="duaCard" style="width:820px;padding:30px 40px 36px;transform:rotate(1.5deg)">
+      <div style="display:flex;align-items:center;gap:28px">
+        <svg width="120" height="110" viewBox="0 0 120 110"><path id="chk" class="draw" d="M14,58 L46,90 L108,14" stroke="#11604c" stroke-width="18" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+        <div class="big" style="font-size:64px">أدعيةٌ <span class="hl" id="hlDua">تفهم معناها</span></div>
+      </div>
+    </div>
+
+    <div class="a" id="tali"><svg width="760" height="900" viewBox="0 0 760 900" id="taliBig"></svg></div>
+    <div class="a" id="tl1"><div class="tag red">أرقام</div></div>
+    <div class="a" id="tl2"><div class="tag red">جداول</div></div>
+    <div class="a" id="tl3"><div class="tag red">أسماء مجهولة</div></div>
+    <div class="a" id="xBig"><svg width="700" height="700" viewBox="0 0 700 700">
+      <path id="x1" class="draw boil" d="M80,90 C260,260 430,420 620,610" stroke="#d63a2a" stroke-width="46" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="x2" class="draw boil" d="M610,80 C430,270 270,440 90,620" stroke="#d63a2a" stroke-width="46" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg></div>
+    <div class="a" id="notStamp"><div style="border:12px solid var(--red);color:var(--red);padding:4px 40px 16px;background:rgba(251,250,245,.92)" class="big"><span style="font-size:96px">ليست رُقية</span></div></div>
+  </div>
+
+  <!-- ===== Scene C: difference 2 ===== -->
+  <div class="scene" id="sC">
+    <div class="a" id="n2"><div class="big kufi" style="font-size:420px;color:var(--green);text-shadow:10px 12px 0 rgba(0,0,0,.14)">٢</div></div>
+    <div class="a" id="n2lab"><div class="tag" style="font-size:58px">بنفسك</div></div>
+
+    <div class="a" id="house"><svg width="900" height="760" viewBox="0 0 900 760">
+      <path id="houseP" class="draw boil" d="M90,330 L450,60 L810,330 M150,300 L150,700 L750,700 L750,300" stroke="#17191a" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg></div>
+    <div class="a" id="me"></div>
+    <div class="a" id="meLab"><div class="tag green">أنت</div></div>
+    <div class="a" id="fam1"></div>
+    <div class="a" id="fam2"></div>
+    <div class="a" id="fam3"></div>
+    <div class="a" id="famLab"><div class="big" style="font-size:60px"><span class="hl" id="hlFam">وأهلك</span></div></div>
+
+    <div class="a" id="other"></div>
+    <div class="a" id="otherLab"><div class="tag" style="background:#8a8d88">غيرك</div></div>
+    <div class="a" id="otherX"><svg width="260" height="260" viewBox="0 0 260 260">
+      <path id="ox1" class="draw boil" d="M30,30 L230,230" stroke="#d63a2a" stroke-width="22" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="ox2" class="draw boil" d="M230,30 L30,230" stroke="#d63a2a" stroke-width="22" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg></div>
+    <div class="a" id="key"><svg width="260" height="110" viewBox="0 0 260 110">
+      <g fill="#c39a3c" stroke="#7d5f1d" stroke-width="5">
+        <circle cx="200" cy="55" r="44"/><rect x="20" y="44" width="150" height="22" rx="6"/>
+        <rect x="26" y="62" width="18" height="34" rx="4"/><rect x="58" y="62" width="18" height="24" rx="4"/>
+      </g><circle cx="200" cy="55" r="18" fill="#fbfaf5" stroke="#7d5f1d" stroke-width="5"/>
+    </svg></div>
+    <div class="a" id="keyGlow"><svg width="420" height="420" viewBox="-210 -210 420 420"><g id="rays" stroke="#f6d03f" stroke-width="12" stroke-linecap="round"></g></svg></div>
+    <div class="a card" id="keyCard" style="padding:20px 40px 30px;transform:rotate(-2deg)">
+      <div class="big" style="font-size:62px"><span class="hl" id="hlKey">مفتاحُ طُمأنينتك</span></div>
+    </div>
+  </div>
+
+  <!-- ===== Scene D: difference 3 ===== -->
+  <div class="scene" id="sD">
+    <div class="a" id="n3"><div class="big kufi" style="font-size:420px;color:var(--green);text-shadow:10px 12px 0 rgba(0,0,0,.14)">٣</div></div>
+    <div class="a" id="n3lab"><div class="tag" style="font-size:58px">بلا شروط</div></div>
+
+    <div class="a" id="clip">
+      <div class="card" style="width:820px;height:900px;padding:120px 60px 40px;position:relative">
+        <div style="position:absolute;top:-34px;left:50%;transform:translateX(-50%);width:260px;height:84px;background:#2a2d2c;border-radius:18px"></div>
+        <div class="big" style="font-size:72px;text-align:center">شروطٌ غريبة؟</div>
+        <svg width="520" height="40" viewBox="0 0 520 40" style="margin:6px auto 30px"><path id="clipU" class="draw boil" d="M10,24 C140,8 360,36 510,14" stroke="#d63a2a" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+        <div id="items" style="display:flex;flex-direction:column;gap:46px"></div>
+      </div>
+    </div>
+    <div class="a" id="stop">
+      <svg width="560" height="560" viewBox="-280 -280 560 560">
+        <polygon id="oct" fill="#d63a2a" stroke="#fbfaf5" stroke-width="22"/>
+      </svg>
+      <div style="position:absolute;left:0;right:0;top:186px;text-align:center;color:#fff" class="big"><span style="font-size:118px">توقَّف</span></div>
+    </div>
+  </div>
+
+  <!-- ===== Scene E: outro ===== -->
+  <div class="scene" id="sE">
+    <div class="a" id="eTitle"><div class="tag green serif" style="font-size:84px;font-weight:700;padding:8px 46px 18px">الرُّقية الشرعية</div></div>
+    <div class="a" id="eW1"><div class="big" style="font-size:120px"><span class="hl" id="hlW1">واضحة</span></div></div>
+    <div class="a" id="eAnd"><div class="big" style="font-size:72px;color:var(--mute)">و</div></div>
+    <div class="a" id="eW2"><div class="big" style="font-size:120px"><span class="hl" id="hlW2">بسيطة</span></div></div>
+
+    <div class="a" id="phone">
+      <div style="width:540px;height:960px;border-radius:70px;background:#17191a;padding:26px;box-shadow:0 30px 50px rgba(0,0,0,.28)">
+        <div style="width:100%;height:100%;border-radius:48px;background:#fbfaf5;overflow:hidden;position:relative">
+          <div style="height:300px;background:var(--green);position:relative;display:grid;place-items:center">
+            <svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="62" fill="rgba(255,255,255,.18)"/><path d="M50,36 L98,65 L50,94 Z" fill="#fff"/></svg>
+            <div style="position:absolute;bottom:16px;right:22px;background:rgba(0,0,0,.6);color:#fff;font-weight:800;font-size:26px;padding:0 12px 4px;border-radius:6px">الرقية كاملة</div>
+          </div>
+          <div style="padding:30px 32px">
+            <div class="big serif" style="font-size:52px;font-weight:700;white-space:normal">الرُّقية الكاملة</div>
+            <div style="margin-top:22px" id="phChip"><span class="tag" style="font-size:36px;padding:4px 20px 8px">مع نصِّ الآيات</span></div>
+            <div style="margin-top:40px;display:flex;flex-direction:column;gap:20px">
+              <div style="height:22px;width:90%;background:#e2e1d9;border-radius:11px"></div>
+              <div style="height:22px;width:70%;background:#e2e1d9;border-radius:11px"></div>
+              <div style="height:22px;width:80%;background:#e2e1d9;border-radius:11px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="a" id="inCh"><div class="tag red" style="font-size:56px">في القناة</div></div>
+    <div class="a" id="arrow"><svg width="260" height="200" viewBox="0 0 260 200">
+      <path id="arr" class="draw boil" d="M230,30 C170,40 90,70 50,160 M50,160 L40,104 M50,160 L104,140" stroke="#d63a2a" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg></div>
+
+    <div class="a" id="final"><div class="big" style="font-size:118px"><span class="hl" id="hlFinal">فاقرأها بنفسك</span></div></div>
+    <div class="a" id="disc"><div style="font-weight:700;font-size:40px;color:var(--mute);white-space:nowrap">مع العلاج الطبي، لا بدلًا منه</div></div>
+  </div>
+
+  <div id="chap">
+    <div class="dot" id="d1">١</div><div class="bar"></div><div class="dot" id="d2">٢</div><div class="bar"></div><div class="dot" id="d3">٣</div>
+  </div>
+  <div id="cap"><div class="line" id="capLine"></div></div>
+  <canvas class="layer" id="vign" width="1080" height="1920"></canvas>
+  <canvas class="layer" id="grain" width="540" height="960"></canvas>
+</div>
+
+<script>
+// ---------- deterministic helpers ----------
+function rng(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const EZ = {
+  lin: x => x,
+  out: x => 1 - Math.pow(1 - x, 3),
+  in: x => x * x * x,
+  io: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+  back: x => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+  pop: x => { const c1 = 2.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+};
+// keyframes: [[t, v], [t, v, ease], ...]; ease names the curve INTO that key
+function tw(t, k) {
+  if (typeof k === "number") return k;
+  if (t <= k[0][0]) return k[0][1];
+  for (let i = 1; i < k.length; i++) {
+    if (t <= k[i][0]) {
+      const [t0, v0] = k[i - 1], [t1, v1, e = "out"] = k[i];
+      return v0 + (v1 - v0) * EZ[e](clamp((t - t0) / ((t1 - t0) || 1)));
+    }
+  }
+  return k[k.length - 1][1];
+}
+// decaying shake after an impact at time t0
+function shake(t, t0, amp = 14, dur = .35, seed = 1) {
+  const u = (t - t0) / dur; if (u < 0 || u > 1) return [0, 0];
+  const f = (1 - u) * (1 - u) * amp;
+  return [Math.sin((t - t0) * 90 + seed) * f, Math.cos((t - t0) * 77 + seed * 2) * f];
+}
+const $ = id => document.getElementById(id);
+const specs = [];
+// A(id, {x,y,s,r,o,sx,blur}) -- x/y are the element's CENTER in stage px
+function A(id, sp) { specs.push([$(id), sp]); }
+function applyAll(t) {
+  for (const [el, sp] of specs) {
+    const x = tw(t, sp.x ?? 540), y = tw(t, sp.y ?? 900), s = tw(t, sp.s ?? 1), r = tw(t, sp.r ?? 0);
+    const o = tw(t, sp.o ?? 1), sx = sp.sx ? tw(t, sp.sx) : 1;
+    let jx = 0, jy = 0;
+    if (sp.hit) for (const h of [].concat(sp.hit[0] instanceof Array ? sp.hit : [sp.hit])) { const [a, b] = shake(t, h[0], h[1] ?? 14); jx += a; jy += b; }
+    if (sp.float) { jy += Math.sin(t * 1.6 + sp.float) * 6; }
+    el.style.opacity = clamp(o);
+    el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+    el.style.transform = `translate(${x + jx}px, ${y + jy}px) translate(-50%, -50%) rotate(${r}deg) scale(${s * sx}, ${s})`;
+  }
+}
+const draws = []; // [el, keys] stroke-draw progress 0..1
+function D(id, k) { draws.push([$(id), k]); }
+const ops = []; // [el, keys] opacity only, for elements that stay in normal flow
+function O(id, k) { ops.push([$(id), k]); }
+const hls = []; // [el, keys] highlighter sweep 0..1
+function H(id, k) { hls.push([$(id), k]); }
+
+// ---------- static art ----------
+function paper() {
+  const c = $("paper"), g = c.getContext("2d"), r = rng(7);
+  g.fillStyle = "#e9e8e0"; g.fillRect(0, 0, 1080, 1920);
+  const img = g.getImageData(0, 0, 1080, 1920), d = img.data;
+  for (let i = 0; i < d.length; i += 4) { const n = (r() - .5) * 14; d[i] += n; d[i + 1] += n; d[i + 2] += n - 1; }
+  g.putImageData(img, 0, 0);
+  g.globalAlpha = .05; g.strokeStyle = "#6b6f6a";
+  for (let i = 0; i < 900; i++) { const x = r() * 1080, y = r() * 1920, a = r() * Math.PI, l = 6 + r() * 26;
+    g.lineWidth = .6 + r(); g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke(); }
+  const v = $("vign").getContext("2d"), grd = v.createRadialGradient(540, 860, 380, 540, 960, 1250);
+  grd.addColorStop(0, "rgba(0,0,0,0)"); grd.addColorStop(1, "rgba(30,28,20,.32)");
+  v.fillStyle = grd; v.fillRect(0, 0, 1080, 1920);
+}
+const grainFrames = [];
+function grain() {
+  for (let f = 0; f < 4; f++) {
+    const c = document.createElement("canvas"); c.width = 540; c.height = 960;
+    const g = c.getContext("2d"), img = g.createImageData(540, 960), d = img.data, r = rng(100 + f);
+    for (let i = 0; i < d.length; i += 4) { const n = r() * 255; d[i] = d[i + 1] = d[i + 2] = n; d[i + 3] = 26; }
+    g.putImageData(img, 0, 0); grainFrames.push(c);
+  }
+}
+function tornCard(id, seed) {
+  // jagged paper edge via clip-path, so cut-outs read as torn paper rather than UI boxes
+  const el = $(id), r = rng(seed), pts = [], n = 22;
+  const j = () => (r() * 1.4).toFixed(2);
+  for (let i = 0; i <= n; i++) pts.push(`${(i / n * 100).toFixed(1)}% ${j()}%`);
+  for (let i = 0; i <= n; i++) pts.push(`${100 - j()}% ${(i / n * 100).toFixed(1)}%`);
+  for (let i = n; i >= 0; i--) pts.push(`${(i / n * 100).toFixed(1)}% ${100 - j()}%`);
+  for (let i = n; i >= 0; i--) pts.push(`${j()}% ${(i / n * 100).toFixed(1)}%`);
+  el.style.clipPath = `polygon(${pts.join(",")})`;
+}
+const NS = "http://www.w3.org/2000/svg";
+function svgEl(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+
+// open mushaf: abstract gold-framed pages with ink "lines" -- deliberately no real text
+function book(svg, w, h) {
+  const r = rng(11), cx = w / 2;
+  svgEl("path", { d: `M${cx},${h * .08} L${w * .02},${h * .02} L${w * .02},${h * .94} L${cx},${h} L${w * .98},${h * .94} L${w * .98},${h * .02} Z`, fill: "#11604c" }, svg);
+  for (const side of [-1, 1]) {
+    const x0 = side < 0 ? w * .05 : cx + w * .01, pw = w * .44;
+    svgEl("path", { d: `M${x0},${h * .07} Q${x0 + pw / 2},${h * .02} ${x0 + pw},${h * .07} L${x0 + pw},${h * .92} Q${x0 + pw / 2},${h * .87} ${x0},${h * .92} Z`, fill: "#fbfaf5" }, svg);
+    svgEl("rect", { x: x0 + pw * .08, y: h * .13, width: pw * .84, height: h * .7, fill: "none", stroke: "#c39a3c", "stroke-width": Math.max(3, w / 160) }, svg);
+    svgEl("rect", { x: x0 + pw * .2, y: h * .16, width: pw * .6, height: h * .07, rx: h * .035, fill: "#c39a3c", opacity: .85 }, svg);
+    for (let i = 0; i < 8; i++) {
+      const y = h * (.3 + i * .065), len = pw * (.55 + r() * .2);
+      svgEl("line", { x1: x0 + pw * .86, y1: y, x2: x0 + pw * .86 - len, y2: y, stroke: "#17191a", "stroke-width": Math.max(3, w / 110), "stroke-linecap": "round", opacity: .55 }, svg);
+    }
+  }
+  svgEl("line", { x1: cx, y1: h * .06, x2: cx, y2: h * .97, stroke: "#0b4636", "stroke-width": Math.max(3, w / 140) }, svg);
+}
+// crumpled talisman: grid of numerals plus meaningless squiggles
+const taliDigits = "٧٢٩٤٣٥٨١٦٠٩٤٢٧٥٣";
+function talisman(svg, w, h, big) {
+  const r = rng(big ? 23 : 29);
+  const pts = []; const n = 14;
+  for (let i = 0; i < n; i++) pts.push([w * (i / (n - 1)), h * .03 + r() * h * .03]);
+  for (let i = 0; i < n; i++) pts.push([w * .97 + r() * w * .03, h * (i / (n - 1))]);
+  for (let i = n - 1; i >= 0; i--) pts.push([w * (i / (n - 1)), h * .94 + r() * h * .05]);
+  for (let i = n - 1; i >= 0; i--) pts.push([r() * w * .03, h * (i / (n - 1))]);
+  svgEl("polygon", { points: pts.map(p => p.join(",")).join(" "), fill: "#e8dcb8", stroke: "#b9a774", "stroke-width": 2 }, svg);
+  for (let i = 0; i < 6; i++) svgEl("line", { x1: r() * w, y1: r() * h, x2: r() * w, y2: r() * h, stroke: "#b9a774", "stroke-width": 2, opacity: .5 }, svg);
+  const gx = w * .18, gy = h * (big ? .1 : .12), gs = w * .64, cs = gs / 4;
+  for (let i = 0; i <= 4; i++) {
+    svgEl("line", { x1: gx, y1: gy + i * cs, x2: gx + gs, y2: gy + i * cs, stroke: "#5a3b22", "stroke-width": big ? 5 : 3 }, svg);
+    svgEl("line", { x1: gx + i * cs, y1: gy, x2: gx + i * cs, y2: gy + gs, stroke: "#5a3b22", "stroke-width": big ? 5 : 3 }, svg);
+  }
+  for (let i = 0; i < 16; i++) {
+    const t = svgEl("text", { x: gx + (i % 4 + .5) * cs, y: gy + (Math.floor(i / 4) + .72) * cs, "text-anchor": "middle", "font-size": cs * .62, fill: "#5a3b22", "font-family": "Reem Kufi", "font-weight": 700 }, svg);
+    t.textContent = taliDigits[i];
+  }
+  if (big) {
+    const sy = gy + gs + h * .05;
+    for (let row = 0; row < 3; row++) {
+      let d = `M${w * .82},${sy + row * h * .07}`;
+      for (let k = 0; k < 7; k++) d += ` q${-w * .03},${(r() - .5) * h * .08} ${-w * .09},0`;
+      svgEl("path", { d, fill: "none", stroke: "#5a3b22", "stroke-width": 5, "stroke-linecap": "round" }, svg);
+    }
+  }
+}
+function person(id, scale, color) {
+  const el = $(id), s = svgEl("svg", { width: 220 * scale, height: 300 * scale, viewBox: "0 0 220 300" }, el);
+  svgEl("circle", { cx: 110, cy: 70, r: 58, fill: color }, s);
+  svgEl("path", { d: "M10,300 C10,190 50,148 110,148 C170,148 210,190 210,300 Z", fill: color }, s);
+}
+
+function buildStatic() {
+  const ticks = $("watchTicks");
+  for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; svgEl("line", { x1: Math.cos(a) * 186, y1: Math.sin(a) * 186, x2: Math.cos(a) * 198, y2: Math.sin(a) * 198 }, ticks); }
+  book($("bookMini"), 300, 230); book($("bookBig"), 760, 560);
+  talisman($("taliMini"), 310, 260, false); talisman($("taliBig"), 760, 900, true);
+  // red annotation layer over the big talisman: circle on the grid, box, question marks on squiggles
+  const tb = $("taliBig");
+  svgEl("ellipse", { id: "rc1", class: "draw boil", cx: 380, cy: 330, rx: 330, ry: 300, stroke: "#d63a2a", "stroke-width": 12, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, tb);
+  svgEl("path", { id: "rc2", class: "draw boil", d: "M120,70 L640,62 L648,600 L118,608 Z", stroke: "#d63a2a", "stroke-width": 10, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, tb);
+  svgEl("path", { id: "rc3", class: "draw boil", d: "M70,640 C250,612 520,612 700,646 L700,850 C520,880 250,880 70,850 Z", stroke: "#d63a2a", "stroke-width": 10, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, tb);
+  const oct = []; for (let i = 0; i < 8; i++) { const a = (i + .5) / 8 * Math.PI * 2; oct.push(`${(Math.cos(a) * 250).toFixed(1)},${(Math.sin(a) * 250).toFixed(1)}`); }
+  $("oct").setAttribute("points", oct.join(" "));
+  const rays = $("rays"); for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; svgEl("line", { x1: Math.cos(a) * 120, y1: Math.sin(a) * 120, x2: Math.cos(a) * 190, y2: Math.sin(a) * 190 }, rays); }
+  person("me", 1.15, "#11604c"); person("fam1", .7, "#1d7d63"); person("fam2", .62, "#1d7d63"); person("fam3", .7, "#1d7d63"); person("other", 1, "#8a8d88");
+  const items = [["اسمُ الأم", 31.25, 32.45], ["ادفِن الورقة", 33.55, 34.4], ["الذبح لغير الله", 35.0, 35.85]];
+  items.forEach(([txt], i) => {
+    const row = document.createElement("div"); row.id = "it" + i; row.style.cssText = "display:flex;align-items:center;gap:26px;position:relative";
+    row.innerHTML = `<svg width="78" height="78" viewBox="0 0 78 78"><rect x="5" y="5" width="68" height="68" rx="10" fill="none" stroke="#17191a" stroke-width="7"/>
+      <path id="itx${i}" class="draw" d="M16,16 L62,62 M62,16 L16,62" stroke="#d63a2a" stroke-width="11" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+      <div class="big" style="font-size:66px;position:relative">${txt}<svg width="100%" height="20" viewBox="0 0 100 20" preserveAspectRatio="none" style="position:absolute;left:0;right:0;top:52%;width:100%">
+      <path id="its${i}" class="draw" d="M0,10 L100,8" stroke="#d63a2a" stroke-width="7" vector-effect="non-scaling-stroke" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg></div>`;
+    $("items").appendChild(row);
+  });
+  window.ITEMS = items;
+  ["cardR", "cardL", "duaCard", "keyCard"].forEach((id, i) => tornCard(id, 40 + i));
+}
+
+// ---------- timeline (seconds, synced to the voice) ----------
+// A 0-7.3 | B 7.3-18.85 | C 18.85-27.45 | D 27.45-37.7 | E 37.7-47
+const CUTS = [7.3, 18.85, 27.45, 37.7];
+const SCENES = [["sA", 0, 7.3], ["sB", 7.3, 18.85], ["sC", 18.85, 27.45], ["sD", 27.45, 37.7], ["sE", 37.7, 99]];
+const WH = .42; // whip duration
+
+const CAPS = [
+  [0.00, "في <b>ثلاثين</b> ثانية"],
+  [1.62, "<b>ثلاثةُ فروقٍ</b> بين الرُّقية الشرعية وكتابةِ الحُجُب"],
+  [5.55, "لا يُخبرك بها <b>أحد</b>"],
+  [7.60, "<b>أولًا</b>"],
+  [8.42, "الرُّقية <b>آياتٌ من القرآن</b>"],
+  [10.75, "وأدعيةٌ <b>تفهم معناها</b>"],
+  [12.98, "فإن كانت الورقةُ مليئةً <b>بالأرقام والجداول</b> والأسماء المجهولة"],
+  [17.78, "<b>فليست رُقية</b>"],
+  [19.08, "<b>ثانيًا</b>"],
+  [19.93, "تستطيع أن تَرقيَ <b>نفسك وأهلك</b> بنفسك"],
+  [23.23, "لا يلزم أن يكون <b>مفتاحُ طُمأنينتك</b> بيدِ أحدٍ غيرك"],
+  [27.64, "<b>ثالثًا</b>"],
+  [28.51, "الرُّقية ليس فيها <b>شروطٌ غريبة</b>"],
+  [31.16, "فإن طلبوا <b>اسمَ أمك</b>"],
+  [33.47, "أو قالوا: <b>ادفِنْ هذه الورقة</b>"],
+  [34.94, "أو <b>اذبَحْ لغير الله</b>"],
+  [36.45, "<b>فتوقَّفْ</b> عندها"],
+  [37.86, "الرُّقية الشرعية <b>واضحةٌ وبسيطة</b>"],
+  [40.91, "الرُّقيةُ الكاملة مع نصِّ الآيات <b>في القناة</b>"],
+  [44.94, "<b>فاقرأها بنفسك</b>"],
+];
+
+function buildTimeline() {
+  // --- A ---
+  A("watch", { x: [[0, 540], [1.45, 540], [2.0, 870, "io"]], y: [[0, 780], [1.45, 780], [2.0, 420, "io"]],
+    s: [[0, .2], [.45, 1, "pop"], [1.45, 1], [2.0, .42, "io"]], r: [[0, -25], [.45, 0, "back"]], o: [[0, 0], [.12, 1], [6.9, 1], [7.2, 0]] });
+  A("stamp3", { y: 380, x: [[1.66, 470]], s: [[1.66, 2.6], [1.95, 1, "pop"]], r: -4, o: [[1.66, 0], [1.75, 1], [5.4, 1], [5.7, 0]], hit: [1.95, 18] });
+  A("cardR", { x: [[2.6, 1450], [3.1, 770, "back"]], y: 900, r: [[2.6, 14], [3.1, 3, "back"]], o: [[2.6, 1]], float: 1 });
+  A("cardL", { x: [[3.9, -420], [4.4, 310, "back"]], y: 930, r: [[3.9, -14], [4.4, -4, "back"]], o: [[3.9, 1]], float: 2.3 });
+  A("vs", { x: 540, y: 890, s: [[4.3, 0], [4.6, 1, "pop"]], o: [[4.3, 0], [4.4, 1]] });
+  A("secret", { x: 540, y: [[5.58, 1500], [6.0, 760, "back"]], r: [[5.58, 8], [6.0, -2, "back"]], o: [[5.55, 0], [5.6, 1]] });
+  H("hlSecret", [[6.1, 0], [6.6, 1, "io"]]);
+  A("shh", { x: 860, y: 560, s: [[6.2, 0], [6.45, 1, "pop"]], r: -12, o: [[6.2, 0], [6.25, 1]] });
+
+  // --- B: difference 1 ---
+  A("n1", { x: [[7.63, 540], [8.3, 540], [8.75, 900, "io"]], y: [[7.63, 820], [8.3, 820], [8.75, 420, "io"]],
+    s: [[7.6, 2.6], [7.95, 1, "pop"], [8.3, 1], [8.75, .34, "io"]], o: [[7.55, 0], [7.65, 1]], hit: [7.95, 20] });
+  A("n1lab", { x: [[7.9, 540], [8.3, 540], [8.75, 690, "io"]], y: [[7.9, 1130], [8.3, 1130], [8.75, 430, "io"]],
+    s: [[7.9, 0], [8.15, 1, "pop"], [8.3, 1], [8.75, .7, "io"]], o: [[7.9, 0], [7.95, 1], [12.7, 1], [13.0, 0]] });
+  A("book", { x: 540, y: [[8.45, 1500], [9.0, 820, "back"], [10.78, 820], [11.3, 640, "io"]], s: [[8.45, .7], [9.0, 1, "back"], [10.78, 1], [11.3, .7, "io"]],
+    r: [[8.45, -6], [9.0, 0, "back"]], o: [[8.42, 0], [8.47, 1], [12.7, 1], [13.0, 0]] });
+  A("bookLab", { x: 540, y: [[9.2, 1220], [10.78, 1220], [11.3, 905, "io"]], s: [[9.2, 0], [9.5, 1, "pop"], [10.78, 1], [11.3, .8, "io"]], o: [[9.2, 0], [9.25, 1], [12.7, 1], [13.0, 0]] });
+  H("hlAyat", [[9.55, 0], [10.1, 1, "io"]]);
+  A("duaCard", { x: [[10.78, -600], [11.3, 540, "back"]], y: 1130, o: [[10.78, 1], [12.7, 1], [13.0, 0]], float: 3 });
+  D("chk", [[11.45, 0], [11.9, 1, "out"]]);
+  H("hlDua", [[11.8, 0], [12.3, 1, "io"]]);
+  A("tali", { x: [[12.95, -500], [13.5, 540, "io"]], y: 860, r: [[12.95, -20], [13.5, -3, "io"]], s: [[13.5, .9], [17.4, .97, "lin"]], o: [[12.95, 1]], hit: [17.95, 22] });
+  D("rc1", [[14.0, 0], [14.5, 1]]); D("rc2", [[14.9, 0], [15.4, 1]]); D("rc3", [[15.9, 0], [16.5, 1]]);
+  A("tl1", { x: 860, y: 520, s: [[14.2, 0], [14.45, 1, "pop"]], r: 6, o: [[14.2, 0], [14.25, 1]] });
+  A("tl2", { x: 230, y: 330, s: [[15.1, 0], [15.35, 1, "pop"]], r: -6, o: [[15.1, 0], [15.15, 1]] });
+  A("tl3", { x: 540, y: 1320, s: [[16.1, 0], [16.35, 1, "pop"]], r: 3, o: [[16.1, 0], [16.15, 1]] });
+  A("xBig", { x: 540, y: 860, o: [[17.8, 0], [17.82, 1]], hit: [17.95, 16] });
+  D("x1", [[17.8, 0], [18.0, 1, "out"]]); D("x2", [[17.95, 0], [18.15, 1, "out"]]);
+  A("notStamp", { x: 540, y: 860, s: [[18.1, 2.4], [18.32, 1, "out"]], r: -9, o: [[18.1, 0], [18.18, 1]], hit: [18.32, 22] });
+
+  // --- C: difference 2 ---
+  A("n2", { x: [[19.11, 540], [19.75, 540], [20.2, 900, "io"]], y: [[19.11, 820], [19.75, 820], [20.2, 420, "io"]],
+    s: [[19.08, 2.6], [19.42, 1, "pop"], [19.75, 1], [20.2, .34, "io"]], o: [[19.0, 0], [19.12, 1]], hit: [19.42, 20] });
+  A("n2lab", { x: [[19.4, 540], [19.75, 540], [20.2, 690, "io"]], y: [[19.4, 1130], [19.75, 1130], [20.2, 430, "io"]],
+    s: [[19.4, 0], [19.6, 1, "pop"], [19.75, 1], [20.2, .7, "io"]], o: [[19.4, 0], [19.45, 1]] });
+  A("me", { x: [[20.0, 540], [23.2, 540], [23.8, 700, "io"]], y: [[20.0, 1300], [20.45, 880, "back"]], o: [[19.97, 0], [20.02, 1]], s: [[23.2, 1], [23.8, .85, "io"]] });
+  A("meLab", { x: [[20.4, 540], [23.2, 540], [23.8, 700, "io"]], y: 1120, s: [[20.4, 0], [20.65, 1, "pop"]], o: [[20.4, 0], [20.45, 1]] });
+  A("fam1", { x: [[21.2, 540], [21.55, 300, "back"], [23.2, 300], [23.8, 820, "io"]], y: [[21.2, 900], [21.55, 960, "back"], [23.2, 960], [23.8, 1010, "io"]], s: [[21.2, 0], [21.55, 1, "back"], [23.2, 1], [23.8, .6, "io"]], o: [[21.2, 0], [21.25, 1]] });
+  A("fam2", { x: [[21.35, 540], [21.7, 780, "back"], [23.2, 780], [23.8, 900, "io"]], y: [[21.35, 900], [21.7, 980, "back"], [23.2, 980], [23.8, 1010, "io"]], s: [[21.35, 0], [21.7, 1, "back"], [23.2, 1], [23.8, .6, "io"]], o: [[21.35, 0], [21.4, 1]] });
+  A("fam3", { x: [[21.5, 540], [21.85, 880, "back"], [23.2, 880], [23.8, 980, "io"]], y: [[21.5, 900], [21.85, 1000, "back"], [23.2, 1000], [23.8, 1010, "io"]], s: [[21.5, 0], [21.85, 1, "back"], [23.2, 1], [23.8, .6, "io"]], o: [[21.5, 0], [21.55, 1]] });
+  A("famLab", { x: 540, y: 1260, s: [[21.3, 0], [21.55, 1, "pop"]], o: [[21.3, 0], [21.35, 1], [23.1, 1], [23.35, 0]] });
+  H("hlFam", [[21.6, 0], [22.0, 1, "io"]]);
+  A("house", { x: [[22.2, 540], [23.2, 540], [23.8, 760, "io"]], y: [[22.2, 840], [23.2, 840], [23.8, 860, "io"]], s: [[23.2, 1], [23.8, .62, "io"]], o: [[22.1, 0], [22.15, 1]] });
+  D("houseP", [[22.2, 0], [22.95, 1, "io"]]);
+  A("other", { x: [[23.3, -200], [23.8, 250, "back"]], y: 900, o: [[23.3, 1], [26.4, 1], [26.9, .45]] });
+  A("otherLab", { x: [[23.5, -200], [23.95, 250, "back"]], y: 1130, o: [[23.5, 1], [26.4, 1], [26.9, .45]] });
+  // key: held by "غيرك", then arcs to "أنت" as "غيرك" is spoken (~26.2)
+  const kx = [[23.5, -200], [24.0, 330, "back"], [25.9, 330], [26.25, 520, "io"], [26.6, 690, "out"]];
+  const ky = [[23.5, 760], [24.0, 760, "back"], [25.9, 760], [26.25, 600, "io"], [26.6, 760, "in"]];
+  A("key", { x: kx, y: ky, r: [[24.0, -10], [25.9, -10], [26.6, 350, "io"]], s: [[25.9, 1], [26.25, 1.3], [26.6, 1]], o: [[23.5, 1]] });
+  A("keyGlow", { x: 690, y: 760, s: [[26.55, .4], [27.0, 1.15, "out"]], o: [[26.55, 0], [26.6, 1], [27.2, 0]], r: [[26.55, 0], [27.2, 25, "lin"]] });
+  A("otherX", { x: 250, y: 900, o: [[26.3, 0], [26.32, 1]] });
+  D("ox1", [[26.3, 0], [26.45, 1]]); D("ox2", [[26.42, 0], [26.57, 1]]);
+  A("keyCard", { x: 540, y: [[24.4, 1500], [24.85, 1250, "back"]], o: [[24.37, 0], [24.42, 1]], float: 4 });
+  H("hlKey", [[24.95, 0], [25.5, 1, "io"]]);
+
+  // --- D: difference 3 ---
+  A("n3", { x: [[27.67, 540], [28.3, 540], [28.75, 900, "io"]], y: [[27.67, 820], [28.3, 820], [28.75, 420, "io"]],
+    s: [[27.64, 2.6], [27.98, 1, "pop"], [28.3, 1], [28.75, .34, "io"]], o: [[27.55, 0], [27.68, 1]], hit: [27.98, 20] });
+  A("n3lab", { x: [[27.95, 540], [28.3, 540], [28.75, 690, "io"]], y: [[27.95, 1130], [28.3, 1130], [28.75, 430, "io"]],
+    s: [[27.95, 0], [28.15, 1, "pop"], [28.3, 1], [28.75, .7, "io"]], o: [[27.95, 0], [28.0, 1]] });
+  A("clip", { x: 540, y: [[28.55, 1900], [29.1, 960, "back"]], r: [[28.55, 6], [29.1, -1.5, "back"]], s: [[29.1, .92], [36.4, .97, "lin"]], o: [[28.52, 0], [28.57, 1]], hit: [36.75, 26] });
+  D("clipU", [[29.3, 0], [29.8, 1, "io"]]);
+  ITEMS.forEach(([, t0, t1], i) => {
+    O("it" + i, [[t0, 0], [t0 + .15, 1]]);
+    D("itx" + i, [[t1, 0], [t1 + .22, 1]]); D("its" + i, [[t1 + .05, 0], [t1 + .3, 1, "io"]]);
+  });
+  A("stop", { x: 540, y: 930, s: [[36.48, 3], [36.75, 1, "out"]], r: [[36.48, -30], [36.75, 0, "out"]], o: [[36.45, 0], [36.52, 1]], hit: [36.75, 26] });
+
+  // --- E: outro ---
+  A("eTitle", { x: 540, y: [[37.9, 560], [40.9, 560], [41.3, 380, "io"]], s: [[37.9, 0], [38.25, 1, "pop"], [40.9, 1], [41.3, .6, "io"]], r: -2, o: [[37.9, 0], [37.95, 1], [44.8, 1], [45.0, 0]] });
+  A("eW1", { x: 540, y: [[38.95, 1000], [39.25, 820, "back"]], o: [[38.95, 0], [39.05, 1], [40.8, 1], [41.0, 0]] });
+  A("eAnd", { x: 540, y: 960, o: [[39.6, 0], [39.75, 1], [40.8, 1], [41.0, 0]] });
+  A("eW2", { x: 540, y: [[39.85, 1260], [40.15, 1100, "back"]], o: [[39.85, 0], [39.95, 1], [40.8, 1], [41.0, 0]] });
+  H("hlW1", [[39.2, 0], [39.6, 1, "io"]]); H("hlW2", [[40.1, 0], [40.5, 1, "io"]]);
+  A("phone", { x: 540, y: [[40.94, 2500], [41.55, 900, "back"], [44.8, 900], [45.3, 2500, "in"]], r: [[40.94, 8], [41.55, -2, "back"]], o: [[40.94, 1]], float: 5 });
+  A("inCh", { x: 830, y: 1290, s: [[43.3, 0], [43.55, 1, "pop"]], r: 6, o: [[43.3, 0], [43.35, 1], [44.8, 1], [45.0, 0]] });
+  A("arrow", { x: 850, y: 1130, o: [[43.4, 0], [43.42, 1], [44.8, 1], [45.0, 0]] });
+  D("arr", [[43.45, 0], [43.9, 1, "io"]]);
+  A("final", { x: 540, y: 860, s: [[45.0, .5], [45.35, 1, "pop"]], o: [[45.0, 0], [45.08, 1]] });
+  H("hlFinal", [[45.5, 0], [46.1, 1, "io"]]);
+  A("disc", { x: 540, y: 1040, o: [[45.6, 0], [46.0, 1]] });
+}
+
+let lastCap = -1;
+function render(t) {
+  applyAll(t);
+  const boil = Math.floor(t * 12); // 12fps "boil" on hand-drawn strokes
+  for (const [el, k] of draws) {
+    const v = clamp(tw(t, k)); el.setAttribute("stroke-dashoffset", (1 - v).toFixed(4));
+    if (el.classList.contains("boil")) { const r = rng(boil * 31 + el.id.length * 7); el.style.transform = `translate(${(r() - .5) * 3}px, ${(r() - .5) * 3}px)`; }
+  }
+  for (const [el, k] of ops) { const o = clamp(tw(t, k)); el.style.opacity = o; el.style.transform = `translateX(${(1 - o) * -40}px)`; }
+  for (const [el, k] of hls) el.style.setProperty("--hl", clamp(tw(t, k)).toFixed(3));
+  // stopwatch arc runs down while "ثلاثين ثانية" is said, then keeps ticking small
+  $("watchArc").setAttribute("stroke-dashoffset", clamp((t - .3) / 6.6).toFixed(4));
+
+  // scenes: whip pan (RTL: next scene enters from the left), slow push-in while held
+  for (const [id, a, b] of SCENES) {
+    const el = $(id);
+    const vis = t >= a - WH && t < b + WH;
+    el.style.display = vis ? "block" : "none";
+    if (!vis) continue;
+    let x = 0, blur = 0;
+    if (t < a + WH * .5 && a > 0) { const u = clamp((t - (a - WH * .5)) / WH); x = -1080 * (1 - EZ.io(u)); blur = Math.sin(u * Math.PI) * 18; }
+    if (t > b - WH * .5) { const u = clamp((t - (b - WH * .5)) / WH); x = 1080 * EZ.io(u); blur = Math.sin(u * Math.PI) * 18; }
+    const push = 1 + .045 * clamp((t - a) / Math.max(1, b - a));
+    el.style.transform = `translateX(${x}px) scale(${push})`;
+    el.style.filter = blur > .5 ? `blur(${blur.toFixed(1)}px)` : "none";
+  }
+
+  // chapter dots
+  const ch = $("chap"); const co = clamp((t - 7.4) / .3) * (t < 37.6 ? 1 : clamp(1 - (t - 37.6) / .3));
+  ch.style.opacity = co; ch.style.visibility = co > 0 ? "visible" : "hidden";
+  const active = t < 18.85 ? 1 : t < 27.45 ? 2 : 3;
+  [1, 2, 3].forEach(n => {
+    const d = $("d" + n);
+    if (n === active) { d.style.background = "var(--green)"; d.style.borderColor = "var(--green)"; d.style.color = "#fff"; d.style.transform = "scale(1.12)"; }
+    else if (n < active) { d.style.background = "var(--ink)"; d.style.borderColor = "var(--ink)"; d.style.color = "#fff"; d.style.transform = "scale(.9)"; }
+    else { d.style.background = "transparent"; d.style.borderColor = "var(--ink)"; d.style.color = "var(--ink)"; d.style.transform = "scale(.9)"; }
+  });
+
+  // captions
+  let ci = -1; for (let i = 0; i < CAPS.length; i++) if (t >= CAPS[i][0]) ci = i;
+  const line = $("capLine");
+  if (ci !== lastCap) { line.innerHTML = ci < 0 ? "" : `<span class="box">${CAPS[ci][1]}</span>`; lastCap = ci; }
+  const since = ci < 0 ? 0 : t - CAPS[ci][0];
+  const cs = .9 + .1 * EZ.back(clamp(since / .22));
+  const cOut = t > 46.6 ? clamp(1 - (t - 46.6) / .3) : 1;
+  line.style.transform = `scale(${cs})`; line.style.opacity = clamp(since / .08) * cOut;
+
+  // grain
+  const g = $("grain").getContext("2d"); g.clearRect(0, 0, 540, 960); g.drawImage(grainFrames[Math.floor(t * 12) % 4], 0, 0);
+}
+
+window.ready = (async () => {
+  await document.fonts.load('900 60px "Cairo"'); await document.fonts.load('700 60px "Reem Kufi"'); await document.fonts.load('700 60px "Amiri"');
+  await document.fonts.ready;
+  paper(); grain(); buildStatic(); buildTimeline(); render(0);
+  return true;
+})();
+window.render = render;
+</script>
+</body>
+</html>
