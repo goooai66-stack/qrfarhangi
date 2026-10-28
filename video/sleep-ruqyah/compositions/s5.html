@@ -1,0 +1,78 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; color: #f4ecd8; font-family: "Cairo", sans-serif; }
+    #root .stage { position: absolute; inset: 0; }
+    #root .line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap; }
+    #root .w { display: inline-block; }
+    #root .gold { color: #d4a94f; }
+    #root .amiri { font-family: "Amiri", serif; font-weight: 700; }
+    #root .kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+    #root .chip { display: inline-block; border: 3px solid #d4a94f; border-radius: 999px; padding: 4px 34px 10px;
+      font-weight: 800; font-size: 42px; color: #f4ecd8; background: rgba(5, 18, 26, .55); }
+    #root .art { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+    #root .ordinal { font-size: 380px; line-height: 1; color: #d4a94f; text-shadow: 0 0 60px rgba(212, 169, 79, .35); }
+    #s5-sleep { transform-origin: 50% 0; }
+  </style>
+  <div id="root" data-composition-id="s5" data-width="1080" data-height="1920">
+    <div id="s5-stage" class="stage">
+      <div id="s5-lamp" class="art" style="top: 168px">
+        <svg width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+          <defs><radialGradient id="s5-glowg"><stop offset="0" stop-color="#ffd98a" stop-opacity=".85"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient></defs>
+          <circle id="s5-glow" cx="150" cy="300" r="150" fill="url(#s5-glowg)"/>
+          <line x1="150" y1="0" x2="150" y2="170" stroke="#d4a94f" stroke-width="4"/>
+          <path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#d4a94f"/>
+          <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="none" stroke="#d4a94f" stroke-width="7"/>
+          <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#ffe3a3"/>
+          <path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#d4a94f"/>
+          <line x1="150" y1="400" x2="150" y2="440" stroke="#d4a94f" stroke-width="4"/>
+        </svg>
+      </div>
+      <div id="s5-l1" class="line amiri gold" style="top: 660px; font-size: 128px"><span class="w">رُقيةٌ</span> <span class="w">يسيرة</span></div>
+      <div id="s5-l2" class="line" style="top: 850px; font-weight: 800; font-size: 72px"><span class="w">تقرؤها</span> <span class="w">أنت</span> <span class="w">بنفسك</span></div>
+      <div id="s5-sleep" class="line" style="top: 700px; font-weight: 900; font-size: 96px"><span class="w">نَمِ</span> <span class="w">الليلة</span></div>
+      <div id="s5-name" class="line amiri gold" style="top: 860px; font-size: 156px"><span class="w">في</span> <span class="w">معيّة</span> <span class="w">الله</span></div>
+      <div id="s5-tag" class="line amiri" style="top: 1075px; font-size: 56px; font-weight: 400; color: #9fb3ab">وأنا معه إذا ذكرني</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const S = 31.55; // scene start in film seconds; tweens below are written in film seconds
+      const at = (t) => t - S;
+
+      // per-word blur-in, 0.07 s apart (motion.md title entrance)
+      function words(sel, t, gap) {
+        tl.fromTo(sel + " .w", { opacity: 0, filter: "blur(8px)" },
+          { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out", stagger: gap || 0.07 }, t);
+      }
+      function blurOut(sel, t) {
+        tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, t);
+      }
+      function pop(sel, t) {
+        tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, t);
+      }
+      function ordinal(sel, land, leave) {
+        tl.fromTo(sel, { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, land);
+        tl.to(sel, { opacity: 0, scale: 0.4, y: -260, duration: 0.28, ease: "power3.in" }, leave);
+      }
+
+      // blur swap: in only after scene 4 has gone (31.6 + 0.2)
+      tl.fromTo("#s5-stage", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, at(31.8));
+      words("#s5-l1", at(31.92), 0.09);
+      words("#s5-l2", at(33.3));
+      blurOut(["#s5-l1", "#s5-l2"], at(34.95));
+      // نَمِ الليلة: the lamp dims to a night-light
+      tl.to("#s5-glow", { opacity: 0.3, duration: 1.2, ease: "power2.inOut" }, at(35.2));
+      words("#s5-sleep", at(35.2));
+      tl.to("#s5-sleep", { y: -60, scale: 0.78, opacity: 0.8, duration: 0.6, ease: "power3.inOut" }, at(36.0));
+      words("#s5-name", at(36.2), 0.1);
+      tl.fromTo("#s5-tag", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "power2.out" }, at(37.0));
+      tl.to({}, { duration: 0.01 }, at(39.45)); // the name holds to the end
+      window.__timelines["s5"] = tl;
+    })();
+  </script>
+</template>

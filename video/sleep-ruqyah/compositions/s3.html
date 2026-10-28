@@ -1,0 +1,79 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; color: #f4ecd8; font-family: "Cairo", sans-serif; }
+    #root .stage { position: absolute; inset: 0; }
+    #root .line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap; }
+    #root .w { display: inline-block; }
+    #root .gold { color: #d4a94f; }
+    #root .amiri { font-family: "Amiri", serif; font-weight: 700; }
+    #root .kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+    #root .chip { display: inline-block; border: 3px solid #d4a94f; border-radius: 999px; padding: 4px 34px 10px;
+      font-weight: 800; font-size: 42px; color: #f4ecd8; background: rgba(5, 18, 26, .55); }
+    #root .art { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+    #root .ordinal { font-size: 380px; line-height: 1; color: #d4a94f; text-shadow: 0 0 60px rgba(212, 169, 79, .35); }
+    #s3-ring { transform-origin: 50% 310px; }
+  </style>
+  <div id="root" data-composition-id="s3" data-width="1080" data-height="1920">
+    <div id="s3-stage" class="stage">
+
+      <div id="s3-num" class="line kufi ordinal" style="top: 560px">٢</div>
+      <div id="s3-title" class="line amiri gold" style="top: 300px; font-size: 124px"><span class="w">آخرُ</span> <span class="w">آيتين</span></div>
+      <div id="s3-chip" class="line" style="top: 500px"><span class="chip">البقرة · ٢٨٥–٢٨٦</span></div>
+      <div id="s3-book" class="art" style="top: 600px"><svg width="680" height="470" viewBox="0 0 680 470" aria-hidden="true"><path d="M340,40 L14,12 L14,440 L340,470 L666,440 L666,12 Z" fill="#11604c"/><path d="M30,34 Q182.0,14 334,34 L334,432 Q182.0,412 30,432 Z" fill="#f7f1e1"/><rect x="52" y="58" width="260" height="336" fill="none" stroke="#d4a94f" stroke-width="4"/><rect x="100" y="74" width="164" height="30" rx="15" fill="#d4a94f" opacity=".85"/><line x1="294" y1="134" x2="112" y2="134" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="294" y1="166" x2="105" y2="166" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="294" y1="198" x2="80" y2="198" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="294" y1="230" x2="111" y2="230" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="294" y1="262" x2="108" y2="262" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="294" y1="294" x2="103" y2="294" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="294" y1="326" x2="130" y2="326" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="294" y1="358" x2="108" y2="358" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><path d="M346,34 Q498.0,14 650,34 L650,432 Q498.0,412 346,432 Z" fill="#f7f1e1"/><rect x="368" y="58" width="260" height="336" fill="none" stroke="#d4a94f" stroke-width="4"/><rect x="416" y="74" width="164" height="30" rx="15" fill="#d4a94f" opacity=".85"/><line x1="610" y1="134" x2="416" y2="134" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="610" y1="166" x2="405" y2="166" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="610" y1="198" x2="452" y2="198" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="610" y1="230" x2="438" y2="230" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="610" y1="262" x2="452" y2="262" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="610" y1="294" x2="404" y2="294" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="610" y1="326" x2="412" y2="326" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="610" y1="358" x2="455" y2="358" stroke="#17191a" stroke-width="7" stroke-linecap="round" opacity=".5"/><line x1="340" y1="36" x2="340" y2="466" stroke="#0b4636" stroke-width="5"/><line class="s3-hl" x1="294" y1="326" x2="130" y2="326" stroke="#d4a94f" stroke-width="11" stroke-linecap="round" opacity="0"/><line class="s3-hl" x1="294" y1="358" x2="108" y2="358" stroke="#d4a94f" stroke-width="11" stroke-linecap="round" opacity="0"/></svg></div>
+      <div id="s3-night" class="line" style="top: 1095px; font-weight: 800; font-size: 64px"><span class="w">مَن</span> <span class="w">قرأهما</span> <span class="w">في</span> <span class="gold"><span class="w">ليلةٍ</span></span></div>
+      <div id="s3-ring" class="art" style="top: 470px">
+        <svg width="620" height="620" viewBox="0 0 620 620" aria-hidden="true">
+          <circle id="s3-disc" cx="310" cy="310" r="270" fill="#0b2a26" opacity="0"/>
+          <circle id="s3-ringc" cx="310" cy="310" r="270" fill="none" stroke="#d4a94f" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-90 310 310)"/>
+        </svg>
+      </div>
+      <div id="s3-kafatah" class="line amiri gold" style="top: 650px; font-size: 180px">كَفَتاه</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const S = 13.4; // scene start in film seconds; tweens below are written in film seconds
+      const at = (t) => t - S;
+
+      // per-word blur-in, 0.07 s apart (motion.md title entrance)
+      function words(sel, t, gap) {
+        tl.fromTo(sel + " .w", { opacity: 0, filter: "blur(8px)" },
+          { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out", stagger: gap || 0.07 }, t);
+      }
+      function blurOut(sel, t) {
+        tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, t);
+      }
+      function pop(sel, t) {
+        tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, t);
+      }
+      function ordinal(sel, land, leave) {
+        tl.fromTo(sel, { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, land);
+        tl.to(sel, { opacity: 0, scale: 0.4, y: -260, duration: 0.28, ease: "power3.in" }, leave);
+      }
+
+      // blur swap: in only after scene 2 has gone (13.4 + 0.2)
+      tl.fromTo("#s3-stage", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, at(13.6));
+      ordinal("#s3-num", at(13.75), at(14.42));
+      words("#s3-title", at(14.55), 0.09);
+      pop("#s3-chip", at(15.0));
+      tl.fromTo("#s3-book", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.7, ease: "expo.out" }, at(14.75));
+      tl.to(".s3-hl", { opacity: 1, duration: 0.35, ease: "power2.out", stagger: 0.25 }, at(15.7));
+      words("#s3-night", at(16.9));
+      // كَفَتاه: the page steps back, the word lands inside a ring that draws itself
+      tl.to(["#s3-book", "#s3-night", "#s3-title", "#s3-chip"], { opacity: 0.18, filter: "blur(4px)", duration: 0.3, ease: "power2.out" }, at(18.55));
+      tl.fromTo("#s3-kafatah", { opacity: 0, scale: 1.25, filter: "blur(10px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.35, ease: "expo.out" }, at(18.64));
+      tl.to("#s3-ringc", { attr: { "stroke-dashoffset": 0 }, duration: 0.45, ease: "power2.inOut" }, at(18.7));
+      // object becomes the world: the ring's disc grows past the frame into scene 4
+      tl.to("#s3-disc", { opacity: 1, duration: 0.15 }, at(19.05));
+      blurOut("#s3-kafatah", at(19.05));
+      tl.to("#s3-ring", { scale: 6.5, duration: 0.65, ease: "power2.inOut" }, at(19.1));
+      tl.to(["#s3-book", "#s3-night", "#s3-title", "#s3-chip"], { opacity: 0, duration: 0.3 }, at(19.1));
+      window.__timelines["s3"] = tl;
+    })();
+  </script>
+</template>

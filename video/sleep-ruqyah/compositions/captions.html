@@ -1,0 +1,112 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; }
+    #root .cap { position: absolute; left: 0; right: 0; top: 1200px; text-align: center; font-family: "Cairo", sans-serif;
+      font-weight: 700; font-size: 46px; line-height: 1.5; color: #f4ecd8; opacity: 0; overflow: visible;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .6); padding: 0 90px; }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1920">
+      <div id="cap-0" class="cap">تُريدُ أن تنامَ في معيّة الله؟</div>
+      <div id="cap-1" class="cap">هذه رُقيتُك قبل النوم</div>
+      <div id="cap-2" class="cap">في ثلاثين ثانية</div>
+      <div id="cap-3" class="cap">أولًا</div>
+      <div id="cap-4" class="cap">آيةُ الكرسيّ</div>
+      <div id="cap-5" class="cap">مَن قرأها عند نومه</div>
+      <div id="cap-6" class="cap">لم يزل عليه من الله حافظ</div>
+      <div id="cap-7" class="cap">حتى يُصبح</div>
+      <div id="cap-8" class="cap">ثانيًا</div>
+      <div id="cap-9" class="cap">آخرُ آيتين من سورة البقرة</div>
+      <div id="cap-10" class="cap">مَن قرأهما في ليلةٍ</div>
+      <div id="cap-11" class="cap">كَفَتاه</div>
+      <div id="cap-12" class="cap">ثالثًا</div>
+      <div id="cap-13" class="cap">اجمع كفّيك، وانفث فيهما</div>
+      <div id="cap-14" class="cap">واقرأ سورةَ الإخلاص، والفلق، والناس</div>
+      <div id="cap-15" class="cap">ثم امسح بهما</div>
+      <div id="cap-16" class="cap">ما استطعتَ من جسدك</div>
+      <div id="cap-17" class="cap">تبدأ برأسك ووجهك</div>
+      <div id="cap-18" class="cap">ثلاثَ مرات</div>
+      <div id="cap-19" class="cap">رُقيةٌ يسيرة</div>
+      <div id="cap-20" class="cap">تقرؤها أنت بنفسك</div>
+      <div id="cap-21" class="cap">نَمِ الليلة</div>
+      <div id="cap-22" class="cap">وأنت في معيّة الله</div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#cap-0", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 0.15);
+      tl.to("#cap-0", { opacity: 0, duration: 0.12, ease: "power2.in" }, 2.11);
+      tl.set("#cap-0", { opacity: 0, visibility: "hidden" }, 2.23);
+      tl.fromTo("#cap-1", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 2.37);
+      tl.to("#cap-1", { opacity: 0, duration: 0.12, ease: "power2.in" }, 4.18);
+      tl.set("#cap-1", { opacity: 0, visibility: "hidden" }, 4.30);
+      tl.fromTo("#cap-2", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 4.50);
+      tl.to("#cap-2", { opacity: 0, duration: 0.12, ease: "power2.in" }, 5.85);
+      tl.set("#cap-2", { opacity: 0, visibility: "hidden" }, 5.97);
+      tl.fromTo("#cap-3", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 6.13);
+      tl.to("#cap-3", { opacity: 0, duration: 0.12, ease: "power2.in" }, 6.74);
+      tl.set("#cap-3", { opacity: 0, visibility: "hidden" }, 6.86);
+      tl.fromTo("#cap-4", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 6.93);
+      tl.to("#cap-4", { opacity: 0, duration: 0.12, ease: "power2.in" }, 7.99);
+      tl.set("#cap-4", { opacity: 0, visibility: "hidden" }, 8.11);
+      tl.fromTo("#cap-5", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 8.25);
+      tl.to("#cap-5", { opacity: 0, duration: 0.12, ease: "power2.in" }, 9.81);
+      tl.set("#cap-5", { opacity: 0, visibility: "hidden" }, 9.93);
+      tl.fromTo("#cap-6", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 9.95);
+      tl.to("#cap-6", { opacity: 0, duration: 0.12, ease: "power2.in" }, 12.17);
+      tl.set("#cap-6", { opacity: 0, visibility: "hidden" }, 12.29);
+      tl.fromTo("#cap-7", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 12.35);
+      tl.to("#cap-7", { opacity: 0, duration: 0.12, ease: "power2.in" }, 13.49);
+      tl.set("#cap-7", { opacity: 0, visibility: "hidden" }, 13.61);
+      tl.fromTo("#cap-8", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 13.77);
+      tl.to("#cap-8", { opacity: 0, duration: 0.12, ease: "power2.in" }, 14.40);
+      tl.set("#cap-8", { opacity: 0, visibility: "hidden" }, 14.52);
+      tl.fromTo("#cap-9", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 14.54);
+      tl.to("#cap-9", { opacity: 0, duration: 0.12, ease: "power2.in" }, 16.71);
+      tl.set("#cap-9", { opacity: 0, visibility: "hidden" }, 16.83);
+      tl.fromTo("#cap-10", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 16.85);
+      tl.to("#cap-10", { opacity: 0, duration: 0.12, ease: "power2.in" }, 18.46);
+      tl.set("#cap-10", { opacity: 0, visibility: "hidden" }, 18.58);
+      tl.fromTo("#cap-11", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 18.64);
+      tl.to("#cap-11", { opacity: 0, duration: 0.12, ease: "power2.in" }, 19.36);
+      tl.set("#cap-11", { opacity: 0, visibility: "hidden" }, 19.48);
+      tl.fromTo("#cap-12", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 19.62);
+      tl.to("#cap-12", { opacity: 0, duration: 0.12, ease: "power2.in" }, 20.33);
+      tl.set("#cap-12", { opacity: 0, visibility: "hidden" }, 20.45);
+      tl.fromTo("#cap-13", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 20.47);
+      tl.to("#cap-13", { opacity: 0, duration: 0.12, ease: "power2.in" }, 22.77);
+      tl.set("#cap-13", { opacity: 0, visibility: "hidden" }, 22.89);
+      tl.fromTo("#cap-14", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 22.91);
+      tl.to("#cap-14", { opacity: 0, duration: 0.12, ease: "power2.in" }, 26.10);
+      tl.set("#cap-14", { opacity: 0, visibility: "hidden" }, 26.22);
+      tl.fromTo("#cap-15", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 26.24);
+      tl.to("#cap-15", { opacity: 0, duration: 0.12, ease: "power2.in" }, 27.16);
+      tl.set("#cap-15", { opacity: 0, visibility: "hidden" }, 27.28);
+      tl.fromTo("#cap-16", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 27.30);
+      tl.to("#cap-16", { opacity: 0, duration: 0.12, ease: "power2.in" }, 28.46);
+      tl.set("#cap-16", { opacity: 0, visibility: "hidden" }, 28.58);
+      tl.fromTo("#cap-17", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 28.60);
+      tl.to("#cap-17", { opacity: 0, duration: 0.12, ease: "power2.in" }, 30.42);
+      tl.set("#cap-17", { opacity: 0, visibility: "hidden" }, 30.54);
+      tl.fromTo("#cap-18", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 30.64);
+      tl.to("#cap-18", { opacity: 0, duration: 0.12, ease: "power2.in" }, 31.72);
+      tl.set("#cap-18", { opacity: 0, visibility: "hidden" }, 31.84);
+      tl.fromTo("#cap-19", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 31.90);
+      tl.to("#cap-19", { opacity: 0, duration: 0.12, ease: "power2.in" }, 33.12);
+      tl.set("#cap-19", { opacity: 0, visibility: "hidden" }, 33.24);
+      tl.fromTo("#cap-20", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 33.26);
+      tl.to("#cap-20", { opacity: 0, duration: 0.12, ease: "power2.in" }, 34.87);
+      tl.set("#cap-20", { opacity: 0, visibility: "hidden" }, 34.99);
+      tl.fromTo("#cap-21", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 35.16);
+      tl.to("#cap-21", { opacity: 0, duration: 0.12, ease: "power2.in" }, 35.98);
+      tl.set("#cap-21", { opacity: 0, visibility: "hidden" }, 36.10);
+      tl.fromTo("#cap-22", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out" }, 36.12);
+      tl.to("#cap-22", { opacity: 0, duration: 0.12, ease: "power2.in" }, 38.08);
+      tl.set("#cap-22", { opacity: 0, visibility: "hidden" }, 38.20);
+      window.__timelines["captions"] = tl;
+    })();
+  </script>
+</template>

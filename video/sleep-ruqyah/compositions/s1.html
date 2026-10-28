@@ -1,0 +1,75 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; color: #f4ecd8; font-family: "Cairo", sans-serif; }
+    #root .stage { position: absolute; inset: 0; }
+    #root .line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap; }
+    #root .w { display: inline-block; }
+    #root .gold { color: #d4a94f; }
+    #root .amiri { font-family: "Amiri", serif; font-weight: 700; }
+    #root .kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+    #root .chip { display: inline-block; border: 3px solid #d4a94f; border-radius: 999px; padding: 4px 34px 10px;
+      font-weight: 800; font-size: 42px; color: #f4ecd8; background: rgba(5, 18, 26, .55); }
+    #root .art { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+    #root .ordinal { font-size: 380px; line-height: 1; color: #d4a94f; text-shadow: 0 0 60px rgba(212, 169, 79, .35); }
+    #s1-hook { transform-origin: 50% 0; }
+  </style>
+  <div id="root" data-composition-id="s1" data-width="1080" data-height="1920">
+    <div id="s1-stage" class="stage">
+      <div id="s1-lamp" class="art" style="top: 168px">
+        <svg width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+          <defs><radialGradient id="s1-glowg"><stop offset="0" stop-color="#ffd98a" stop-opacity=".85"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient></defs>
+          <circle id="s1-glow" cx="150" cy="300" r="150" fill="url(#s1-glowg)"/>
+          <line x1="150" y1="0" x2="150" y2="170" stroke="#d4a94f" stroke-width="4"/>
+          <path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#d4a94f"/>
+          <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="none" stroke="#d4a94f" stroke-width="7"/>
+          <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#ffe3a3"/>
+          <path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#d4a94f"/>
+          <line x1="150" y1="400" x2="150" y2="440" stroke="#d4a94f" stroke-width="4"/>
+        </svg>
+      </div>
+      <div id="s1-hook" class="line" style="top: 650px; font-weight: 900; font-size: 98px; line-height: 1.3">
+        <div><span class="w">تُريدُ</span> <span class="w">أن</span> <span class="w">تنامَ</span></div>
+        <div><span class="w">في</span> <span class="gold"><span class="w">معيّة</span> <span class="w">الله؟</span></span></div>
+      </div>
+      <div id="s1-title" class="line amiri gold" style="top: 720px; font-size: 140px"><span class="w">رُقيتُك</span> <span class="w">قبل</span> <span class="w">النوم</span></div>
+      <div id="s1-chip" class="line" style="top: 960px"><span class="chip">٣٠ ثانية</span></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const S = 0; // scene start in film seconds; tweens below are written in film seconds
+      const at = (t) => t - S;
+
+      // per-word blur-in, 0.07 s apart (motion.md title entrance)
+      function words(sel, t, gap) {
+        tl.fromTo(sel + " .w", { opacity: 0, filter: "blur(8px)" },
+          { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out", stagger: gap || 0.07 }, t);
+      }
+      function blurOut(sel, t) {
+        tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, t);
+      }
+      function pop(sel, t) {
+        tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, t);
+      }
+      function ordinal(sel, land, leave) {
+        tl.fromTo(sel, { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, land);
+        tl.to(sel, { opacity: 0, scale: 0.4, y: -260, duration: 0.28, ease: "power3.in" }, leave);
+      }
+
+      // frame 0 is the hook: already on screen, the lamp glow arrives under it
+      tl.fromTo("#s1-glow", { opacity: 0.35 }, { opacity: 1, duration: 1.4, ease: "power2.out" }, 0);
+      // the question has been asked: it lifts away before the answer lands in its place
+      tl.to("#s1-hook", { y: -60, opacity: 0, filter: "blur(8px)", duration: 0.3, ease: "power3.in" }, at(2.15));
+      words("#s1-title", at(2.42));
+      pop("#s1-chip", at(4.5));
+      // whip out to the right (the next scene arrives from the left)
+      tl.to("#s1-stage", { x: 620, filter: "blur(16px)", opacity: 0, duration: 0.28, ease: "power3.in" }, at(5.95));
+      window.__timelines["s1"] = tl;
+    })();
+  </script>
+</template>

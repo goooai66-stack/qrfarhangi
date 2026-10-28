@@ -1,0 +1,83 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; color: #f4ecd8; font-family: "Cairo", sans-serif; }
+    #root .stage { position: absolute; inset: 0; }
+    #root .line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap; }
+    #root .w { display: inline-block; }
+    #root .gold { color: #d4a94f; }
+    #root .amiri { font-family: "Amiri", serif; font-weight: 700; }
+    #root .kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+    #root .chip { display: inline-block; border: 3px solid #d4a94f; border-radius: 999px; padding: 4px 34px 10px;
+      font-weight: 800; font-size: 42px; color: #f4ecd8; background: rgba(5, 18, 26, .55); }
+    #root .art { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+    #root .ordinal { font-size: 380px; line-height: 1; color: #d4a94f; text-shadow: 0 0 60px rgba(212, 169, 79, .35); }
+  </style>
+  <div id="root" data-composition-id="s2" data-width="1080" data-height="1920">
+    <div id="s2-stage" class="stage">
+
+      <div id="s2-num" class="line kufi ordinal" style="top: 560px">١</div>
+      <div id="s2-title" class="line amiri gold" style="top: 300px; font-size: 124px"><span class="w">آيةُ</span> <span class="w">الكرسيّ</span></div>
+      <div id="s2-chip" class="line" style="top: 500px"><span class="chip">البقرة · ٢٥٥</span></div>
+      <div id="s2-bed" class="art" style="top: 650px">
+        <svg width="640" height="360" viewBox="0 0 640 360" aria-hidden="true">
+          <path id="s2-domefill" d="M70,300 C70,40 570,40 570,300 Z" fill="#d4a94f" opacity="0"/>
+          <path id="s2-dome" d="M70,300 C70,40 570,40 570,300" fill="none" stroke="#d4a94f" stroke-width="9" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <g fill="none" stroke="#f4ecd8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M110,300 L110,170 Q110,150 130,150 L150,150 Q170,150 170,170 L170,236"/>
+            <rect x="110" y="236" width="420" height="44" rx="12"/>
+            <ellipse cx="210" cy="222" rx="42" ry="16"/>
+            <path d="M262,236 Q330,206 420,214 Q500,220 530,236"/>
+            <line x1="122" y1="280" x2="122" y2="306"/><line x1="518" y1="280" x2="518" y2="306"/>
+          </g>
+        </svg>
+      </div>
+      <div id="s2-sun" class="art" style="top: 868px"><svg width="300" height="150" viewBox="0 0 300 150" aria-hidden="true">
+        <defs><radialGradient id="s2-sung" cy="1"><stop offset="0" stop-color="#ffcf7a"/><stop offset="1" stop-color="#ffcf7a" stop-opacity="0"/></radialGradient></defs>
+        <circle cx="150" cy="150" r="150" fill="url(#s2-sung)"/></svg></div>
+      <div id="s2-safe" class="line" style="top: 950px; font-weight: 900; font-size: 84px"><span class="w">حافظٌ</span> <span class="gold"><span class="w">من</span> <span class="w">الله</span></span></div>
+      <div id="s2-dawn" class="line" style="top: 1078px; font-weight: 700; font-size: 52px; color: #9fb3ab"><span class="w">حتى</span> <span class="w">الصباح</span></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const S = 5.95; // scene start in film seconds; tweens below are written in film seconds
+      const at = (t) => t - S;
+
+      // per-word blur-in, 0.07 s apart (motion.md title entrance)
+      function words(sel, t, gap) {
+        tl.fromTo(sel + " .w", { opacity: 0, filter: "blur(8px)" },
+          { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out", stagger: gap || 0.07 }, t);
+      }
+      function blurOut(sel, t) {
+        tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, t);
+      }
+      function pop(sel, t) {
+        tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, t);
+      }
+      function ordinal(sel, land, leave) {
+        tl.fromTo(sel, { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, land);
+        tl.to(sel, { opacity: 0, scale: 0.4, y: -260, duration: 0.28, ease: "power3.in" }, leave);
+      }
+
+      // whip in from the left, landing blurred and sharpening
+      tl.fromTo("#s2-stage", { x: -620, filter: "blur(16px)", opacity: 0.4 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.3, ease: "power3.out" }, 0);
+      ordinal("#s2-num", at(6.1), at(6.82));
+      words("#s2-title", at(6.95), 0.09);
+      pop("#s2-chip", at(7.35));
+      tl.fromTo("#s2-bed", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: "expo.out" }, at(8.25));
+      tl.to("#s2-dome", { attr: { "stroke-dashoffset": 0 }, duration: 0.7, ease: "power2.inOut" }, at(11.25));
+      tl.to("#s2-domefill", { opacity: 0.16, duration: 0.6, ease: "power2.out" }, at(11.6));
+      words("#s2-safe", at(11.55));
+      tl.fromTo("#s2-sun", { opacity: 0, y: 60 }, { opacity: 0.9, y: 0, duration: 0.9, ease: "power2.out" }, at(12.35));
+      words("#s2-dawn", at(12.45));
+      // blur swap out
+      blurOut("#s2-stage", at(13.4));
+      window.__timelines["s2"] = tl;
+    })();
+  </script>
+</template>
