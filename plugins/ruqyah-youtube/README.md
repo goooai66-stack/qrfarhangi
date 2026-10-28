@@ -25,7 +25,7 @@
 می‌خوانند و اگر نبود، از نسخه‌ی داخل همین پلاگین استفاده می‌کنند. برای پروفایل اختصاصی هر پروژه،
 این دو فایل را در `.claude/youtube/` همان پروژه کپی کنید.
 
-## اسکیل‌ها (۱۵ تا)
+## اسکیل‌ها (۲۲ تا)
 
 | اسکیل | کار |
 | --- | --- |
@@ -44,6 +44,13 @@
 | `youtube-seo` | سئوی یوتیوب و گوگل |
 | `youtube-own-channel-analyzer` | تحلیل کانال خودتان با YouTube Data API |
 | `youtube-competitor-analyzer` | پیدا کردن و مقایسه‌ی رقبا با YouTube Data API |
+| `hyperframes` | ساخت، انیمیشن و رندر ویدیو با HTML (موشن، توضیحی، عمودی، زیرنویس) |
+| `hyperframes-cli` | کار با CLI هایپرفریمز: ساخت پروژه، پیش‌نمایش، رندر |
+| `hyperframes-registry` | حدود ۴۵۰ بلوک آماده: ترنزیشن، تایتل، تایپوگرافی متحرک، زیرنویس |
+| `media-use` | موسیقی، افکت صوتی، تصویر، صداگذاری و زیرنویس برای ویدیو |
+| `remotion-to-hyperframes` | آوردن انیمیشن‌های موجود (Remotion، Lottie، HTML) به هایپرفریمز |
+| `slideshow` | اسلایدشوی ارائه با هایپرفریمز |
+| `figma` | آوردن طرح‌های Figma به ویدیو |
 
 دو اسکیل آخر و اسکریپت‌های `youtube` کلید را از متغیر محیطی `YOUTUBE_API_KEY` می‌خوانند. کلید را در
 هیچ فایلی از ریپو ذخیره نکنید.
@@ -56,3 +63,4 @@
 - `youtube`: [AgriciDaniel/claude-youtube](https://github.com/AgriciDaniel/claude-youtube)
 - `youtube-seo`: [kostja94/marketing-skills](https://github.com/kostja94/marketing-skills)
 - `youtube-own-channel-analyzer`، `youtube-competitor-analyzer`: [nikhilbhansali/claude-youtube-skills](https://github.com/nikhilbhansali/claude-youtube-skills)
+- `hyperframes`، `hyperframes-cli`، `hyperframes-registry`، `media-use`، `remotion-to-hyperframes`، `slideshow`، `figma`: [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) با مجوز Apache 2.0 (`licenses/hyperframes-LICENSE`)، بدون تغییر. `media-use` آمار استفاده‌ی ناشناس می‌فرستد؛ با `DO_NOT_TRACK=1` خاموش می‌شود.
