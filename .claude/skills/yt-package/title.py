@@ -16,11 +16,22 @@ import json, re, sys, os
 
 DESKTOP, MOBILE, HARD = 60, 40, 100
 VAGUE = {"amazing","incredible","insane","crazy","huge","massive","ultimate","best","powerful",
-         "secret","revolutionary","mindblowing","epic","perfect","complete","everything"}
+         "secret","revolutionary","mindblowing","epic","perfect","complete","everything",
+         # Persian
+         "فوق‌العاده","باورنکردنی","معجزه","معجزه‌آسا","شگفت‌انگیز","عجیب","قدرتمند","بهترین",
+         "تضمینی","قطعی","صددرصد","راز","اسرار","خارق‌العاده","بی‌نظیر","فوری"}
 STOP = {"the","a","an","of","for","to","in","on","and","or","is","are","with","your","you","my","i",
-        "this","that","it","how","what","why"}
+        "this","that","it","how","what","why",
+        # Persian
+        "و","در","به","از","برای","با","که","را","این","آن","یک","چه","چرا","چطور","من","تو","شما",
+        "ها","های","است","هست","یا","تا","هم"}
+# Persian has no capitals, so named things (surahs, verses, books of hadith) count as the "name"
+NAMED = re.compile(r"(سوره|آیه|آیات|آیة|آیت‌الکرسی|فاتحه|بقره|فلق|ناس|اخلاص|معوذتین|اعراف|یونس|طه|"
+                   r"کافرون|بخاری|مسلم|ابوداود|ترمذی)")
+# Persian and Arabic digits to ASCII, Arabic yeh/kaf to Persian
+NORM = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩يك", "01234567890123456789یک")
 
-def words(t): return re.findall(r"[a-z0-9']+", t.lower())
+def words(t): return re.findall(r"[\w\u200c']+", t.lower().translate(NORM))
 
 def check(title, thumb=None):
     t = title.strip()
@@ -37,10 +48,12 @@ def check(title, thumb=None):
     elif caps: good.append(f"{len(caps)} all-caps word for emphasis")
     v = [w for w in words(t) if w in VAGUE]
     if v: issues.append(("vague", f"{', '.join(sorted(set(v)))} - swap for a number, a name or a date"))
-    nums = re.findall(r"\d[\d,.]*%?", t)
+    nums = re.findall(r"\d[\d,.]*%?", t.translate(NORM))
+    named = NAMED.findall(t)
     if nums: good.append(f"carries a concrete figure ({', '.join(nums[:3])})")
+    elif named: good.append(f"names something specific ({', '.join(dict.fromkeys(named))})")
     else: issues.append(("no-number", "no number, date or name - the most reliable single fix"))
-    if t.endswith("?"): good.append("open question in the title")
+    if t.endswith(("?", "؟")): good.append("open question in the title")
     front = [w for w in words(t)[:3] if w not in STOP]
     if not front: issues.append(("front-load", "the first three words are all filler - move the subject forward"))
     if thumb:

@@ -1,33 +1,56 @@
-# voice.md
+# voice.md — لحن کانال
 
-Copy this to `~/.claude/youtube/voice.md` and fill it in. Every skill in this pack reads it. Ten
-minutes here is worth more than any prompt you will ever write, because on YouTube you have to say
-the words out loud and a script in the wrong voice is unreadable on camera.
+همه‌ی اسکیل‌های `yt-*` این فایل را می‌خوانند. ده دقیقه وقت گذاشتن روی این فایل از هر پرامپتی
+ارزشمندتر است، چون اسکریپت را باید بلند جلوی دوربین یا میکروفون بخوانید و متنی که لحن شما نیست
+خواندنی نیست. حوزه و خطوط قرمز در [`niche.md`](niche.md) آمده‌اند؛ اینجا فقط مربوط به خود شماست.
 
-## Who I am talking to
+راه سریع: لینک یا متن سه ویدیوی خودتان را به Claude بدهید و بگویید «voice.md من را از روی این‌ها
+بنویس».
 
-One person. Name them properly - not "creators", but "someone with under a thousand subs who has
-made nine videos and cannot work out why none of them break 400 views".
+## با چه کسی حرف می‌زنم
 
-## How I actually talk
+یک نفر مشخص. نه «مسلمانان» یا «همه»؛ مثلاً: «مادری که سه ماه است بچه‌اش شب‌ها از ترس بیدار
+می‌شود، از دعانویس محل می‌ترسد و می‌خواهد بداند خودش چه بخواند».
 
-Paste the transcript of your best-performing video here, or three of them. Not what you wish you
-sounded like.
+<!-- پر کنید -->
 
-## Words I never use
+## واقعاً چطور حرف می‌زنم
 
-The ones that are not mine. Be specific: "unlock", "game-changer", "dive in", "let's get into it".
+متن (ترنسکریپت) پربازدیدترین ویدیوتان را اینجا بگذارید، یا سه تا. همان‌طور که واقعاً حرف می‌زنید،
+نه آن‌طور که دوست دارید.
 
-## Words I do use
+<!-- پر کنید -->
 
-Your tics. The phrases that are yours. Keep them.
+## رسمی یا محاوره‌ای؟
 
-## What I will not claim
+«شما» یا «تو»؟ نوشتاری («می‌خواهم») یا گفتاری («می‌خوام»)؟ با «بسم‌الله» شروع می‌کنید؟
 
-Numbers I cannot show, results that are not mine, tools I have not used. Write them down so the
-skills refuse them for you instead of you catching it in the edit.
+<!-- پر کنید -->
 
-## My format
+## کلمه‌هایی که هرگز به کار نمی‌برم
 
-Length, how a video opens, whether there is an intro, whether you swear, whether you appear on
-camera, what the desk looks like.
+کلمه‌هایی که مال شما نیستند. مثال: «معجزه‌آسا»، «تضمینی»، «صددرصد»، «فوری»، «راز ناگفته».
+
+<!-- پر کنید -->
+
+## کلمه‌ها و عبارت‌های خودم
+
+تکیه‌کلام‌ها و عبارت‌هایی که امضای شماست. نگهشان دارید.
+
+<!-- پر کنید -->
+
+## چه ادعایی نمی‌کنم
+
+- شفای قطعی هیچ بیماری را وعده نمی‌دهم و رقیه را جایگزین پزشک معرفی نمی‌کنم.
+- برای کسی از راه دور تشخیص سحر، جن یا چشم‌زخم نمی‌دهم.
+- حدیثی را بدون منبع و درجه‌ی صحت نقل نمی‌کنم.
+- آمار و عددی که منبع ندارد نمی‌گویم.
+
+<!-- موارد دیگر را اضافه کنید -->
+
+## قالب من
+
+قاری خودتان هستید یا تلاوت دیگران؟ صورتتان در تصویر است یا فقط صدا و متن آیات؟ طول معمول ویدیو؟
+مقدمه دارید؟ پس‌زمینه و تصویر چیست؟
+
+<!-- پر کنید -->

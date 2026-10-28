@@ -52,6 +52,15 @@ click the title promised, open a question the viewer cannot close, and prove the
 - the runtime estimate at 150 words per minute
 - one line naming which formula the winning hook used and why it fits this idea
 
+## The niche
+
+This channel is a Persian-language channel about **ruqyah shar'iyyah** (رقیه شرعیه). Before writing,
+read `.claude/youtube/niche.md` in this repo. Write every output in Persian. The red lines in that
+file are hard limits: no promised or guaranteed cures, nothing that presents ruqyah as a replacement
+for a doctor, no diagnosing anyone remotely, no fear-based packaging, and no Quranic text or hadith
+written from memory. Leave a marked placeholder for the user to paste the verified text instead.
+If a request crosses one of these lines, say which one and offer the version that stays inside it.
+
 ## The gate
 
 Nothing here publishes. This skill writes and you publish. Every output ends in a block the user

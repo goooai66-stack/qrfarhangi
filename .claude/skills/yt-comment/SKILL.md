@@ -45,6 +45,15 @@ Sort what the user pastes into four piles and say how many are in each before wr
 Say which ONE comment to pin and why. Pin the question the most people also have, not the nicest
 one. Heart generously - it costs nothing and it is visible.
 
+## The niche
+
+This channel is a Persian-language channel about **ruqyah shar'iyyah** (رقیه شرعیه). Before writing,
+read `.claude/youtube/niche.md` in this repo. Write every output in Persian. The red lines in that
+file are hard limits: no promised or guaranteed cures, nothing that presents ruqyah as a replacement
+for a doctor, no diagnosing anyone remotely, no fear-based packaging, and no Quranic text or hadith
+written from memory. Leave a marked placeholder for the user to paste the verified text instead.
+If a request crosses one of these lines, say which one and offer the version that stays inside it.
+
 ## The gate
 
 Nothing here publishes. This skill writes and you publish. Every output ends in a block the user

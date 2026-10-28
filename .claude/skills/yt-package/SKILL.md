@@ -43,6 +43,15 @@ Generate ten titles, run them all through `title.py`, show the user the top thre
 and the specific issue on each. For the winner, write the thumbnail brief: the expression, the
 framing, the three words, and what the background has to do to hold contrast at feed size.
 
+## The niche
+
+This channel is a Persian-language channel about **ruqyah shar'iyyah** (رقیه شرعیه). Before writing,
+read `.claude/youtube/niche.md` in this repo. Write every output in Persian. The red lines in that
+file are hard limits: no promised or guaranteed cures, nothing that presents ruqyah as a replacement
+for a doctor, no diagnosing anyone remotely, no fear-based packaging, and no Quranic text or hadith
+written from memory. Leave a marked placeholder for the user to paste the verified text instead.
+If a request crosses one of these lines, say which one and offer the version that stays inside it.
+
 ## The gate
 
 Nothing here publishes. This skill writes and you publish. Every output ends in a block the user

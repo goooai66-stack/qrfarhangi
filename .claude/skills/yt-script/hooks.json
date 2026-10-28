@@ -18,7 +18,9 @@
    "match": [
     "\\b\\d+(\\.\\d+)?\\s?%",
     "\\b\\d+ (out of|in) \\d+\\b",
-    "\\b\\d{2,}(,\\d{3})+\\b"
+    "\\b\\d{2,}(,\\d{3})+\\b",
+    "\\d+(\\.\\d+)?\\s?درصد",
+    "\\d+ (نفر )?از (هر )?\\d+"
    ]
   },
   {
@@ -42,7 +44,10 @@
    "match": [
     "\\byou('re| are) (probably |still )?(doing|making)\\b",
     "\\bthe (mistake|reason) (everyone|most people|nobody)\\b",
-    "\\bstop (doing )?\\b"
+    "\\bstop (doing )?\\b",
+    "اشتباه(ی)? (رایج|بزرگ|که)",
+    "(داری|دارید) اشتباه",
+    "(این کار را|این کارو) (نکن|نکنید)"
    ]
   },
   {
@@ -54,7 +59,10 @@
    "match": [
     "\\beveryone (says|thinks|tells you)\\b",
     "\\bis (actually )?wrong\\b",
-    "\\bnobody (tells|talks about)\\b"
+    "\\bnobody (tells|talks about)\\b",
+    "(همه|خیلی‌ها|اکثر مردم) (می‌گویند|میگن|فکر می‌کنند|فکر میکنن)",
+    "(اشتباه است|غلط است|درست نیست)",
+    "هیچ‌کس (نمی‌گوید|نمیگه|حرفش را نمی‌زند)"
    ]
   },
   {
@@ -66,7 +74,9 @@
    "match": [
     "\\bI('m| am) going to show you\\b",
     "\\bhere('s| is) (the|exactly)\\b",
-    "\\bon screen\\b"
+    "\\bon screen\\b",
+    "(می‌خواهم|میخوام) (به شما |بهت )?(نشان|نشون) (بدهم|بدم)",
+    "(این|اینجا) دقیقا?ً?"
    ]
   },
   {
@@ -77,7 +87,8 @@
    "fails_when": "Superlatives are cheap. Earn it by naming what it beat.",
    "match": [
     "\\bthe (best|worst|fastest|easiest|only)\\b",
-    "\\bnumber one\\b"
+    "\\bnumber one\\b",
+    "(بهترین|بدترین|سریع‌ترین|ساده‌ترین|مهم‌ترین|تنها)"
    ]
   },
   {
@@ -89,7 +100,9 @@
    "match": [
     "\\bin (the next )?\\d+ (seconds|minutes|hours)\\b",
     "\\bby the end of this video\\b",
-    "\\bunder \\d+\\b"
+    "\\bunder \\d+\\b",
+    "در \\d+ (ثانیه|دقیقه)",
+    "تا (آخر|پایان) (این )?(ویدیو|ویدئو)"
    ]
   },
   {
@@ -101,7 +114,9 @@
    "match": [
     "\\bI (tried|spent|tested|let|gave)\\b",
     "\\bfor \\d+ (days|weeks|months)\\b",
-    "\\bso you don'?t have to\\b"
+    "\\bso you don'?t have to\\b",
+    "(امتحان|تجربه) (کردم|کرده‌ام)",
+    "\\d+ (روز|شب|هفته|ماه)"
    ]
   },
   {
@@ -112,7 +127,9 @@
    "fails_when": "Must be the viewer's question, not yours. Pull it from your own comments.",
    "match": [
     "^(why|how|what|when|should|can|do|does|is)\\b",
-    "\\?\\s*$"
+    "\\?\\s*$",
+    "^(چرا|چطور|چگونه|آیا|چه|کدام|چی)",
+    "؟\\s*$"
    ]
   },
   {
@@ -124,7 +141,9 @@
    "match": [
     "\\bbefore\\b.*\\bafter\\b",
     "\\bthis was\\b.*\\bthis is\\b",
-    "\\bused to\\b"
+    "\\bused to\\b",
+    "قبل.*بعد",
+    "(قبلا|قبلاً|سابقا)"
    ]
   },
   {
@@ -162,7 +181,10 @@
     "\\bdo not\\b",
     "\\bdon'?t (upload|post|publish|start)\\b",
     "\\bbefore you\\b",
-    "\\bstop\\b"
+    "\\bstop\\b",
+    "(نکنید|نکن|نخوانید|نخوان|هرگز)",
+    "قبل از (اینکه|آنکه)",
+    "(مراقب|مواظب) باش"
    ]
   },
   {
@@ -173,7 +195,9 @@
    "fails_when": "The count must be exact and every item must be different in kind.",
    "match": [
     "^\\d+ \\w+",
-    "\\b(here are|these are) \\d+\\b"
+    "\\b(here are|these are) \\d+\\b",
+    "(این|اینها|این‌ها) \\d+",
+    "^\\d+ (آیه|ذکر|دعا|نکته|اشتباه|نشانه|قدم)"
    ]
   },
   {
@@ -198,7 +222,9 @@
    "match": [
     "\\b(nobody|almost nobody|most people) (knows?|opens?|uses?)\\b",
     "\\bhidden\\b",
-    "\\bburied\\b"
+    "\\bburied\\b",
+    "(هیچ‌کس|کمتر کسی|بیشتر مردم|اکثر مردم) (نمی‌داند|نمیدونه|نمی‌دانند|نمیدونن)",
+    "(پنهان|مخفی|ناگفته)"
    ]
   },
   {
@@ -211,7 +237,9 @@
     "\\bwithout\\b",
     "\\bnever\\b",
     "\\bin one\\b",
-    "\\bzero\\b"
+    "\\bzero\\b",
+    "(بدون|صفر)",
+    "(تضمینی|صددرصد|قطعی)"
    ]
   },
   {
@@ -224,7 +252,9 @@
     "\\bvs\\.?\\b",
     "\\bversus\\b",
     "\\bwhich (one )?(is|wins)\\b",
-    "\\bsame .* (three|two) ways\\b"
+    "\\bsame .* (three|two) ways\\b",
+    "(فرق|تفاوت) .*(با|و)",
+    "(کدام|کدوم) (بهتر|درست)"
    ]
   },
   {
@@ -236,7 +266,8 @@
    "match": [
     "\\bevery (video|post) .* starts\\b",
     "\\bit all (starts|started)\\b",
-    "\\bthe (real )?reason\\b"
+    "\\bthe (real )?reason\\b",
+    "(دلیل|علت|ریشه) (اصلی|واقعی)"
    ]
   },
   {
@@ -249,7 +280,8 @@
     "\\b(this|next) (week|month|year)\\b",
     "\\bis changing\\b",
     "\\bno longer\\b",
-    "\\bas of\\b"
+    "\\bas of\\b",
+    "(از|تا) (امشب|امروز|این هفته)"
    ]
   },
   {
@@ -261,8 +293,11 @@
    "match": [
     "^if you\\b",
     "\\bfor (anyone|everyone|people) who\\b",
-    "\\byou specifically\\b"
+    "\\byou specifically\\b",
+    "^اگر",
+    "برای (کسانی|کسی|هر کسی) که"
    ]
   }
- ]
+ ],
+ "note_fa": "الگوهای فارسی به فهرست match هر فرمول اضافه شده‌اند تا hookscore.py و swipe.py هوک‌ها و عنوان‌های فارسی را هم دسته‌بندی کنند."
 }

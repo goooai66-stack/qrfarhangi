@@ -21,7 +21,11 @@ import json, os, re, statistics, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 FORMULAS = json.load(open(os.path.join(HERE, "..", "yt-script", "hooks.json")))["hooks"]
 
+# Persian and Arabic digits to ASCII, Arabic yeh/kaf to Persian, so Persian titles match too
+NORM = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩يك", "01234567890123456789یک")
+
 def classify(title):
+    title = title.translate(NORM)
     scored = []
     for f in FORMULAS:
         n = sum(1 for p in f["match"] if re.search(p, title, re.I))

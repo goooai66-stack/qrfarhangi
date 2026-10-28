@@ -20,15 +20,37 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FORMULAS = json.load(open(os.path.join(HERE, "hooks.json")))["hooks"]
 
 FILLER = {"basically","actually","literally","just","really","very","so","kind","sort","like",
-          "guys","hey","welcome","today","video","subscribe","channel"}
+          "guys","hey","welcome","today","video","subscribe","channel",
+          # Persian
+          "سلام","دوستان","عزیزان","خوش","آمدید","امروز","ویدیو","ویدئو","کانال","سابسکرایب",
+          "لایک","واقعا","واقعاً","خیلی","یعنی","دیگه","حالا","بله","خب"}
 VAGUE = {"amazing","incredible","insane","crazy","huge","massive","game","changer","secret",
-         "powerful","ultimate","best","revolutionary","mind","blowing","unbelievable"}
+         "powerful","ultimate","best","revolutionary","mind","blowing","unbelievable",
+         # Persian
+         "فوق‌العاده","باورنکردنی","معجزه","معجزه‌آسا","شگفت‌انگیز","عجیب","قوی","قدرتمند",
+         "بهترین","تضمینی","قطعی","صددرصد","راز","اسرار","خارق‌العاده","بی‌نظیر"}
 CONCRETE = re.compile(r"\b(\d[\d,.]*\s?(%|k|m|x|s|m|h)?|\$\d|\d+\s?(second|minute|hour|day|week|month|year)s?)\b", re.I)
-YOU = re.compile(r"\b(you|your|you're|youre|yourself)\b", re.I)
-STAKE = re.compile(r"\b(lose|lost|wasting|waste|quit|fail|broke|cost|risk|before|stop|never|die|dying|dead)\b", re.I)
-CURIOSITY = re.compile(r"\b(why|how|what|which|until|before|but|nobody|almost|except|reason|actually)\b", re.I)
+# Persian has no capitals, so named things (surahs, verses, books of hadith) are listed instead.
+NAMED = re.compile(r"(سوره|آیه|آیات|آیة|آیت‌الکرسی|آیةالکرسی|فاتحه|بقره|فلق|ناس|اخلاص|معوذتین|"
+                   r"اعراف|یونس|طه|کافرون|پیامبر|بخاری|مسلم|ابوداود|ترمذی)")
+NOT_W = r"(?<![\w\u200c])"; END_W = r"(?![\w\u200c])"
+YOU = re.compile(r"\b(you|your|you're|youre|yourself)\b"
+                 + "|" + NOT_W + r"(تو|شما|خودت|خودتان|خودتون|برات|برایت|برایتان|بهت|بهتان|بخوان|بخوانید|"
+                 r"بدان|بدانید|ببین|ببینید|گوش کن|گوش کنید)" + END_W
+                 + r"|(?<![\w\u200c])(نمی|می)[\u200c ]\w+(ی|ید|ین)" + END_W, re.I)
+STAKE = re.compile(r"\b(lose|lost|wasting|waste|quit|fail|broke|cost|risk|before|stop|never|die|dying|dead)\b"
+                   + "|" + NOT_W + r"(اشتباه|خطر|ضرر|از دست|هرگز|هیچ‌وقت|قبل از|نکن|نکنید|باطل|بی‌اثر|"
+                   r"آسیب|عذاب|رنج)", re.I)
+CURIOSITY = re.compile(r"\b(why|how|what|which|until|before|but|nobody|almost|except|reason|actually)\b"
+                       + "|" + NOT_W + r"(چرا|چطور|چگونه|چه|کدام|چی|تا|اما|ولی|هیچ‌کس|تقریبا|تقریباً|"
+                       r"جز|دلیل|علت)" + END_W, re.I)
+CLOSED = re.compile(r"\b(because|so that|which means)\b|" + NOT_W + r"(چون|زیرا|به همین دلیل|یعنی اینکه)" + END_W, re.I)
 
-def words(t): return re.findall(r"[a-z0-9'%$.]+", t.lower())
+# Persian and Arabic digits to ASCII, Arabic yeh/kaf to Persian, so one set of patterns covers all three
+NORM = str.maketrans("۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩يك", "01234567890123456789یک")
+def norm(t): return t.translate(NORM)
+
+def words(t): return re.findall(r"[\w\u200c'%$.]+", t.lower())
 
 def specificity(t):
     w = words(t)
@@ -38,7 +60,7 @@ def specificity(t):
     filler = sum(1 for x in w if x in FILLER)
     s = 34 + nums * 22 - vague * 16 - filler * 5
     # proper nouns that are not sentence-initial read as named things
-    s += min(18, 6 * sum(1 for x in t.split()[1:] if x[:1].isupper()))
+    s += min(18, 6 * sum(1 for x in t.split()[1:] if x[:1].isupper()) + 6 * len(NAMED.findall(t)))
     return max(0, min(100, s))
 
 def address(t):
@@ -52,9 +74,9 @@ def stakes(t):
 
 def curiosity(t):
     n = len(CURIOSITY.findall(t))
-    q = 18 if t.strip().endswith("?") else 0
+    q = 18 if t.strip().endswith(("?", "؟")) else 0
     # a hook that resolves itself has no gap left
-    closed = -18 if re.search(r"\b(because|so that|which means)\b", t, re.I) else 0
+    closed = -18 if CLOSED.search(t) else 0
     return max(0, min(100, 24 + n * 17 + q + closed))
 
 def brevity(t):
@@ -76,6 +98,7 @@ def classify(t):
     return (best["name"] if best else "Unclassified"), hits
 
 def score(t):
+    t = norm(t)
     parts = {n: fn(t) for n, fn in PROPS}
     vals = list(parts.values())
     verdict = round(0.6 * (sum(vals) / len(vals)) + 0.4 * min(vals))
@@ -92,7 +115,8 @@ def report(t, parts, verdict, name, hits):
     print(f"    {'VERDICT':<12} {verdict:3d}  {band(verdict)}")
     print(f"    formula      {name}" + (f"  ({hits} pattern{'s' if hits != 1 else ''} matched)" if hits else "  (no formula matched - that is usually a summary, not a hook)"))
     low = min(parts, key=parts.get)
-    print(f"    weakest      {low} - {FIX[low]}")
+    fix = FIX_FA if re.search(r"[\u0600-\u06ff]", t) else FIX
+    print(f"    weakest      {low} - {fix[low]}")
 
 FIX = {
  "SPECIFICITY": "swap one adjective for a number, a name or a date",
@@ -100,6 +124,14 @@ FIX = {
  "STAKES": "name what it costs them to keep doing it the current way",
  "CURIOSITY": "cut the half of the sentence that answers itself",
  "BREVITY": "9 to 24 words. Read it out loud and stop where you run out of breath",
+}
+
+FIX_FA = {
+ "SPECIFICITY": "یک صفت کلی را با عدد، نام سوره/آیه یا موقعیت مشخص عوض کن",
+ "ADDRESS": "در شش کلمه‌ی اول مخاطب را مستقیم صدا بزن (تو / شما / اگر ... می‌بینی)",
+ "STAKES": "بگو ادامه‌ی همین روش فعلی چه هزینه‌ای برایش دارد - بدون ترساندن و بدون وعده‌ی شفا",
+ "CURIOSITY": "نیمه‌ای از جمله را که خودش جواب خودش را می‌دهد حذف کن",
+ "BREVITY": "۹ تا ۲۴ کلمه. بلند بخوانش و هرجا نفست تمام شد، همان‌جا تمامش کن",
 }
 
 def main():
