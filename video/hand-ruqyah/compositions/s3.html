@@ -1,0 +1,99 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; color: #f4ecd8; font-family: "Cairo", sans-serif; }
+    #root .stage { position: absolute; inset: 0; }
+    #root .line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap; }
+    #root .abs { position: absolute; }
+    #root .w { display: inline-block; }
+    #root .k { color: #d4a94f; }
+    #root .gold { color: #d4a94f; }
+    #root .amiri { font-family: "Amiri", serif; font-weight: 700; }
+    #root .kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+    #root .chip { display: inline-block; border: 3px solid #d4a94f; border-radius: 999px; padding: 4px 34px 10px;
+      font-weight: 800; font-size: 46px; color: #f4ecd8; background: rgba(5, 18, 26, .6); white-space: nowrap; }
+    #root svg { overflow: visible; display: block; }
+    #root .tk { width: 42px; height: 42px; border-radius: 50%; border: 5px solid #d4a94f; background: transparent; display: inline-block; }
+  </style>
+  <div id="root" data-composition-id="s3" data-width="1080" data-height="1920">
+    <div id="s3-stage" class="stage">
+
+      <svg class="abs" style="left: 0; top: 0" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+        <circle class="s3-rp" cx="540" cy="880" r="100" fill="none" stroke="#e07a5f" stroke-width="6" stroke-opacity="0"/>
+        <circle class="s3-rp" cx="540" cy="880" r="100" fill="none" stroke="#e07a5f" stroke-width="6" stroke-opacity="0"/>
+        <circle class="s3-rp" cx="540" cy="880" r="100" fill="none" stroke="#d4a94f" stroke-width="6" stroke-opacity="0"/>
+        <circle class="s3-rp" cx="540" cy="880" r="100" fill="none" stroke="#d4a94f" stroke-width="6" stroke-opacity="0"/>
+      </svg>
+      <div id="s3-orbP" class="abs" style="left: 340px; top: 680px; width: 400px; height: 400px; border-radius: 50%;
+        background: radial-gradient(circle, #ffd0b0 0%, #f0956f 22%, rgba(224,122,95,.55) 48%, rgba(224,122,95,0) 72%)"></div>
+      <div id="s3-orbG" class="abs" style="left: 340px; top: 680px; width: 400px; height: 400px; border-radius: 50%;
+        background: radial-gradient(circle, #fff1c4 0%, #f0cf7a 24%, rgba(212,169,79,.55) 50%, rgba(212,169,79,0) 72%)"></div>
+      <div id="s3-chip" class="line" style="top: 515px"><span class="chip">موضع الألم</span></div>
+      <svg id="s3-hand" class="abs" style="left: 322px; top: 627px" width="384" height="512" viewBox="0 0 240 320" aria-hidden="true"><g fill="rgba(5,18,26,.45)" stroke="#f4ecd8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M40,250 C30,190 34,150 52,110 L52,40 Q52,24 66,24 Q80,24 80,40 L80,110 L82,20 Q82,4 96,4 Q110,4 110,20 L110,108 L114,26 Q114,10 128,10 Q142,10 142,26 L142,112 L146,50 Q146,36 160,36 Q174,36 174,52 L172,170 C190,150 204,140 220,146 Q232,152 222,170 C200,206 186,240 176,262 C160,296 120,312 84,306 C60,302 46,284 40,250 Z"/></g></svg>
+      <div id="s3-bsm" class="line amiri gold" style="top: 215px; font-size: 168px; text-shadow: 0 0 50px rgba(212,169,79,.45)"><span class="w" data-t="18.28">بسم</span> <span class="w" data-t="18.64">الله</span></div>
+      <div id="s3-ticks" class="line" style="top: 440px; display: flex; justify-content: center; gap: 44px">
+        <span class="tk" id="s3-k1"></span><span class="tk" id="s3-k2"></span><span class="tk" id="s3-k3"></span>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const S = 14.9; // scene start in film seconds; every time below is written in film seconds
+      const at = (t) => t - S;
+
+      function lit(sel, dur) {
+        gsap.utils.toArray(sel + " .w").forEach((el) => {
+          tl.fromTo(el, { opacity: 0, filter: "blur(8px)" },
+            { opacity: 1, filter: "blur(0px)", duration: dur || 0.16, ease: "power2.out" }, at(parseFloat(el.getAttribute("data-t"))));
+        });
+      }
+      function hit(sel) {
+        gsap.utils.toArray(sel).forEach((el) => {
+          const t = at(parseFloat(el.getAttribute("data-t")));
+          tl.fromTo(el, { color: "#f4ecd8", scale: 1.0 }, { color: "#d4a94f", scale: 1.14, duration: 0.14, ease: "power2.out" }, t);
+          tl.to(el, { scale: 1, duration: 0.4, ease: "expo.out" }, t + 0.14);
+        });
+      }
+      function blurOut(sel, t, d) { tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d || 0.2, ease: "power3.in" }, t); }
+      function pop(sel, t) { tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, t); }
+      function draw(sel, t, d, e) {
+        tl.fromTo(sel, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e || "power2.inOut" }, t);
+      }
+      function whipIn(stage) {
+        tl.fromTo(stage, { x: -620, filter: "blur(16px)", opacity: 0.4 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.3, ease: "power3.out" }, 0);
+      }
+      function ripple(sel, t, r0, r1, d) {
+        tl.fromTo(sel, { attr: { r: r0, "stroke-opacity": 0.75 } }, { attr: { r: r1, "stroke-opacity": 0 }, duration: d || 1.1, ease: "power2.out", immediateRender: false }, t);
+      }
+
+      tl.fromTo("#s3-stage", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, at(15.1));
+      // the pain is still there; the hand comes up from below and lands on it
+      [15.3, 16.05].forEach((b, i) => { ripple(gsap.utils.toArray(".s3-rp")[i], at(b), 100, 380, 1.1);
+        tl.fromTo("#s3-orbP", { scale: 1 }, { scale: 1.14, duration: 0.2, ease: "power2.out", yoyo: true, repeat: 1 }, at(b)); });
+      tl.fromTo("#s3-hand", { x: 420, y: 640, rotation: 22, opacity: 0 }, { x: 0, y: 0, rotation: 0, opacity: 1, duration: 1.1, ease: "expo.out" }, at(15.35));
+      pop("#s3-chip", at(16.03));
+      // landing: the orb is pressed under the palm
+      tl.fromTo("#s3-orbP", { scale: 1 }, { scale: 0.82, duration: 0.18, ease: "power3.out" }, at(16.42));
+      tl.fromTo("#s3-hand", { scale: 1 }, { scale: 0.96, duration: 0.18, ease: "power3.out", yoyo: true, repeat: 1 }, at(16.42));
+      ripple(gsap.utils.toArray(".s3-rp")[1], at(16.45), 100, 340, 0.9);
+      // ثلاثًا: three rings wait to be filled
+      [17.3, 17.48, 17.66].forEach((b, i) => pop("#s3-k" + (i + 1), at(b)));
+      // بسم الله: the word, the ticks fill, the amber turns to gold
+      lit("#s3-bsm", 0.2);
+      [18.3, 18.58, 18.86].forEach((b, i) => { tl.to("#s3-k" + (i + 1), { backgroundColor: "#d4a94f", scale: 1.25, duration: 0.18, ease: "back.out(1.6)" }, at(b));
+        tl.to("#s3-k" + (i + 1), { scale: 1, duration: 0.25, ease: "power2.out" }, at(b + 0.18)); });
+      tl.to("#s3-orbP", { opacity: 0, duration: 0.6, ease: "power2.inOut" }, at(18.3));
+      tl.fromTo("#s3-orbG", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1.1, duration: 0.6, ease: "power2.out" }, at(18.3));
+      ripple(gsap.utils.toArray(".s3-rp")[2], at(18.3), 100, 420, 1.0);
+      ripple(gsap.utils.toArray(".s3-rp")[3], at(18.65), 100, 420, 1.0);
+      // everything but the orb leaves; the orb grows into the next scene
+      blurOut(["#s3-hand", "#s3-bsm", "#s3-ticks", "#s3-chip"], at(19.12), 0.25);
+      tl.to("#s3-orbG", { scale: 1.6, duration: 0.5, ease: "power2.in" }, at(19.15));
+      window.__timelines["s3"] = tl;
+    })();
+  </script>
+</template>

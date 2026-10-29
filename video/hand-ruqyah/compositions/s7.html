@@ -1,0 +1,107 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; color: #f4ecd8; font-family: "Cairo", sans-serif; }
+    #root .stage { position: absolute; inset: 0; }
+    #root .line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap; }
+    #root .abs { position: absolute; }
+    #root .w { display: inline-block; }
+    #root .k { color: #d4a94f; }
+    #root .gold { color: #d4a94f; }
+    #root .amiri { font-family: "Amiri", serif; font-weight: 700; }
+    #root .kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+    #root .chip { display: inline-block; border: 3px solid #d4a94f; border-radius: 999px; padding: 4px 34px 10px;
+      font-weight: 800; font-size: 46px; color: #f4ecd8; background: rgba(5, 18, 26, .6); white-space: nowrap; }
+    #root svg { overflow: visible; display: block; }
+  </style>
+  <div id="root" data-composition-id="s7" data-width="1080" data-height="1920">
+    <div id="s7-stage" class="stage">
+      <div id="s7-lamp" class="abs" style="left: 390px; top: 168px">
+        <svg width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+          <defs><radialGradient id="s7-glowg"><stop offset="0" stop-color="#ffd98a" stop-opacity=".85"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient></defs>
+          <circle id="s7-glow" cx="150" cy="300" r="150" fill="url(#s7-glowg)"/>
+          <line x1="150" y1="0" x2="150" y2="170" stroke="#d4a94f" stroke-width="4"/>
+          <path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#d4a94f"/>
+          <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="none" stroke="#d4a94f" stroke-width="7"/>
+          <path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#d4a94f"/>
+          <line x1="150" y1="400" x2="150" y2="440" stroke="#d4a94f" stroke-width="4"/>
+        </svg>
+      </div>
+      <svg id="s7-flame" class="abs" style="left: 524px; top: 404px" width="32" height="76" viewBox="134 236 32 76" aria-hidden="true">
+        <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#ffe3a3"/>
+      </svg>
+      <div id="s7-flare" class="abs" style="inset: 0; background: radial-gradient(circle at 50% 50%, #fff6d6 0%, #f6d98a 50%, #d4a94f 100%)"></div>
+      <div id="s7-start" class="line" style="top: 720px">
+        <div class="amiri gold" style="font-size: 140px; line-height: 1.2"><span class="w" data-t="45.72">ابدأ</span> <span class="w" data-t="46.11">من</span> <span class="w" data-t="46.33">اليوم</span></div>
+        <div style="font-size: 150px; font-weight: 900; line-height: 1.2"><span class="w" data-t="46.81">بنفسك</span></div>
+      </div>
+      <svg id="s7-share" class="abs" style="left: 380px; top: 690px" width="320" height="288" viewBox="0 0 240 216" aria-hidden="true">
+        <path id="s7-box" d="M30,100 L30,196 L210,196 L210,100" fill="none" stroke="#f4ecd8" stroke-width="10" stroke-linecap="butt" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <path id="s7-up" d="M120,150 L120,18" fill="none" stroke="#d4a94f" stroke-width="12" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <path id="s7-uph" d="M74,66 L120,16 L166,66" fill="none" stroke="#d4a94f" stroke-width="12" stroke-linecap="butt" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <circle class="s7-rp" cx="120" cy="16" r="20" fill="none" stroke="#d4a94f" stroke-width="5" stroke-opacity="0"/>
+        <circle class="s7-rp" cx="120" cy="16" r="20" fill="none" stroke="#d4a94f" stroke-width="5" stroke-opacity="0"/>
+        <circle class="s7-rp" cx="120" cy="16" r="20" fill="none" stroke="#d4a94f" stroke-width="5" stroke-opacity="0"/>
+      </svg>
+      <div id="s7-shlab" class="line amiri gold" style="top: 1000px; font-size: 120px">شارك</div>
+      <div id="s7-name" class="line amiri gold" style="top: 740px; font-size: 190px; line-height: 1.2; text-shadow: 0 0 60px rgba(212,169,79,.4)">في معيّة الله</div>
+      <div id="s7-tag" class="line amiri" style="top: 990px; font-size: 62px; font-weight: 400; color: #b8c8c1">وأنا معه إذا ذكرني</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const S = 45.25; // scene start in film seconds; every time below is written in film seconds
+      const at = (t) => t - S;
+
+      function lit(sel, dur) {
+        gsap.utils.toArray(sel + " .w").forEach((el) => {
+          tl.fromTo(el, { opacity: 0, filter: "blur(8px)" },
+            { opacity: 1, filter: "blur(0px)", duration: dur || 0.16, ease: "power2.out" }, at(parseFloat(el.getAttribute("data-t"))));
+        });
+      }
+      function hit(sel) {
+        gsap.utils.toArray(sel).forEach((el) => {
+          const t = at(parseFloat(el.getAttribute("data-t")));
+          tl.fromTo(el, { color: "#f4ecd8", scale: 1.0 }, { color: "#d4a94f", scale: 1.14, duration: 0.14, ease: "power2.out" }, t);
+          tl.to(el, { scale: 1, duration: 0.4, ease: "expo.out" }, t + 0.14);
+        });
+      }
+      function blurOut(sel, t, d) { tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d || 0.2, ease: "power3.in" }, t); }
+      function pop(sel, t) { tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, t); }
+      function draw(sel, t, d, e) {
+        tl.fromTo(sel, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e || "power2.inOut" }, t);
+      }
+      function whipIn(stage) {
+        tl.fromTo(stage, { x: -620, filter: "blur(16px)", opacity: 0.4 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.3, ease: "power3.out" }, 0);
+      }
+      function ripple(sel, t, r0, r1, d) {
+        tl.fromTo(sel, { attr: { r: r0, "stroke-opacity": 0.75 } }, { attr: { r: r1, "stroke-opacity": 0 }, duration: d || 1.1, ease: "power2.out", immediateRender: false }, t);
+      }
+
+      // the flare from the sujood dissolves into the lamp's room
+      tl.fromTo("#s7-flare", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.in" }, at(45.25));
+      tl.to("#s7-flare", { opacity: 0, duration: 0.7, ease: "power2.out" }, at(45.58));
+      tl.fromTo("#s7-lamp", { y: -120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "expo.out" }, at(45.6));
+      tl.fromTo("#s7-glow", { opacity: 0.2 }, { opacity: 1, duration: 0.9, ease: "power2.out" }, at(45.7));
+      // ابدأ: the flame lights
+      tl.fromTo("#s7-flame", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.8)", transformOrigin: "50% 100%" }, at(45.72));
+      lit("#s7-start", 0.18);
+      blurOut("#s7-start", at(47.45), 0.2);
+      // شارك: the arrow leaves the tray, rings go out
+      draw("#s7-box", at(47.6), 0.5, "power2.out");
+      draw("#s7-up", at(47.85), 0.4, "power2.out");
+      draw("#s7-uph", at(48.2), 0.18, "power2.out");
+      gsap.utils.toArray(".s7-rp").forEach((el, i) => ripple(el, at(48.35 + i * 0.22), 20, 90 + i * 14, 0.9));
+      tl.fromTo("#s7-shlab", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, at(48.0));
+      // the name, held
+      blurOut(["#s7-share", "#s7-shlab"], at(49.95), 0.2);
+      tl.fromTo("#s7-name", { opacity: 0, filter: "blur(12px)", scale: 1.06 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.7, ease: "expo.out" }, at(50.12));
+      tl.fromTo("#s7-tag", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out" }, at(50.45));
+      window.__timelines["s7"] = tl;
+    })();
+  </script>
+</template>

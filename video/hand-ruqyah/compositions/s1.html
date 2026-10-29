@@ -1,0 +1,112 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; color: #f4ecd8; font-family: "Cairo", sans-serif; }
+    #root .stage { position: absolute; inset: 0; }
+    #root .line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap; }
+    #root .abs { position: absolute; }
+    #root .w { display: inline-block; }
+    #root .k { color: #d4a94f; }
+    #root .gold { color: #d4a94f; }
+    #root .amiri { font-family: "Amiri", serif; font-weight: 700; }
+    #root .kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+    #root .chip { display: inline-block; border: 3px solid #d4a94f; border-radius: 999px; padding: 4px 34px 10px;
+      font-weight: 800; font-size: 46px; color: #f4ecd8; background: rgba(5, 18, 26, .6); white-space: nowrap; }
+    #root svg { overflow: visible; display: block; }
+  </style>
+  <div id="root" data-composition-id="s1" data-width="1080" data-height="1920">
+    <div id="s1-stage" class="stage">
+
+      <svg class="abs" style="left: 0; top: 0" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+        <circle class="s1-rp" cx="540" cy="900" r="90" fill="none" stroke="#e07a5f" stroke-width="6" stroke-opacity="0"/>
+        <circle class="s1-rp" cx="540" cy="900" r="90" fill="none" stroke="#e07a5f" stroke-width="6" stroke-opacity="0"/>
+        <circle class="s1-rp" cx="540" cy="900" r="90" fill="none" stroke="#e07a5f" stroke-width="6" stroke-opacity="0"/>
+        <circle class="s1-rp" cx="540" cy="900" r="90" fill="none" stroke="#e07a5f" stroke-width="6" stroke-opacity="0"/>
+        <circle class="s1-rp" cx="540" cy="900" r="90" fill="none" stroke="#e07a5f" stroke-width="6" stroke-opacity="0"/>
+        <circle class="s1-rp" cx="540" cy="900" r="90" fill="none" stroke="#e07a5f" stroke-width="6" stroke-opacity="0"/>
+      </svg>
+      <div id="s1-orb" class="abs" style="left: 350px; top: 710px; width: 380px; height: 380px; border-radius: 50%;
+        background: radial-gradient(circle, #ffd0b0 0%, #f0956f 22%, rgba(224,122,95,.55) 48%, rgba(224,122,95,0) 72%)"></div>
+      <svg id="s1-eye" class="abs" style="left: 220px; top: 720px" width="640" height="360" viewBox="-320 -180 640 360" aria-hidden="true">
+        <path id="s1-almond" d="M-290,0 C-170,-150 170,-150 290,0 C170,150 -170,150 -290,0 Z" fill="none" stroke="#d4a94f" stroke-width="9"
+          stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <circle id="s1-iris" r="84" fill="none" stroke="#d4a94f" stroke-width="7" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-90)"/>
+      </svg>
+      <div id="s1-hook" class="line amiri" style="top: 250px; font-size: 130px; line-height: 1.25; font-family: Cairo, sans-serif; font-weight: 900">
+        <div><span class="w" data-t="0.0">تشعر</span> <span class="w k" data-t="0.49">بألم</span></div>
+        <div style="font-size: 80px; font-weight: 800; line-height: 1.5"><span class="w" data-t="0.97">أو</span> <span class="w" data-t="1.25">تظن</span> <span class="w" data-t="1.63">أنك</span> <span class="w" data-t="2.01">أُصبتَ</span> <span class="w k" data-t="2.5">بعين؟</span></div>
+      </div>
+      <div id="s1-step" class="line amiri gold" style="top: 300px; font-size: 128px"><span class="w" data-t="3.45">أول</span> <span class="w" data-t="3.84">خطوة</span></div>
+      <svg class="abs" style="left: 0; top: 0" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+        <path id="s1-shaft" d="M395,900 L262,900" fill="none" stroke="#d4a94f" stroke-width="12" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <path id="s1-head" d="M262,900 L296,874 M262,900 L296,926" fill="none" stroke="#d4a94f" stroke-width="12" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      </svg>
+      <div id="s1-door" class="abs" style="left: 70px; top: 770px; width: 160px; height: 260px; border: 8px solid #f4ecd8; border-radius: 14px 14px 0 0; background: rgba(5,18,26,.6)">
+        <div style="position: absolute; left: 24px; top: 118px; width: 20px; height: 20px; border-radius: 50%; background: #d4a94f"></div>
+      </div>
+      <svg class="abs" style="left: 0; top: 0" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+        <path id="s1-x1" d="M60,760 L240,1040" fill="none" stroke="#e07a5f" stroke-width="24" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <path id="s1-x2" d="M240,760 L60,1040" fill="none" stroke="#e07a5f" stroke-width="24" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      </svg>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const S = 0; // scene start in film seconds; every time below is written in film seconds
+      const at = (t) => t - S;
+
+      function lit(sel, dur) {
+        gsap.utils.toArray(sel + " .w").forEach((el) => {
+          tl.fromTo(el, { opacity: 0, filter: "blur(8px)" },
+            { opacity: 1, filter: "blur(0px)", duration: dur || 0.16, ease: "power2.out" }, at(parseFloat(el.getAttribute("data-t"))));
+        });
+      }
+      function hit(sel) {
+        gsap.utils.toArray(sel).forEach((el) => {
+          const t = at(parseFloat(el.getAttribute("data-t")));
+          tl.fromTo(el, { color: "#f4ecd8", scale: 1.0 }, { color: "#d4a94f", scale: 1.14, duration: 0.14, ease: "power2.out" }, t);
+          tl.to(el, { scale: 1, duration: 0.4, ease: "expo.out" }, t + 0.14);
+        });
+      }
+      function blurOut(sel, t, d) { tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d || 0.2, ease: "power3.in" }, t); }
+      function pop(sel, t) { tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, t); }
+      function draw(sel, t, d, e) {
+        tl.fromTo(sel, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e || "power2.inOut" }, t);
+      }
+      function whipIn(stage) {
+        tl.fromTo(stage, { x: -620, filter: "blur(16px)", opacity: 0.4 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.3, ease: "power3.out" }, 0);
+      }
+      function ripple(sel, t, r0, r1, d) {
+        tl.fromTo(sel, { attr: { r: r0, "stroke-opacity": 0.75 } }, { attr: { r: r1, "stroke-opacity": 0 }, duration: d || 1.1, ease: "power2.out", immediateRender: false }, t);
+      }
+
+      // the pain orb beats like a pulse; each beat sends a ring out
+      const beats = [0.25, 1.15, 2.05, 2.95, 3.9, 4.8];
+      gsap.utils.toArray(".s1-rp").forEach((el, i) => ripple(el, beats[i] - 0.02, 90, i < 4 ? 420 : 300, 1.2));
+      beats.forEach((b, i) => tl.fromTo("#s1-orb", { scale: 1 }, { scale: i < 4 ? 1.16 : 1.08, duration: 0.22, ease: "power2.out" }, b)
+        .to("#s1-orb", { scale: 1, duration: 0.6, ease: "power2.inOut" }, b + 0.22));
+      hit("#s1-hook .k");
+      // the eye closes around the pain: بعين
+      draw("#s1-almond", at(1.43), 0.7, "power2.inOut");
+      draw("#s1-iris", at(1.73), 0.5, "power2.inOut");
+      // the question has been asked: it lifts away
+      tl.to("#s1-hook", { y: -70, opacity: 0, filter: "blur(8px)", duration: 0.3, ease: "power3.in" }, at(3.2));
+      tl.to("#s1-eye", { opacity: 0, duration: 0.3 }, at(3.3));
+      lit("#s1-step", 0.2);
+      // 'ليست أن تذهب إلى أحد': the way out of the pain leads to a door, and the door is crossed out
+      draw("#s1-shaft", at(4.82), 0.4, "power2.out");
+      draw("#s1-head", at(5.18), 0.15, "power2.out");
+      tl.fromTo("#s1-door", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, at(5.60));
+      draw("#s1-x1", at(5.98), 0.16, "power3.out");
+      draw("#s1-x2", at(6.10), 0.16, "power3.out");
+      tl.fromTo("#s1-door", { rotation: 0 }, { rotation: -2, duration: 0.2, ease: "power2.out", yoyo: true, repeat: 1 }, at(5.98));
+      // whip out to the right; the card arrives from the left
+      tl.to("#s1-stage", { x: 620, filter: "blur(16px)", opacity: 0, duration: 0.28, ease: "power3.in" }, at(6.47));
+      window.__timelines["s1"] = tl;
+    })();
+  </script>
+</template>

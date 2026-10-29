@@ -1,0 +1,106 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; color: #f4ecd8; font-family: "Cairo", sans-serif; }
+    #root .stage { position: absolute; inset: 0; }
+    #root .line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap; }
+    #root .abs { position: absolute; }
+    #root .w { display: inline-block; }
+    #root .k { color: #d4a94f; }
+    #root .gold { color: #d4a94f; }
+    #root .amiri { font-family: "Amiri", serif; font-weight: 700; }
+    #root .kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+    #root .chip { display: inline-block; border: 3px solid #d4a94f; border-radius: 999px; padding: 4px 34px 10px;
+      font-weight: 800; font-size: 46px; color: #f4ecd8; background: rgba(5, 18, 26, .6); white-space: nowrap; }
+    #root svg { overflow: visible; display: block; }
+  </style>
+  <div id="root" data-composition-id="s5" data-width="1080" data-height="1920">
+    <div id="s5-stage" class="stage">
+
+      <div id="s5-why" class="line amiri gold" style="top: 330px; font-size: 280px; line-height: 1.1">لماذا؟</div>
+      <div id="s5-why2" class="line" style="top: 720px; font-size: 92px; font-weight: 900"><span class="w" data-t="26.4">ترقي</span> <span class="w" data-t="26.83">نفسك</span> <span class="w k" data-t="27.25">بنفسك</span></div>
+      <div id="s5-pain" class="abs" style="left: 330px; top: 460px; width: 420px; height: 420px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(240,149,111,.85) 0%, rgba(224,122,95,.35) 45%, rgba(224,122,95,0) 70%); opacity: 0"></div>
+      <div id="s5-light" class="abs" style="left: 220px; top: 350px; width: 640px; height: 640px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(246,217,138,.95) 0%, rgba(246,217,138,.4) 38%, rgba(246,217,138,0) 70%); opacity: 0"></div>
+      <div id="s5-rays" class="abs" style="left: 220px; top: 350px; width: 640px; height: 640px; border-radius: 50%;
+        background: repeating-conic-gradient(from 0deg, rgba(246,217,138,.75) 0deg 3deg, rgba(246,217,138,0) 3deg 30deg);
+        -webkit-mask-image: radial-gradient(circle, transparent 0 22%, #000 30%, transparent 68%);
+        mask-image: radial-gradient(circle, transparent 0 22%, #000 30%, transparent 68%); opacity: 0"></div>
+      <svg id="s5-mih" class="abs" style="left: 260px; top: 230px" width="560" height="660" viewBox="0 0 560 660" aria-hidden="true">
+        <path id="s5-arch" d="M40,640 L40,280 Q40,40 280,40 Q520,40 520,280 L520,640" fill="none" stroke="#d4a94f" stroke-width="9" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+        <line id="s5-floor" x1="0" y1="640" x2="560" y2="640" stroke="#f4ecd8" stroke-opacity=".35" stroke-width="4" opacity="0"/>
+        <circle id="s5-vessel" cx="280" cy="440" r="100" fill="rgba(5,18,26,.5)" stroke="#f4ecd8" stroke-width="9" opacity="0"/>
+        <path class="crk" d="M276,338 L256,384 L296,418 L262,466 L294,504 L278,544" fill="none" stroke="#f6d98a" stroke-width="9" stroke-linecap="butt" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path class="crk" d="M296,418 L346,402 L380,428" fill="none" stroke="#f6d98a" stroke-width="9" stroke-linecap="butt" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path class="crk" d="M262,466 L214,452 L184,484" fill="none" stroke="#f6d98a" stroke-width="9" stroke-linecap="butt" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path class="crk" d="M256,384 L212,368 L190,332" fill="none" stroke="#f6d98a" stroke-width="9" stroke-linecap="butt" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path class="crk" d="M294,504 L338,520 L364,556" fill="none" stroke="#f6d98a" stroke-width="9" stroke-linecap="butt" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      </svg>
+      <div id="s5-need" class="line" style="top: 920px; font-size: 62px; font-weight: 800"><span class="w" data-t="32.09">تكون</span> <span class="w" data-t="32.48">في</span> <span class="w k" data-t="32.69">أصدق</span> <span class="w" data-t="33.08">حالات</span> <span class="w k" data-t="33.55">الافتقار</span> <span class="w" data-t="34.27">إليه</span></div>
+      <div id="s5-track" class="abs" style="left: 150px; top: 1030px; width: 780px; height: 30px; border-radius: 15px; background: rgba(244,236,216,.14); opacity: 0"></div>
+      <div id="s5-fill" class="abs" style="left: 150px; top: 1030px; width: 780px; height: 30px; border-radius: 15px; background: linear-gradient(270deg, #f6d98a, #d4a94f); transform-origin: 100% 50%; opacity: 0"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const S = 25.7; // scene start in film seconds; every time below is written in film seconds
+      const at = (t) => t - S;
+
+      function lit(sel, dur) {
+        gsap.utils.toArray(sel + " .w").forEach((el) => {
+          tl.fromTo(el, { opacity: 0, filter: "blur(8px)" },
+            { opacity: 1, filter: "blur(0px)", duration: dur || 0.16, ease: "power2.out" }, at(parseFloat(el.getAttribute("data-t"))));
+        });
+      }
+      function hit(sel) {
+        gsap.utils.toArray(sel).forEach((el) => {
+          const t = at(parseFloat(el.getAttribute("data-t")));
+          tl.fromTo(el, { color: "#f4ecd8", scale: 1.0 }, { color: "#d4a94f", scale: 1.14, duration: 0.14, ease: "power2.out" }, t);
+          tl.to(el, { scale: 1, duration: 0.4, ease: "expo.out" }, t + 0.14);
+        });
+      }
+      function blurOut(sel, t, d) { tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d || 0.2, ease: "power3.in" }, t); }
+      function pop(sel, t) { tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, t); }
+      function draw(sel, t, d, e) {
+        tl.fromTo(sel, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e || "power2.inOut" }, t);
+      }
+      function whipIn(stage) {
+        tl.fromTo(stage, { x: -620, filter: "blur(16px)", opacity: 0.4 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.3, ease: "power3.out" }, 0);
+      }
+      function ripple(sel, t, r0, r1, d) {
+        tl.fromTo(sel, { attr: { r: r0, "stroke-opacity": 0.75 } }, { attr: { r: r1, "stroke-opacity": 0 }, duration: d || 1.1, ease: "power2.out", immediateRender: false }, t);
+      }
+
+      tl.fromTo("#s5-stage", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, at(25.85));
+      // لماذا؟ lands big, the rest of the question lights under it
+      tl.fromTo("#s5-why", { opacity: 0, scale: 1.5, filter: "blur(10px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "expo.out" }, at(25.81));
+      lit("#s5-why2", 0.16); hit("#s5-why2 .k");
+      blurOut(["#s5-why", "#s5-why2"], at(27.85), 0.22);
+      // لأنك حين تقف بين يدي الله: the arch draws while it is said, the vessel stands in it
+      draw("#s5-arch", at(28.07), 1.7, "power2.inOut");
+      tl.to("#s5-floor", { opacity: 1, duration: 0.4 }, at(28.07));
+      tl.fromTo("#s5-vessel", { opacity: 0, attr: { r: 60 } }, { opacity: 1, attr: { r: 100 }, duration: 0.5, ease: "expo.out" }, at(30.02));
+      // متألمًا: the vessel aches (amber glow, three beats)
+      tl.fromTo("#s5-pain", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }, at(30.49));
+      [0, 1, 2].forEach((i) => {
+        tl.fromTo("#s5-pain", { scale: 1 }, { scale: 1.16, duration: 0.2, ease: "power2.out", yoyo: true, repeat: 1 }, at(30.94 + i * 0.42));
+        tl.fromTo("#s5-vessel", { attr: { r: 100 } }, { attr: { r: 110 }, duration: 0.2, ease: "power2.out", yoyo: true, repeat: 1 }, at(30.94 + i * 0.42));
+      });
+      // منكسرًا: it breaks, and the light comes out through the cracks
+      gsap.utils.toArray(".crk").forEach((el, i) => draw(el, at(31.16) + i * 0.06, 0.2, "power3.out"));
+      tl.to("#s5-pain", { opacity: 0, duration: 0.3 }, at(31.16));
+      tl.fromTo("#s5-light", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }, at(31.26));
+      tl.fromTo("#s5-rays", { opacity: 0, scale: 0.6, rotation: 0 }, { opacity: 0.9, scale: 1.1, duration: 0.55, ease: "expo.out" }, at(31.26));
+      tl.to("#s5-rays", { opacity: 0.3, duration: 0.8, ease: "power2.inOut" }, at(31.86));
+      tl.to("#s5-rays", { rotation: 24, duration: 3.6, ease: "none" }, at(31.26));
+      tl.fromTo("#s5-mih", { x: 0 }, { x: 8, duration: 0.05, yoyo: true, repeat: 5, ease: "none" }, at(31.16));
+      // أصدق حالات الافتقار: the meter fills
+      lit("#s5-need", 0.16); hit("#s5-need .k");
+      tl.to(["#s5-track", "#s5-fill"], { opacity: 1, duration: 0.3 }, at(32.05));
+      tl.fromTo("#s5-fill", { scaleX: 0 }, { scaleX: 1, duration: 2.4, ease: "power1.inOut" }, at(32.15));
+      blurOut("#s5-stage", at(34.72), 0.2);
+      window.__timelines["s5"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,91 @@
+<template>
+  <style>
+    @font-face { font-family: "Cairo"; src: url("assets/fonts/Cairo.ttf") format("truetype"); font-weight: 200 1000; }
+    @font-face { font-family: "Reem Kufi"; src: url("assets/fonts/ReemKufi.ttf") format("truetype"); font-weight: 400 700; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Regular.woff") format("woff"); font-weight: 400; }
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/Amiri-Bold.woff") format("woff"); font-weight: 700; }
+    #root { position: absolute; inset: 0; direction: rtl; color: #f4ecd8; font-family: "Cairo", sans-serif; }
+    #root .stage { position: absolute; inset: 0; }
+    #root .line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap; }
+    #root .abs { position: absolute; }
+    #root .w { display: inline-block; }
+    #root .k { color: #d4a94f; }
+    #root .gold { color: #d4a94f; }
+    #root .amiri { font-family: "Amiri", serif; font-weight: 700; }
+    #root .kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+    #root .chip { display: inline-block; border: 3px solid #d4a94f; border-radius: 999px; padding: 4px 34px 10px;
+      font-weight: 800; font-size: 46px; color: #f4ecd8; background: rgba(5, 18, 26, .6); white-space: nowrap; }
+    #root svg { overflow: visible; display: block; }
+  </style>
+  <div id="root" data-composition-id="s4" data-width="1080" data-height="1920">
+    <div id="s4-stage" class="stage">
+
+      <div id="s4-flood" class="abs" style="inset: 0; background: radial-gradient(circle at 50% 46%, #fbe7a8 0%, #d4a94f 42%, #8a6a1e 100%); clip-path: circle(0px at 540px 880px)"></div>
+      <svg id="s4-ring" class="abs" style="left: 320px; top: 200px" width="440" height="440" viewBox="0 0 520 520" aria-hidden="true">
+        <circle cx="260" cy="260" r="200" fill="none" stroke="#d4a94f" stroke-width="3" stroke-opacity=".4"/>
+        <circle class="bead" cx="260.0" cy="60.0" r="30" fill="rgba(5,18,26,.4)" stroke="#d4a94f" stroke-width="7"/><circle class="bead" cx="416.4" cy="135.3" r="30" fill="rgba(5,18,26,.4)" stroke="#d4a94f" stroke-width="7"/><circle class="bead" cx="455.0" cy="304.5" r="30" fill="rgba(5,18,26,.4)" stroke="#d4a94f" stroke-width="7"/><circle class="bead" cx="346.8" cy="440.2" r="30" fill="rgba(5,18,26,.4)" stroke="#d4a94f" stroke-width="7"/><circle class="bead" cx="173.2" cy="440.2" r="30" fill="rgba(5,18,26,.4)" stroke="#d4a94f" stroke-width="7"/><circle class="bead" cx="65.0" cy="304.5" r="30" fill="rgba(5,18,26,.4)" stroke="#d4a94f" stroke-width="7"/><circle class="bead" cx="103.6" cy="135.3" r="30" fill="rgba(5,18,26,.4)" stroke="#d4a94f" stroke-width="7"/>
+      </svg>
+      <div id="s4-x7" class="line kufi gold" style="top: 362px; font-size: 130px; line-height: 1">×٧</div>
+      <div id="s4-dua" class="abs" style="left: 0; right: 0; top: 650px; text-align: center; font-family: Amiri, serif; font-weight: 700; color: #f4ecd8">
+        <div style="font-size: 92px; line-height: 1.55; white-space: nowrap"><span class="w" data-t="21.13">أَعُوذُ</span> <span class="w" data-t="21.63">بِعِزَّةِ</span> <span class="w k" data-t="22.13">اللَّهِ</span></div>
+        <div style="font-size: 92px; line-height: 1.55; white-space: nowrap"><span class="w" data-t="22.64">وَقُدْرَتِهِ</span></div>
+        <div style="font-size: 92px; line-height: 1.55; white-space: nowrap"><span class="w" data-t="23.36">مِنْ</span> <span class="w" data-t="23.64">شَرِّ</span> <span class="w" data-t="23.92">مَا</span> <span class="w" data-t="24.21">أَجِدُ</span> <span class="w" data-t="24.6">وَأُحَاذِرُ</span></div>
+      </div>
+      <div id="s4-fa" class="abs" style="left: 90px; right: 90px; top: 1120px; text-align: center; text-wrap: balance; font-size: 42px; font-weight: 600; line-height: 1.55; color: #b8c8c1">پناه می‌برم به عزّت و قدرت خدا، از شرّ آنچه می‌یابم و می‌ترسم</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const S = 19.15; // scene start in film seconds; every time below is written in film seconds
+      const at = (t) => t - S;
+
+      function lit(sel, dur) {
+        gsap.utils.toArray(sel + " .w").forEach((el) => {
+          tl.fromTo(el, { opacity: 0, filter: "blur(8px)" },
+            { opacity: 1, filter: "blur(0px)", duration: dur || 0.16, ease: "power2.out" }, at(parseFloat(el.getAttribute("data-t"))));
+        });
+      }
+      function hit(sel) {
+        gsap.utils.toArray(sel).forEach((el) => {
+          const t = at(parseFloat(el.getAttribute("data-t")));
+          tl.fromTo(el, { color: "#f4ecd8", scale: 1.0 }, { color: "#d4a94f", scale: 1.14, duration: 0.14, ease: "power2.out" }, t);
+          tl.to(el, { scale: 1, duration: 0.4, ease: "expo.out" }, t + 0.14);
+        });
+      }
+      function blurOut(sel, t, d) { tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d || 0.2, ease: "power3.in" }, t); }
+      function pop(sel, t) { tl.fromTo(sel, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, t); }
+      function draw(sel, t, d, e) {
+        tl.fromTo(sel, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e || "power2.inOut" }, t);
+      }
+      function whipIn(stage) {
+        tl.fromTo(stage, { x: -620, filter: "blur(16px)", opacity: 0.4 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.3, ease: "power3.out" }, 0);
+      }
+      function ripple(sel, t, r0, r1, d) {
+        tl.fromTo(sel, { attr: { r: r0, "stroke-opacity": 0.75 } }, { attr: { r: r1, "stroke-opacity": 0 }, duration: d || 1.1, ease: "power2.out", immediateRender: false }, t);
+      }
+
+      // the flood is the orb of scene 3 becoming the whole frame, then it settles to night
+      tl.fromTo("#s4-flood", { clipPath: "circle(0px at 540px 880px)", opacity: 1 }, { clipPath: "circle(1700px at 540px 880px)", duration: 0.42, ease: "power2.in" }, at(19.15));
+      tl.to("#s4-flood", { opacity: 0, duration: 0.55, ease: "power2.inOut" }, at(19.5));
+      // سبع: seven beads close a ring
+      tl.fromTo("#s4-ring", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.5, ease: "expo.out" }, at(19.88));
+      tl.to(".bead", { fill: "#d4a94f", duration: 0.1, stagger: 0.07 }, at(20.13));
+      pop("#s4-x7", at(20.08));
+      tl.to("#s4-ring", { rotation: 38, duration: 5.6, ease: "none", transformOrigin: "50% 50%" }, at(19.9));
+      // the dua: it appears dim, and each word lights as it is spoken
+      tl.fromTo("#s4-dua", { opacity: 0 }, { opacity: 1, duration: 0.25 }, at(20.95));
+      gsap.utils.toArray("#s4-dua .w").forEach((el) => {
+        const gold = el.classList.contains("k");
+        tl.fromTo(el, { color: "rgba(244,236,216,.26)" }, { color: gold ? "#d4a94f" : "#f4ecd8", duration: 0.2, ease: "power2.out" }, at(parseFloat(el.getAttribute("data-t"))));
+      });
+      tl.fromTo("#s4-fa", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, at(21.85));
+      // the ring grows through the frame into scene 5
+      blurOut(["#s4-dua", "#s4-x7"], at(25.3), 0.22);
+      blurOut("#s4-fa", at(25.85), 0.2);
+      tl.to("#s4-ring", { scale: 9, duration: 0.55, ease: "power3.in" }, at(25.3));
+      tl.to("#s4-ring", { opacity: 0, duration: 0.25, ease: "power2.in" }, at(25.42));
+      window.__timelines["s4"] = tl;
+    })();
+  </script>
+</template>
