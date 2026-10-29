@@ -79,10 +79,10 @@
         const gold = el.classList.contains("k");
         tl.fromTo(el, { color: "rgba(244,236,216,.26)" }, { color: gold ? "#d4a94f" : "#f4ecd8", duration: 0.2, ease: "power2.out" }, at(parseFloat(el.getAttribute("data-t"))));
       });
-      tl.fromTo("#s4-fa", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, at(21.85));
+      tl.fromTo("#s4-fa", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, at(21.42));
       // the ring grows through the frame into scene 5
       blurOut(["#s4-dua", "#s4-x7"], at(25.3), 0.22);
-      blurOut("#s4-fa", at(25.85), 0.2);
+      blurOut("#s4-fa", at(25.52), 0.2);
       tl.to("#s4-ring", { scale: 9, duration: 0.55, ease: "power3.in" }, at(25.3));
       tl.to("#s4-ring", { opacity: 0, duration: 0.25, ease: "power2.in" }, at(25.42));
       window.__timelines["s4"] = tl;
