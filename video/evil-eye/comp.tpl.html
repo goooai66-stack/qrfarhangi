@@ -71,7 +71,7 @@ svg { overflow: visible; display: block; }
 
   <!-- SC: for yourself and your child, the dua -->
   <div id="SC" class="scn">
-    <svg class="a" style="left:0;top:0" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="arc1" d="M500,455 C430,500 340,545 300,598" fill="none" stroke="#d4a94f" stroke-width="5" stroke-dasharray="1" stroke-dashoffset="1" pathLength="1"/><path id="arc2" d="M580,455 C650,500 740,545 780,598" fill="none" stroke="#d4a94f" stroke-width="5" stroke-dasharray="1" stroke-dashoffset="1" pathLength="1"/></svg>
+    <svg class="a" style="left:0;top:0" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="arc1" d="M580,455 C650,500 740,545 780,598" fill="none" stroke="#d4a94f" stroke-width="5" stroke-dasharray="1" stroke-dashoffset="1" pathLength="1"/><path id="arc2" d="M500,455 C430,500 340,545 300,598" fill="none" stroke="#d4a94f" stroke-width="5" stroke-dasharray="1" stroke-dashoffset="1" pathLength="1"/></svg>
     <div id="cNafs" class="a"><span class="chip">نفسك</span></div>
     <div id="cWalad" class="a"><span class="chip">ولدك</span></div>
     <div id="cHasan" class="a"><span class="chip gold">الحسن</span></div>
@@ -246,10 +246,10 @@ SC("SC", 13.8, 27.3, "blur");
 const C5 = spread("وإن خفت على نفسك أو على ولدك فقل ما كان النبي صلى الله عليه وسلم يعوذ به الحسن والحسين", 13.97, 20.19);
 const tNafs = C5[3][1], tWalad = C5[6][1], tHasan = C5[13][1], tHusayn = C5[15][1];
 D("arc1", [[tNafs - 0.05, 1], [tNafs + 0.5, 0, "out"]]); D("arc2", [[tWalad - 0.05, 1], [tWalad + 0.5, 0, "out"]]);
-A("cNafs", { x: 300, y: 640, s: pop(tNafs), o: [[tNafs - 0.001, 0], [tNafs, 1], [tHasan - 0.1, 1], [tHasan + 0.1, 0]] });
-A("cWalad", { x: 780, y: 640, s: pop(tWalad), o: [[tWalad - 0.001, 0], [tWalad, 1], [tHusayn - 0.1, 1], [tHusayn + 0.1, 0]] });
-A("cHasan", { x: 300, y: 640, s: pop(tHasan), o: [[tHasan - 0.001, 0], [tHasan, 1], [20.6, 1], [20.9, 0, "in"]] });
-A("cHusayn", { x: 780, y: 640, s: pop(tHusayn), o: [[tHusayn - 0.001, 0], [tHusayn, 1], [20.6, 1], [20.9, 0, "in"]] });
+A("cNafs", { x: 780, y: 640, s: pop(tNafs), o: [[tNafs - 0.001, 0], [tNafs, 1], [tHasan - 0.1, 1], [tHasan + 0.1, 0]] });
+A("cWalad", { x: 300, y: 640, s: pop(tWalad), o: [[tWalad - 0.001, 0], [tWalad, 1], [tHusayn - 0.1, 1], [tHusayn + 0.1, 0]] });
+A("cHasan", { x: 780, y: 640, s: pop(tHasan), o: [[tHasan - 0.001, 0], [tHasan, 1], [20.6, 1], [20.9, 0, "in"]] });
+A("cHusayn", { x: 300, y: 640, s: pop(tHusayn), o: [[tHusayn - 0.001, 0], [tHusayn, 1], [20.6, 1], [20.9, 0, "in"]] });
 const c61 = spread("أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ", 21.30, 24.91), c62 = spread("وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ", 25.23, 26.74);
 mount("d1a", c61.slice(0, 4), { mode: "dim", keys: [2] }); mount("d1b", c61.slice(4)); mount("d1c", c62);
 WORDS.filter((w) => w.el.closest("#dua1")).forEach((w) => (w.mode = "dim"));
@@ -259,14 +259,14 @@ A("dua1", { x: SX, y: 800, o: [[20.9, 0], [21.2, 1], [26.85, 1], [27.2, 0, "in"]
 SC("SD", 27.3, 37.7, "whip");
 const C8 = spread("وإذا رأيت ما يعجبك من مال أو ولد أو نعمة فقل ما شاء الله تبارك الله اللهم بارك فيه", 27.52, 34.78);
 const tMal = C8[5][1], tW2 = C8[7][1], tNima = C8[9][1], tQul = C8[10][1], tP1 = C8[11][1], tP2 = C8[14][1], tP3 = C8[16][1];
-A("cMal", { x: 250, y: 660, s: pop(tMal), o: [[tMal - 0.001, 0], [tMal, 1], [tQul, 1], [tQul + 0.3, 0, "in"]] });
+A("cMal", { x: 830, y: 660, s: pop(tMal), o: [[tMal - 0.001, 0], [tMal, 1], [tQul, 1], [tQul + 0.3, 0, "in"]] });
 A("cWal2", { x: 540, y: 660, s: pop(tW2), o: [[tW2 - 0.001, 0], [tW2, 1], [tQul, 1], [tQul + 0.3, 0, "in"]] });
-A("cNima", { x: 830, y: 660, s: pop(tNima), o: [[tNima - 0.001, 0], [tNima, 1], [tQul, 1], [tQul + 0.3, 0, "in"]] });
+A("cNima", { x: 250, y: 660, s: pop(tNima), o: [[tNima - 0.001, 0], [tNima, 1], [tQul, 1], [tQul + 0.3, 0, "in"]] });
 A("p1", { x: SX, y: 650, s: [[tP1 - 0.001, 1.5], [tP1 + 0.3, 1, "out"]], o: [[tP1 - 0.001, 0], [tP1, 1], [35.0, 1], [35.3, 0, "in"]] });
 A("p2", { x: SX, y: 790, s: [[tP2 - 0.001, 1.5], [tP2 + 0.3, 1, "out"]], o: [[tP2 - 0.001, 0], [tP2, 1], [35.0, 1], [35.3, 0, "in"]] });
 A("p3", { x: SX, y: 930, s: [[tP3 - 0.001, 1.5], [tP3 + 0.3, 1, "out"]], o: [[tP3 - 0.001, 0], [tP3, 1], [35.0, 1], [35.3, 0, "in"]] });
 A("waq", { x: SX, y: 790, s: [[35.4, 1.4], [35.8, 1, "out"]], o: [[35.4, 0], [35.5, 1], [37.3, 1], [37.6, 0, "in"]] });
-[[tMal, 250, 660], [tW2, 540, 660], [tNima, 830, 660], [tP1, 540, 650], [tP2, 540, 790], [tP3, 540, 930]].forEach(([t, x, y]) => BURSTS.push({ t, x, y }));
+[[tMal, 830, 660], [tW2, 540, 660], [tNima, 250, 660], [tP1, 540, 650], [tP2, 540, 790], [tP3, 540, 930]].forEach(([t, x, y]) => BURSTS.push({ t, x, y }));
 
 // ---- SE1: the Fatiha and the Mu'awwidhat -------------------------------------------------------
 SC("SE1", 37.6, 42.2, "slide");
