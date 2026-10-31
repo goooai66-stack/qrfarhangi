@@ -14,5 +14,4 @@ const { chromium } = require('playwright');
   console.log(JSON.stringify(await p.evaluate(() => window.SFX))); await b.close(); })();" > sfx.json
 python3 -I mix.py "$VOICE"
 ffmpeg -y -v error -framerate $FPS -i frames/f%05d.jpg -i mix.wav -map 0:v -map 1:a -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p -profile:v high -movflags +faststart -c:a aac -b:a 192k -shortest "../$OUT.mp4"
-ffmpeg -y -v error -i "../$OUT.mp4" -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -movflags +faststart -c:a copy "../$OUT-light.mp4"
 echo done
