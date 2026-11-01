@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Cairo"; src: url(fonts/Cairo.ttf) format("truetype"); font-weight: 200 1000; }
+@font-face { font-family: "Reem Kufi"; src: url(fonts/ReemKufi.ttf) format("truetype"); font-weight: 400 700; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Regular.woff) format("woff"); font-weight: 400; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Bold.woff) format("woff"); font-weight: 700; }
+@font-face { font-family: "Noto Sans SC"; src: url(fonts/NotoSansSC-subset.woff2) format("woff2"); font-weight: 500 700; }
+:root { --ink: #12404a; --paper: #f6ebd4; --cream: #fff8e8; --gold: #e0a100; --cor: #e4572e; --grn: #2a9d8f; --vio: #7b6cd9; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0c3139; }
+body { font-family: "Cairo", sans-serif; color: var(--ink); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.a { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
+.scn { position: absolute; inset: 0; }
+.amiri { font-family: "Amiri", serif; font-weight: 700; }
+svg { overflow: visible; display: block; }
+.chip { display: inline-block; background: var(--cream); border: 5px solid var(--ink); border-radius: 26px; padding: 2px 36px 10px; font-weight: 800; font-size: 54px; color: var(--ink); box-shadow: 0 9px 0 rgba(18,64,74,.2); }
+.chip.y { background: #ffe9a8; border-color: #b98300; } .chip.c { background: #ffd9cc; border-color: var(--cor); color: #a8320f; } .chip.m { background: #cdeedd; border-color: var(--grn); } .chip.b { background: #d9e8ff; border-color: #3b6fb6; }
+.bub { position: relative; background: var(--cream); border: 6px solid var(--ink); border-radius: 40px; padding: 4px 54px 22px; font-family: "Amiri"; font-weight: 700; font-size: 82px; line-height: 1.3; color: var(--ink); box-shadow: 0 12px 0 rgba(18,64,74,.2); }
+.bub.mid::after { left: calc(50% - 26px); }
+.bub::after { content: ""; position: absolute; bottom: -40px; left: 200px; border-left: 26px solid transparent; border-right: 26px solid transparent; border-top: 40px solid var(--ink); }
+#cap { position: absolute; left: 110px; right: 110px; top: 1002px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+#cap .ar { font-weight: 800; font-size: 54px; line-height: 1.45; color: #10302a; text-shadow: none; }
+#cap .zh { font-family: "Noto Sans SC", "Cairo", sans-serif; font-weight: 700; font-size: 42px; line-height: 1.4; color: #8a5a00; direction: ltr; text-shadow: none; }
+#cap .en { font-weight: 600; font-size: 35px; line-height: 1.35; color: #3f524c; direction: ltr; text-shadow: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper" class="layer" style="background: radial-gradient(ellipse at 50% 30%, #3cc6d6 0%, #1696b3 52%, #0a5470 100%)"></div>
+  <svg id="pat" class="layer" width="1080" height="960" viewBox="0 0 1080 960" aria-hidden="true" style="opacity:.07"></svg>
+  <canvas id="fxB" class="layer" width="1080" height="1920"></canvas>
+  <div id="low" class="a" style="width:1080px; height:960px; background: linear-gradient(180deg, #f6ead0 0%, #e6d3a8 100%)"></div>
+  <svg id="pat2" class="a" width="1080" height="960" viewBox="0 0 1080 960" aria-hidden="true" style="opacity:.022"></svg>
+  <div id="band" class="a" style="width:1080px; height:14px; background: linear-gradient(90deg, #b98300, #ffd666, #b98300)"></div>
+
+  <div id="orb" class="a" style="width:260px; height:260px; border-radius:50%; background:#e9fbff"></div>
+  <div id="act" class="layer"></div>
+  <div id="SA" class="scn"></div><div id="SB" class="scn"></div><div id="SC" class="scn"></div><div id="SD" class="scn"></div><div id="SE" class="scn"></div><div id="SF" class="scn"></div><div id="SG" class="scn"></div><div id="SH" class="scn"></div><div id="SI" class="scn"></div><div id="SJ" class="scn"></div><div id="SK" class="scn"></div>
+  <div id="SL" class="scn">
+    <svg id="lamp" class="a" width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+      <line x1="150" y1="0" x2="150" y2="170" stroke="#e8c872" stroke-width="6"/><path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#f6c445" stroke="#e8c872" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="#fff4cf" stroke="#e8c872" stroke-width="8"/>
+      <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#e4572e"/><path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#f6c445" stroke="#e8c872" stroke-width="7" stroke-linejoin="round"/><line x1="150" y1="400" x2="150" y2="440" stroke="#e8c872" stroke-width="6"/>
+    </svg>
+    <div id="name" class="a amiri" style="font-size:150px; line-height:1.2; color:#fff4d6; text-shadow: 0 6px 0 rgba(0,0,0,.3)">في معيّة الله</div>
+    <svg id="share" class="a" width="190" height="171" viewBox="0 0 240 216" aria-hidden="true">
+      <path id="sh1" d="M30,100 L30,196 L210,196 L210,100" fill="none" stroke="#fff4d6" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh2" d="M120,150 L120,18" fill="none" stroke="#7fe3c3" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh3" d="M72,68 L120,16 L168,68" fill="none" stroke="#7fe3c3" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <svg id="bell" class="a" width="170" height="190" viewBox="0 0 170 190" aria-hidden="true">
+      <path id="bl1" d="M85,18 C45,18 32,56 32,92 C32,120 20,134 12,146 L158,146 C150,134 138,120 138,92 C138,56 125,18 85,18 Z" fill="#ffe9a8" stroke="#e8c872" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="bl2" d="M62,164 C66,182 104,182 108,164" fill="none" stroke="#e8c872" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+  </div>
+
+  <div id="cap"><div class="ar" id="capAr"></div><div class="zh" id="capZh"></div><div class="en" id="capEn"></div></div>
+  <canvas id="grn" class="layer" width="540" height="960" style="width:1080px; height:1920px; opacity:.45"></canvas>
+</div>
+
+<script>
+const W = 1080, H = 1920, CAPS = __CAPS__;
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const EZ = { lin: (x) => x, out: (x) => 1 - Math.pow(1 - x, 3), in: (x) => x * x * x, io: (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+  back: (x) => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+  pop: (x) => { const c1 = 2.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); } };
+function tw(t, k) {
+  if (typeof k === "number") return k; if (typeof k === "function") return k(t);
+  if (t <= k[0][0]) return k[0][1];
+  for (let i = 1; i < k.length; i++) if (t <= k[i][0]) { const [t0, v0] = k[i - 1], [t1, v1, e = "out"] = k[i]; return v0 + (v1 - v0) * EZ[e](clamp((t - t0) / ((t1 - t0) || 1))); }
+  return k[k.length - 1][1];
+}
+const rng = (seed) => { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; };
+const NS = "http://www.w3.org/2000/svg";
+const mk = (tag, at, parent) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); parent && parent.appendChild(e); return e; };
+const ITEMS = [], DRAWS = [], SCN = [], BURSTS = [], CUST = [];
+const A = (id, sp) => ITEMS.push([typeof id === "string" ? $(id) : id, sp]);
+const D = (el, k) => DRAWS.push([typeof el === "string" ? $(el) : el, k]);
+const SC = (id, a, b) => SCN.push({ el: $(id), a, b });
+const pop = (t, d = 0.4) => [[t - 0.001, 0.6], [t + d, 1, "pop"]];
+const inc = (t0, t1, k = "out") => [[t0, 1], [t1, 0, k]];
+const on = (a, b, d = 0.2) => [[a - 0.001, 0], [a, 1], [b, 1], [b + d, 0, "in"]];
+function spiral(id, turns, r) { let d = ""; for (let i = 0; i <= 60; i++) { const a = i / 60 * turns * Math.PI * 2, rr = r * (0.18 + 0.82 * i / 60); d += (i ? " L" : "M") + (rr * Math.cos(a)).toFixed(1) + "," + (rr * Math.sin(a)).toFixed(1); } $(id).setAttribute("d", d); }
+function star(id, r, ri) { const pts = []; for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8 - Math.PI / 2, q = i % 2 ? ri : r; pts.push(`${(q * Math.cos(a)).toFixed(1)},${(q * Math.sin(a)).toFixed(1)}`); } $(id).setAttribute("points", pts.join(" ")); }
+
+function spread(text, a, b) {
+  const ws = text.split(/\s+/), cl = (w) => w.replace(/[ً-ْٰ]/g, ""), wt = ws.map((w) => cl(w).length + 0.6), tot = wt.reduce((p, c) => p + c, 0);
+  let c = 0; return ws.map((w, i) => { const t = a + (b - a) * c / tot; c += wt[i]; return [w, t]; });
+}
+// background pattern: 8-point stars
+for (const [svg, w, h] of [[$("pat"), 1080, 960], [$("pat2"), 1080, 960]]) { const col = svg === $("pat") ? "#ffffff" : "#12404a"; for (let y = 0; y < h + 120; y += 120) for (let x = 0; x < w + 120; x += 120) { const o = (y / 120) % 2 ? 60 : 0;
+  mk("rect", { x: x + o - 34, y: y - 34, width: 68, height: 68, fill: "none", stroke: col, "stroke-width": 3 }, svg); mk("rect", { x: x + o - 34, y: y - 34, width: 68, height: 68, fill: "none", stroke: col, "stroke-width": 3, transform: `rotate(45 ${x + o} ${y})` }, svg); } }
+function book(svg, w, h) { const r = rng(11), cx = w / 2; mk("path", { d: `M${cx},${h * .08} L${w * .02},${h * .02} L${w * .02},${h * .94} L${cx},${h} L${w * .98},${h * .94} L${w * .98},${h * .02} Z`, fill: "#cdeedd", stroke: "#2a9d8f", "stroke-width": 14, "stroke-linejoin": "round" }, svg);
+  mk("line", { x1: cx, y1: h * .06, x2: cx, y2: h * .97, stroke: "#2a9d8f", "stroke-width": 10 }, svg);
+  for (const side of [-1, 1]) for (let i = 0; i < 6; i++) { const y = h * (.2 + i * .1), x0 = side < 0 ? w * .08 : cx + w * .06; mk("line", { x1: x0, y1: y, x2: x0 + w * (.3 + r() * .1), y2: y, stroke: "#12404a", "stroke-width": 9, "stroke-linecap": "round", opacity: .75 }, svg); } }
+
+
+// ---- builders ---------------------------------------------------------------------------------------------------------
+const INK = "#12404a";
+const box = (w, h, vb, parent) => mk("svg", { width: w, height: h, viewBox: vb, class: "a" }, parent);
+function chipEl(parent, txt, cls = "", size = 54, amiri = false) { const d = document.createElement("div"); d.className = "a"; const s = document.createElement("span"); s.className = "chip " + cls; s.style.fontSize = size + "px"; if (amiri) { s.style.fontFamily = "Amiri"; s.style.fontWeight = 700; } s.textContent = txt; d.appendChild(s); parent.appendChild(d); return d; }
+function sunEl(p) { const s = box(220, 220, "-110 -110 220 220", p); for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; mk("line", { x1: Math.cos(a) * 70, y1: Math.sin(a) * 70, x2: Math.cos(a) * 100, y2: Math.sin(a) * 100, stroke: "#b56b00", "stroke-width": 9, "stroke-linecap": "round" }, s); } mk("circle", { r: 56, fill: "#ffc93c", stroke: "#b56b00", "stroke-width": 7 }, s); return s; }
+function moonEl(p) { const s = box(220, 220, "-110 -110 220 220", p); mk("path", { d: "M30,-90 A92,92 0 1 0 30,90 A72,72 0 1 1 30,-90 Z", fill: "#fff4d6", stroke: "#6f66b8", "stroke-width": 7, "stroke-linejoin": "round" }, s); return s; }
+function shieldEl(p) { const s = box(330, 380, "0 0 330 380", p); mk("path", { d: "M165,14 C120,44 70,50 22,50 V190 C22,280 90,336 165,368 C240,336 308,280 308,190 V50 C260,50 210,44 165,14 Z", fill: "rgba(255,214,102,.28)", stroke: "#e0a100", "stroke-width": 14, "stroke-linejoin": "round" }, s); return s; }
+function eyeEl(p) { const s = box(200, 130, "0 0 200 130", p); mk("path", { d: "M10,65 Q100,-15 190,65 Q100,145 10,65 Z", fill: "#fff8e8", stroke: INK, "stroke-width": 8, "stroke-linejoin": "round" }, s); mk("circle", { cx: 100, cy: 65, r: 30, fill: "#6f66b8", stroke: INK, "stroke-width": 6 }, s); mk("circle", { cx: 100, cy: 65, r: 12, fill: INK }, s); return s; }
+function scrollEl(p, w = 200, dashed = false) { const s = box(w, w * 1.1, "0 0 200 220", p); mk("rect", { x: 20, y: 14, width: 160, height: 192, rx: 20, fill: "#fff8e8", stroke: "#b98300", "stroke-width": 9, "stroke-dasharray": dashed ? "16 12" : "none" }, s); for (let i = 0; i < 5; i++) mk("line", { x1: 46, y1: 52 + i * 34, x2: 154 - (i % 2) * 30, y2: 52 + i * 34, stroke: INK, "stroke-width": 8, "stroke-linecap": "round", opacity: .75 }, s); return s; }
+function tickEl(p, w = 200) { const s = box(w, w, "0 0 100 100", p); const t = mk("path", { d: "M18,54 L42,78 L86,24", fill: "none", stroke: "#2a9d8f", "stroke-width": 13, "stroke-linecap": "round", "stroke-linejoin": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s); return [s, t]; }
+function crossEl(p, w = 220, col = "#e4572e") { const s = box(w, w, "0 0 100 100", p); const a = mk("path", { d: "M14,14 L86,86", stroke: col, "stroke-width": 11, "stroke-linecap": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s), b = mk("path", { d: "M86,14 L14,86", stroke: col, "stroke-width": 11, "stroke-linecap": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s); return [s, a, b]; }
+function arrowEl(p, x1, y1, x2, y2, col = "#e0a100") { const s = mk("svg", { width: 1080, height: 1920, viewBox: "0 0 1080 1920", class: "layer" }, p); const a = Math.atan2(y2 - y1, x2 - x1), h = 46, d = `M${x1},${y1} L${x2},${y2} M${x2 - h * Math.cos(a - .5)},${y2 - h * Math.sin(a - .5)} L${x2},${y2} L${x2 - h * Math.cos(a + .5)},${y2 - h * Math.sin(a + .5)}`; return mk("path", { d, fill: "none", stroke: col, "stroke-width": 12, "stroke-linecap": "round", "stroke-linejoin": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s); }
+const appear = (t, a = 0, d = .2) => [[t - 0.001, 0], [t, 1]];
+const seg = (a, b, d = .25) => [[a - 0.001, 0], [a, 1], [b, 1], [b + d, 0, "in"]];
+const SS = (el, t, to, d = .25, extra = {}) => A(el, Object.assign({ s: pop(t), o: seg(t, to, d) }, extra));
+const star16 = (r, ri) => { const pts = []; for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8 - Math.PI / 2, q = i % 2 ? ri : r; pts.push(`${(q * Math.cos(a)).toFixed(1)},${(q * Math.sin(a)).toFixed(1)}`); } return pts.join(" "); };
+
+function cupEl(p) { const s = box(180, 220, "0 0 180 220", p); mk("path", { d: "M26,30 H154 L138,196 Q137,208 125,208 H55 Q43,208 42,196 Z", fill: "#e9fbff", stroke: INK, "stroke-width": 8, "stroke-linejoin": "round" }, s); mk("path", { d: "M34,92 Q62,76 90,92 T146,92 L138,196 Q137,208 125,208 H55 Q43,208 42,196 Z", fill: "#4ec3df", stroke: INK, "stroke-width": 6, "stroke-linejoin": "round" }, s); return s; }
+function bookEl(p, label) { const s = box(300, 380, "0 0 330 420", p); mk("rect", { x: 22, y: 14, width: 296, height: 392, rx: 22, fill: "#0f5a7a", stroke: "#e8c872", "stroke-width": 10 }, s); mk("path", { d: "M54,14 V406", stroke: "#e8c872", "stroke-width": 6 }, s); const lines = label.split("|"); lines.forEach((l, i) => { const t = mk("text", { x: 188, y: 190 + i * 86 - (lines.length - 1) * 30, "text-anchor": "middle", "font-family": "Amiri", "font-weight": 700, "font-size": 74, fill: "#fff4d6" }, s); t.textContent = l; }); return s; }
+function mushEl(p, w = 300) { const s = box(w, w * 0.69, "0 0 680 470", p); const r = rng(11), cx = 340, wd = 680, h = 470; mk("path", { d: `M${cx},${h * .08} L${wd * .02},${h * .02} L${wd * .02},${h * .94} L${cx},${h} L${wd * .98},${h * .94} L${wd * .98},${h * .02} Z`, fill: "#fff4d6", stroke: "#b98300", "stroke-width": 14, "stroke-linejoin": "round" }, s); mk("line", { x1: cx, y1: h * .06, x2: cx, y2: h * .97, stroke: "#b98300", "stroke-width": 10 }, s);
+  for (const side of [-1, 1]) for (let i = 0; i < 6; i++) { const y = h * (.2 + i * .1), x0 = side < 0 ? wd * .08 : cx + wd * .06; mk("line", { x1: x0, y1: y, x2: x0 + wd * (.3 + r() * .1), y2: y, stroke: INK, "stroke-width": 9, "stroke-linecap": "round", opacity: .75 }, s); } return s; }
+function medEl(p, w = 220) { const s = box(w, w, "0 0 240 240", p); mk("circle", { cx: 120, cy: 120, r: 108, fill: "#fff", stroke: "#e4572e", "stroke-width": 9 }, s); mk("path", { d: "M98,52 H142 V98 H188 V142 H142 V188 H98 V142 H52 V98 H98 Z", fill: "#e4572e", stroke: "#a8320f", "stroke-width": 6, "stroke-linejoin": "round" }, s); return s; }
+function pillEl(p, w = 220) { const s = box(w, w, "0 0 240 240", p); const g = mk("g", { transform: "rotate(-40 120 120)" }, s); mk("rect", { x: 30, y: 78, width: 180, height: 84, rx: 42, fill: "#fff", stroke: INK, "stroke-width": 8 }, g); mk("path", { d: "M120,78 H72 A42,42 0 0 0 72,162 H120 Z", fill: "#ffb347", stroke: INK, "stroke-width": 8, "stroke-linejoin": "round" }, g); return s; }
+function plateEl(p, txt, cls = "m", size = 62) { return chipEl(p, txt, cls, size, true); }
+function circleTick(p, d = 230) { const s = box(d, d, "0 0 100 100", p); mk("circle", { cx: 50, cy: 50, r: 46, fill: "#cdeedd", stroke: "#2a9d8f", "stroke-width": 6 }, s); const t = mk("path", { d: "M26,52 L44,70 L76,32", fill: "none", stroke: "#1b6f64", "stroke-width": 10, "stroke-linecap": "round", "stroke-linejoin": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s); return [s, t]; }
+const ACT = $("act");
+
+// ---- anchors ----------------------------------------------------------------------------------------------------------------------
+const A1 = spread("ماذا فعل ابن القيم حين مرض في مكة", 0.3, 2.64), A2 = spread("ولم يجد طبيبا ولا دواء", 2.89, 4.88);
+const B1 = spread("يحكي الإمام ابن القيم رحمه الله في زاد المعاد", 5.65, 8.4), tB2 = 8.52;
+const C1 = spread("مر بوقت بمكة مرض فيه", 10.19, 12.14), C2 = spread("وفقد الطبيب والدواء", 12.58, 14.17);
+const D1 = spread("فكان يعالج نفسه بالفاتحة", 15.01, 16.6), D2 = spread("يأخذ شربة من ماء زمزم", 16.87, 18.56), D3 = spread("ويقرأ عليها الفاتحة مرارا ثم يشربها", 18.82, 21.52);
+const E2 = spread("فوجدت بذلك البرء التام", 22.75, 24.37), F1 = spread("ثم صرت أعتمد ذلك عند كثير من الأوجاع", 24.83, 27.67), F2 = spread("فانتفعت بها غاية الانتفاع", 27.94, 29.8);
+const G1 = spread("هذه تجربة عالم جليل حين قطعت به الأسباب", 30.56, 33.8), H1 = spread("لا تعني أن نترك الطبيب متى كان موجودا", 34.22, 36.45), H2 = spread("فاجمع بين الفاتحة والعلاج", 36.99, 38.74);
+const I1 = spread("وقل كما قال النبي صلى الله عليه وسلم", 38.94, 41.51), J = spread("شارك هذه القصة مع من تحب", 45.27, 46.93), tFol = 47.21;
+
+// ---- the sand at the bottom, the water above ----------------------------------------------------------------------------------------
+A("low", { x: 540, y: 1440, o: 1 }); A("pat2", { x: 540, y: 1440, o: .06 }); A("band", { x: 540, y: 967, o: 1 });
+A("orb", { x: 880, y: 250, s: (t) => 1 + 0.04 * Math.sin(t * 1.4), o: .55 });
+CUST.push((t) => { $("orb").style.boxShadow = `0 0 ${100 + 20 * Math.sin(t * 1.4)}px 30px rgba(255,255,255,.35)`; });
+const mkPlate = (S, x, y, t, to) => { const pl = plateEl(S, "ابن القيم", "m", 64); A(pl, { x, y, s: pop(t), o: seg(t, to, .25) }); BURSTS.push({ t: t + 0.3, x, y }); return pl; };
+
+// ---- SA ---------------------------------------------------------------------------------------------------------------------------------------
+SC("SA", 0.2, 5.0);
+{ const S = $("SA"); mkPlate(S, 790, 330, A1[2][1], 4.8); const mk_ = chipEl(S, "مكة", "y", 62, true); A(mk_, { x: 290, y: 330, s: pop(A1[7][1]), o: seg(A1[7][1], 4.8, .2) });
+  const md = medEl(S), pl = pillEl(S), [x1, a1, b1] = crossEl(S, 250), [x2, a2, b2] = crossEl(S, 250);
+  A(md, { x: 790, y: 650, s: pop(A2[2][1]), o: seg(A2[2][1], 4.8, .2) }); A(x1, { x: 790, y: 650, o: seg(A2[2][1] + 0.3, 4.8, .2) }); D(a1, inc(A2[2][1] + 0.3, A2[2][1] + 0.55)); D(b1, inc(A2[2][1] + 0.42, A2[2][1] + 0.67));
+  A(pl, { x: 290, y: 650, s: pop(A2[4][1]), o: seg(A2[4][1], 4.8, .2) }); A(x2, { x: 290, y: 650, o: seg(A2[4][1] + 0.3, 4.8, .2) }); D(a2, inc(A2[4][1] + 0.3, A2[4][1] + 0.55)); D(b2, inc(A2[4][1] + 0.42, A2[4][1] + 0.67)); BURSTS.push({ t: A2[2][1] + 0.4, x: 790, y: 650 }, { t: A2[4][1] + 0.4, x: 290, y: 650 }); }
+// ---- SB ---------------------------------------------------------------------------------------------------------------------------------------
+SC("SB", 5.45, 10.1);
+{ const S = $("SB"); mkPlate(S, 540, 290, B1[3][1], 9.9); const bk = bookEl(S, "زاد|المعاد"), ch = chipEl(S, "تجربة شخصية", "y", 54, true);
+  A(bk, { x: 540, y: 640, r: -3, s: [[B1[7][1] - 0.001, .6], [B1[7][1] + 0.45, 1, "pop"]], o: seg(B1[7][1], 9.9, .25) }); BURSTS.push({ t: B1[7][1] + 0.4, x: 540, y: 640 });
+  A(ch, { x: 540, y: 880, s: pop(tB2), o: seg(tB2, 9.9, .2) }); }
+// ---- SC ---------------------------------------------------------------------------------------------------------------------------------------
+SC("SC", 10.1, 14.6);
+{ const S = $("SC"); const pl = mkPlate(S, 540, 320, 10.2, 14.4), sk = chipEl(S, "مرض", "c", 56, true), md = medEl(S), pi = pillEl(S), [x1, a1, b1] = crossEl(S, 250), [x2, a2, b2] = crossEl(S, 250);
+  A(sk, { x: 540, y: 500, s: pop(C1[3][1]), o: seg(C1[3][1], 14.4, .2) }); BURSTS.push({ t: C1[3][1] + 0.3, x: 540, y: 500 });
+  A(md, { x: 790, y: 720, s: pop(C2[1][1]), o: seg(C2[1][1], 14.4, .2) }); A(x1, { x: 790, y: 720, o: seg(C2[1][1] + 0.3, 14.4, .2) }); D(a1, inc(C2[1][1] + 0.3, C2[1][1] + 0.55)); D(b1, inc(C2[1][1] + 0.42, C2[1][1] + 0.67));
+  A(pi, { x: 290, y: 720, s: pop(C2[2][1]), o: seg(C2[2][1], 14.4, .2) }); A(x2, { x: 290, y: 720, o: seg(C2[2][1] + 0.3, 14.4, .2) }); D(a2, inc(C2[2][1] + 0.3, C2[2][1] + 0.55)); D(b2, inc(C2[2][1] + 0.42, C2[2][1] + 0.67)); }
+// ---- SD: al-Fatihah over Zamzam water ---------------------------------------------------------------------------------------------------------
+SC("SD", 14.95, 22.0);
+{ const S = $("SD"), ms = mushEl(S, 330), fl = chipEl(S, "الفاتحة", "y", 56, true), cp = cupEl(S), zz = chipEl(S, "ماء زمزم", "b", 52, true), pl = plateEl(S, "ابن القيم", "m", 64);
+  A(ms, { x: 790, y: 380, s: pop(D1[3][1] - 0.2), o: seg(D1[3][1] - 0.2, 21.8, .25) }); A(fl, { x: 790, y: 530, s: pop(D1[3][1]), o: seg(D1[3][1], 21.8, .25) }); BURSTS.push({ t: D1[3][1] + 0.3, x: 790, y: 380 });
+  A(cp, { x: [[D2[3][1], 290], [D3[5][1] - 0.2, 290], [D3[5][1] + 0.5, 470, "io"]], y: [[D2[3][1], 740], [D3[5][1] - 0.2, 740], [D3[5][1] + 0.5, 450, "io"]], r: [[D3[5][1] - 0.2, 0], [D3[5][1] + 0.5, 28, "io"]], s: [[D2[3][1] - 0.001, .6], [D2[3][1] + 0.45, 1.1, "pop"]], o: seg(D2[3][1] - 0.001, 21.8, .25) });
+  A(zz, { x: 290, y: 900, s: pop(D2[4][1]), o: seg(D2[4][1], D3[5][1] - 0.1, .25) }); BURSTS.push({ t: D2[4][1] + 0.3, x: 290, y: 740 });
+  A(pl, { x: 330, y: 300, s: pop(D3[5][1] - 0.1), o: seg(D3[5][1] - 0.1, 21.8, .25) }); BURSTS.push({ t: D3[5][1] + 0.6, x: 330, y: 330 });
+  const arcs = [0, 1, 2].map((i) => { const sv = mk("svg", { width: 1080, height: 1920, viewBox: "0 0 1080 1920", class: "layer" }, S); return mk("path", { d: `M${650 - i * 55},${470 + i * 18} Q${520 - i * 40},${560 + i * 40} ${400 + i * 5},${640 + i * 40}`, fill: "none", stroke: "#fff", "stroke-width": 9, "stroke-linecap": "round", "stroke-dasharray": "3 18" }, sv); });
+  CUST.push((t) => { arcs.forEach((a, i) => { const on_ = t >= D3[0][1] && t < D3[4][1]; a.setAttribute("opacity", on_ ? (0.4 + 0.6 * Math.max(0, Math.sin(t * 7 - i * 1.1))).toFixed(2) : 0); a.setAttribute("stroke-dashoffset", (-t * 40).toFixed(1)); }); }); }
+// ---- SE: complete recovery -------------------------------------------------------------------------------------------------------------------
+SC("SE", 22.0, 24.55);
+{ const S = $("SE"), pl = plateEl(S, "ابن القيم", "m", 64), [cs, ct] = circleTick(S, 300), br = chipEl(S, "البرء التام", "m", 62, true);
+  A(pl, { x: 540, y: 330, s: pop(22.05), o: seg(22.05, 24.35, .2) }); A(cs, { x: 540, y: 640, s: pop(E2[2][1]), o: seg(E2[2][1], 24.35, .2) }); D(ct, inc(E2[2][1] + 0.1, E2[2][1] + 0.6, "out")); A(br, { x: 540, y: 860, s: pop(E2[3][1]), o: seg(E2[3][1], 24.35, .2) }); BURSTS.push({ t: E2[2][1] + 0.6, x: 540, y: 640 }); }
+// ---- SF: many pains, great benefit --------------------------------------------------------------------------------------------------------------
+SC("SF", 24.75, 29.95);
+{ const S = $("SF"); [790, 540, 290].forEach((x, i) => { const c = chipEl(S, "وجع", "c", 56, true), t = F1[5 + i][1] > F1[7][1] ? F1[7][1] : F1[5 + i][1]; A(c, { x, y: 400, s: pop(F1[4 + i][1]), o: seg(F1[4 + i][1], 29.75, .2) }); BURSTS.push({ t: F1[4 + i][1] + 0.3, x, y: 400 });
+    const [ts, tt] = tickEl(S, 130); A(ts, { x, y: 520, o: seg(F2[0][1] + i * 0.15, 29.75, .2) }); D(tt, inc(F2[0][1] + i * 0.15, F2[0][1] + i * 0.15 + 0.4)); });
+  const bar = document.createElement("div"); bar.className = "a"; bar.style.cssText = "width:760px; height:60px; border:8px solid #fff; border-radius:40px; background:rgba(255,255,255,.18); overflow:hidden"; const fillB = document.createElement("div"); fillB.style.cssText = "position:absolute; right:0; top:0; bottom:0; width:0; background:linear-gradient(90deg,#ffd666,#7fe3c3)"; bar.appendChild(fillB); S.appendChild(bar);
+  const gi = chipEl(S, "غاية الانتفاع", "m", 60, true); A(gi, { x: 540, y: 690, s: pop(F2[2][1]), o: seg(F2[2][1], 29.75, .2) }); A(bar, { x: 540, y: 810, s: pop(F2[2][1] - 0.2), o: seg(F2[2][1] - 0.2, 29.75, .2) });
+  CUST.push((t) => { fillB.style.width = (100 * clamp((t - F2[2][1]) / 1.0, 0, 1) * EZ.out(1)).toFixed(1) + "%"; }); BURSTS.push({ t: F2[3][1] + 0.9, x: 540, y: 810 }); }
+// ---- SG: when all means were cut off --------------------------------------------------------------------------------------------------------------------
+SC("SG", 30.5, 34.05);
+{ const S = $("SG"), sc = chipEl(S, "عالم جليل", "y", 66, true), as = chipEl(S, "الأسباب", "", 62, true), sv = mk("svg", { width: 760, height: 200, viewBox: "0 0 760 200", class: "a" }, S);
+  [110, 380, 650].forEach((x) => mk("rect", { x: x - 70, y: 60, width: 140, height: 80, rx: 40, fill: "none", stroke: "#fff", "stroke-width": 14 }, sv));
+  const cut = mk("path", { d: "M300,20 L460,180 M460,20 L300,180", stroke: "#ff8a65", "stroke-width": 20, "stroke-linecap": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, sv);
+  A(sc, { x: 540, y: 340, s: pop(G1[2][1]), o: seg(G1[2][1], 33.85, .2) }); BURSTS.push({ t: G1[2][1] + 0.3, x: 540, y: 340 }); A(sv, { x: 540, y: 620, s: pop(G1[4][1]), o: seg(G1[4][1], 33.85, .2) }); D(cut, inc(G1[5][1], G1[5][1] + 0.35, "out")); BURSTS.push({ t: G1[5][1] + 0.4, x: 540, y: 620 });
+  A(as, { x: 540, y: 820, s: pop(G1[7][1]), o: seg(G1[7][1], 33.85, .2) }); }
+// ---- SH: do not abandon the doctor ------------------------------------------------------------------------------------------------------------------------
+SC("SH", 34.1, 36.95);
+{ const S = $("SH"), tk = chipEl(S, "ترك الطبيب", "c", 56, true), [xs, xa, xb] = crossEl(S, 240), md = medEl(S, 260), [ts, tt] = tickEl(S, 190), dc = chipEl(S, "الطبيب", "m", 58, true);
+  A(tk, { x: 290, y: 480, s: pop(H1[3][1]), o: seg(H1[3][1], 36.75, .2) }); A(xs, { x: 290, y: 480, o: seg(H1[3][1] + 0.35, 36.75, .2) }); D(xa, inc(H1[3][1] + 0.35, H1[3][1] + 0.6)); D(xb, inc(H1[3][1] + 0.47, H1[3][1] + 0.72));
+  A(md, { x: 790, y: 520, s: pop(H1[4][1]), o: seg(H1[4][1], 36.75, .2) }); A(dc, { x: 790, y: 720, s: pop(H1[4][1] + 0.1), o: seg(H1[4][1] + 0.1, 36.75, .2) });
+  A(ts, { x: 900, y: 400, o: seg(H1[7][1], 36.75, .2) }); D(tt, inc(H1[7][1], H1[7][1] + 0.4)); BURSTS.push({ t: H1[7][1] + 0.4, x: 900, y: 400 }); }
+// ---- SI: combine -------------------------------------------------------------------------------------------------------------------------------------------------
+SC("SI", 36.95, 38.9);
+{ const S = $("SI"), ms = mushEl(S, 300), md = medEl(S, 230), pl = document.createElement("div"); pl.className = "a amiri"; pl.style.cssText = "font-size:170px; line-height:1; color:#ffd666"; pl.textContent = "+"; S.appendChild(pl);
+  SS(ms, H2[2][1], 38.7, .2, { x: 790, y: 560 }); SS(md, H2[3][1], 38.7, .2, { x: 290, y: 560 }); SS(pl, H2[1][1] + 0.1, 38.7, .2, { x: 540, y: 560 }); BURSTS.push({ t: H2[3][1] + 0.3, x: 540, y: 560 }); }
+// ---- SJ: the hadith ------------------------------------------------------------------------------------------------------------------------------------------------
+SC("SJ", 38.9, 45.15);
+{ const S = $("SJ"), ps = box(260, 260, "-130 -130 260 260", S); mk("polygon", { fill: "#f6c445", stroke: INK, "stroke-width": 7, "stroke-linejoin": "round", points: star16(122, 90) }, ps); mk("circle", { r: 66, fill: "#fff4cf", stroke: INK, "stroke-width": 5 }, ps); const tx = mk("text", { x: 0, y: 26, "text-anchor": "middle", "font-family": "Amiri", "font-weight": 700, "font-size": 76, fill: INK }, ps); tx.textContent = "ﷺ";
+  A(ps, { x: 540, y: 330, s: pop(I1[4][1]), o: seg(I1[4][1], 44.9, .25) }); BURSTS.push({ t: I1[4][1] + 0.4, x: 540, y: 330 });
+  const card = document.createElement("div"); card.className = "a"; card.style.cssText = "width:900px; height:440px; background:#fff8e8; border:9px solid #e0a100; border-radius:44px; box-shadow:0 14px 0 rgba(0,0,0,.18)"; S.appendChild(card); A(card, { x: 540, y: 690, s: pop(41.65, .45), o: seg(41.65, 44.9, .25) });
+  const mkL = (txt, y, t) => { const d = document.createElement("div"); d.className = "a amiri"; d.style.cssText = "font-size:78px; line-height:1.2; color:#12404a"; d.textContent = txt; S.appendChild(d); A(d, { x: 540, y: [[t - 0.001, y + 24], [t + 0.35, y, "out"]], o: [[t - 0.001, 0], [t, 1], [44.9, 1], [45.1, 0, "in"]] }); BURSTS.push({ t: t + 0.1, x: 540, y }); };
+  mkL("ما أنزل الله داءً", 630, 41.72); mkL("إلا أنزل له شفاءً", 770, 43.32); }
+// ---- SK: close ------------------------------------------------------------------------------------------------------------------------------------------------------
+SC("SL", 45.2, 80);
+A("lamp", { x: 540, y: 330, s: [[45.4, .78], [46.1, .66, "out"]], o: [[45.3, 0], [45.7, 1]] });
+A("name", { x: 540, y: 600, s: [[45.5, 1.1], [46.3, 1, "out"]], o: [[45.5, 0], [45.9, 1]] });
+D("sh1", inc(J[0][1], J[0][1] + 0.45)); D("sh2", inc(J[0][1] + 0.3, J[0][1] + 0.7)); D("sh3", inc(J[0][1] + 0.6, J[0][1] + 0.85));
+A("share", { x: 380, y: 830, s: [[J[0][1] + 0.49, .6], [J[0][1] + 1.0, 1, "back"]], o: [[J[0][1] + 0.49, 0], [J[0][1] + 0.5, 1]] });
+A("bell", { x: 700, y: 830, s: [[tFol - 0.01, .6], [tFol + .5, 1, "back"]], r: [[tFol + 0.6, 0], [tFol + 0.7, 14, "out"], [tFol + 0.85, -12, "io"], [tFol + 1.0, 8, "io"], [tFol + 1.15, 0, "io"]], o: [[tFol - 0.01, 0], [tFol, 1]] });
+D("bl1", inc(tFol, tFol + 0.6)); D("bl2", inc(tFol + 0.5, tFol + 0.8));
+
+// ---- canvas: rain, bursts, paper grain -------------------------------------------------------------------------------------
+const fb = $("fxB").getContext("2d"), dr = rng(9), RAIN = [];
+for (let i = 0; i < 70; i++) RAIN.push({ x: dr() * 1200 - 60, y0: dr() * 1000, v: 260 + dr() * 220, l: 40 + dr() * 60, a: .05 + dr() * .09 });
+function drawFX(t) {
+  fb.clearRect(0, 0, W, H); fb.lineWidth = 3; fb.lineCap = "round";
+  for (const d of RAIN) { const y = 980 - ((d.y0 + d.v * 0.3 * t) % 1000), x = d.x * 0.9 + Math.sin(t * .7 + d.y0) * 24; fb.globalAlpha = d.a * 2.6; fb.strokeStyle = "#ffffff"; fb.lineWidth = 2.5; fb.beginPath(); fb.arc(x, y, 5 + d.l / 8, 0, 7); fb.stroke(); }
+  for (const b of BURSTS) { const age = t - b.t; if (age < 0 || age > 0.8) continue; const u = age / 0.8;
+    for (let i = 0; i < 14; i++) { const a = i * Math.PI * 2 / 14 + b.t * 3, v = 90 + (i % 3) * 50, d = v * EZ.out(u); fb.globalAlpha = (1 - u) * .95; fb.fillStyle = ["#e0a100", "#e4572e", "#2a9d8f"][i % 3]; fb.beginPath(); fb.arc(b.x + Math.cos(a) * d, b.y + Math.sin(a) * d, 6 * (1 - u) + 1.6, 0, 7); fb.fill(); } }
+  fb.globalAlpha = 1;
+}
+const DU = $("grn").getContext("2d"), GN = []; (() => { for (let f = 0; f < 4; f++) { const c = document.createElement("canvas"); c.width = 540; c.height = 960; const g = c.getContext("2d"), im = g.createImageData(540, 960), r = rng(100 + f); for (let i = 0; i < im.data.length; i += 4) { const n = r() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = n; im.data[i + 3] = 12; } g.putImageData(im, 0, 0); GN.push(c); } })();
+
+// ---- captions ---------------------------------------------------------------------------------
+let capIdx = -2;
+function drawCaps(t) {
+  let i = -1; for (let k = 0; k < CAPS.length; k++) if (t >= CAPS[k].a && t < CAPS[k].b + 0.25) i = k;
+  if (i !== capIdx) { capIdx = i; const c = CAPS[i] || { ar: "", en: "", zh: "" }; $("capAr").textContent = c.ar; $("capZh").textContent = c.zh; $("capEn").textContent = c.en; $("capAr").style.display = c.ar ? "block" : "none"; }
+  const c = CAPS[i], box = $("cap"); if (!c) { box.style.opacity = 0; return; }
+  const inP = clamp((t - c.a) / 0.16), outP = clamp((t - (c.b + 0.1)) / 0.15), nxt = CAPS[i + 1] && CAPS[i + 1].a - c.b < 0.2 ? 0 : outP;
+  box.style.opacity = inP * (1 - nxt); box.style.filter = `blur(${((1 - inP) * 7 + nxt * 7).toFixed(1)}px)`;
+}
+
+// ---- the renderer -----------------------------------------------------------------------------
+function render(t) {
+  for (const [el, sp] of ITEMS) {
+    const x = tw(t, sp.x ?? 540), y = tw(t, sp.y ?? 900), s = tw(t, sp.s ?? 1), r = tw(t, sp.r ?? 0), o = tw(t, sp.o ?? 1);
+    el.style.opacity = clamp(o); el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${r}deg) scale(${s})`;
+  }
+  for (const [el, k] of DRAWS) if (el) el.setAttribute("stroke-dashoffset", clamp(tw(t, k)).toFixed(4));
+  for (const sc of SCN) { const vis = t >= sc.a - 0.01 && t <= sc.b + 0.01; sc.el.style.display = vis ? "block" : "none"; if (!vis) continue;
+    const out = sc.b > 59 ? 0 : clamp((t - (sc.b - 0.4)) / 0.4);
+    if (out > 0) { const X = out * 112; sc.el.style.webkitMaskImage = sc.el.style.maskImage = `linear-gradient(to left, transparent ${X - 14}%, #000 ${X}%)`; }
+    else sc.el.style.webkitMaskImage = sc.el.style.maskImage = "none"; }
+  for (const f of CUST) f(t);
+  drawFX(t); drawCaps(t);
+  DU.clearRect(0, 0, 540, 960); DU.drawImage(GN[Math.floor(t * 12) % 4], 0, 0);
+}
+window.SFX = [[A1[2][1], "pop-b", .4], [A1[7][1], "pop-a", .4], [A2[2][1], "pop-a", .4], [A2[2][1] + 0.4, "thump", .4], [A2[4][1], "pop-b", .4], [A2[4][1] + 0.4, "thump", .4], [4.85, "erase", .3],
+  [B1[3][1], "pop-b", .4], [B1[7][1], "thump", .45], [tB2, "pop-a", .4], [10.0, "erase", .3], [10.2, "pop-b", .4], [C1[3][1], "thump", .45], [C2[1][1], "pop-a", .4], [C2[2][1], "pop-b", .4], [14.5, "erase", .3],
+  [D1[3][1], "pop-b", .45], [D2[3][1], "pop-a", .4], [D3[0][1], "puff", .35], [D3[5][1], "pop-b", .5], [D3[5][1] + 0.6, "thump", .4], [21.9, "erase", .3],
+  [22.05, "pop-b", .4], [E2[2][1], "pop-a", .45], [E2[3][1], "pop-b", .4], [24.45, "erase", .3], [F1[4][1], "pop-a", .35], [F1[5][1], "pop-b", .35], [F1[6][1], "pop-a", .35], [F2[0][1], "pop-b", .4], [F2[2][1], "pop-a", .45], [F2[3][1] + 0.9, "thump", .5], [29.9, "erase", .3],
+  [G1[2][1], "pop-b", .45], [G1[4][1], "pop-a", .4], [G1[5][1], "thump", .5], [G1[7][1], "pop-b", .4], [34.0, "erase", .3], [H1[3][1], "pop-a", .4], [H1[3][1] + 0.4, "thump", .4], [H1[4][1], "pop-b", .4], [H1[7][1], "pop-a", .45], [36.9, "erase", .3],
+  [H2[2][1], "pop-b", .4], [H2[3][1], "thump", .5], [38.85, "erase", .3], [I1[4][1], "pop-b", .5], [41.65, "pop-a", .4], [41.72, "chalk", .4], [43.32, "chalk", .4], [45.1, "erase", .3], [J[0][1] + 0.5, "pop-b", .4], [tFol, "pop-a", .4], [45.6, "pop-b", .3]];
+window.render = render;
+window.ready = (async () => {
+  await document.fonts.load('900 60px "Cairo"'); await document.fonts.load('700 60px "Amiri"'); await document.fonts.load('700 40px "Noto Sans SC"');
+  await document.fonts.ready; render(0); return true;
+})();
+</script>
+</body>
+</html>
