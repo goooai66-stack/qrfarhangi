@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Cairo"; src: url(fonts/Cairo.ttf) format("truetype"); font-weight: 200 1000; }
+@font-face { font-family: "Reem Kufi"; src: url(fonts/ReemKufi.ttf) format("truetype"); font-weight: 400 700; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Regular.woff) format("woff"); font-weight: 400; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Bold.woff) format("woff"); font-weight: 700; }
+@font-face { font-family: "Noto Sans SC"; src: url(fonts/NotoSansSC-subset.woff2) format("woff2"); font-weight: 500 700; }
+:root { --silver: #e9efff; --amber: #ffb454; --ink: #1a1f55; --paper: #f4ead6; --mute: #c3c9ee; --violet: #9c8cff; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #060a22; }
+body { font-family: "Cairo", sans-serif; color: var(--silver); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.a { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
+.scn { position: absolute; inset: 0; }
+.amiri { font-family: "Amiri", serif; font-weight: 700; }
+.kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+.w { display: inline-block; }
+.w.k { color: var(--amber); }
+svg { overflow: visible; display: block; }
+.plate { display: inline-block; background: linear-gradient(170deg, #2a2f7e, #1b1f5c); border: 3px solid var(--violet); border-radius: 18px; padding: 6px 34px 14px;
+  font-weight: 800; font-size: 54px; color: var(--silver); box-shadow: 0 14px 20px rgba(0,0,0,.45); }
+.plate small { display: block; font-size: 34px; font-weight: 600; color: var(--mute); margin-top: -8px; }
+.chip { display: inline-flex; align-items: center; gap: 18px; background: rgba(20,24,80,.78); border: 3px solid var(--amber); border-radius: 999px; padding: 4px 36px 12px;
+  font-weight: 800; font-size: 50px; color: var(--silver); box-shadow: 0 12px 18px rgba(0,0,0,.4); }
+.card { width: 260px; height: 350px; border-radius: 20px; background: linear-gradient(170deg, #f7eedb, #e6d9bb); color: var(--ink); text-align: center;
+  box-shadow: 0 22px 30px rgba(0,0,0,.5), 0 0 0 7px rgba(255,180,84,.28); }
+.card::before { content: ""; position: absolute; inset: 14px; border: 3px solid #c98b2c; border-radius: 12px; }
+.card .num { position: absolute; left: 0; right: 0; top: 34px; font-family: "Reem Kufi"; font-weight: 700; font-size: 74px; color: #b8741a; }
+.card .nm { position: absolute; left: 0; right: 0; top: 150px; font-family: "Amiri"; font-weight: 700; font-size: 70px; line-height: 1.2; }
+.card svg { position: absolute; left: 90px; top: 270px; }
+.bub { position: relative; background: var(--paper); color: var(--ink); border: 6px solid var(--amber); border-radius: 36px; padding: 6px 56px 22px;
+  font-family: "Amiri"; font-weight: 700; font-size: 150px; line-height: 1.15; box-shadow: 0 16px 24px rgba(0,0,0,.5); }
+.bub.s { border-color: var(--violet); font-size: 76px; padding: 10px 46px 24px; }
+.bub::after { content: ""; position: absolute; bottom: -30px; left: 54px; width: 0; height: 0; border-left: 22px solid transparent; border-right: 22px solid transparent; border-top: 34px solid var(--amber); }
+.bub.s::after { border-top-color: var(--violet); left: auto; right: 54px; }
+.dot { display: inline-block; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); margin: 0 9px; }
+#cap { position: absolute; left: 110px; right: 110px; bottom: 600px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+#cap .ar { font-weight: 800; font-size: 54px; line-height: 1.45; color: var(--silver); text-shadow: 0 2px 14px rgba(0,0,6,.9); }
+#cap .zh { font-family: "Noto Sans SC", "Cairo", sans-serif; font-weight: 700; font-size: 42px; line-height: 1.4; color: #ffd9a0; direction: ltr; text-shadow: 0 2px 14px rgba(0,0,6,.9); }
+#cap .en { font-weight: 600; font-size: 35px; line-height: 1.35; color: var(--mute); direction: ltr; text-shadow: 0 2px 14px rgba(0,0,6,.9); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="sky" class="layer" style="background: linear-gradient(180deg, #060a22 0%, #111850 46%, #2b1f6e 100%)"></div>
+  <div id="dawn" class="layer" style="background: linear-gradient(180deg, rgba(255,150,90,0) 30%, rgba(255,150,90,.38) 60%, rgba(255,196,120,.62) 100%); opacity: 0"></div>
+  <canvas id="fxB" class="layer" width="1080" height="1920"></canvas>
+  <svg id="moon" class="a" width="320" height="320" viewBox="-160 -160 320 320" aria-hidden="true">
+    <defs><radialGradient id="mg"><stop offset="0" stop-color="#e9efff" stop-opacity=".55"/><stop offset="1" stop-color="#e9efff" stop-opacity="0"/></radialGradient></defs>
+    <circle r="160" fill="url(#mg)"/><circle r="74" fill="#e9efff"/><circle cx="-22" cy="-16" r="14" fill="#cfd8ff"/><circle cx="24" cy="22" r="20" fill="#cfd8ff"/><circle cx="14" cy="-34" r="9" fill="#cfd8ff"/>
+  </svg>
+  <svg id="cloudA" class="a" width="520" height="220" viewBox="0 0 520 220" aria-hidden="true"><path d="M60,190 C10,190 0,140 40,125 C35,80 85,60 120,85 C140,30 215,20 245,70 C275,35 340,45 355,95 C400,70 455,95 450,140 C500,140 520,190 460,190 Z" fill="#262b78"/><path d="M60,190 C10,190 0,140 40,125 C80,150 140,160 460,160 C490,170 500,185 460,190 Z" fill="#1c2060"/></svg>
+  <svg id="cloudB" class="a" width="520" height="220" viewBox="0 0 520 220" aria-hidden="true"><path d="M60,190 C10,190 0,140 40,125 C35,80 85,60 120,85 C140,30 215,20 245,70 C275,35 340,45 355,95 C400,70 455,95 450,140 C500,140 520,190 460,190 Z" fill="#1f2468"/></svg>
+  <svg id="cloudC" class="a" width="520" height="220" viewBox="0 0 520 220" aria-hidden="true"><path d="M60,190 C10,190 0,140 40,125 C35,80 85,60 120,85 C140,30 215,20 245,70 C275,35 340,45 355,95 C400,70 455,95 450,140 C500,140 520,190 460,190 Z" fill="#2d3388"/></svg>
+  <svg id="hills" class="layer" viewBox="0 0 1080 1920" aria-hidden="true">
+    <g style="filter: drop-shadow(0 -8px 12px rgba(0,0,10,.5))"><path d="M0,900 C120,860 220,880 330,850 C450,815 560,870 700,860 C830,850 940,820 1080,850 L1080,1920 L0,1920 Z" fill="#1d2268"/>
+      <path d="M880,852 L880,790 Q880,764 905,764 Q930,764 930,790 L930,852 Z" fill="#1d2268"/><path d="M846,790 L846,720 L851,708 L856,720 L856,790 Z" fill="#1d2268"/><rect x="848" y="640" width="6" height="70" fill="#1d2268"/>
+      <path d="M858,640 L851,622 L844,640 Z" fill="#1d2268"/></g>
+    <g style="filter: drop-shadow(0 -8px 12px rgba(0,0,10,.5))"><path d="M0,990 C140,950 260,975 400,950 C540,925 650,985 800,965 C920,950 1000,935 1080,950 L1080,1920 L0,1920 Z" fill="#151a55"/>
+      <path d="M140,968 C130,930 135,900 150,880 M150,880 C120,880 100,890 90,905 M150,880 C175,878 195,888 205,902 M150,880 C140,860 150,845 160,840 M150,880 C165,862 180,858 190,858" stroke="#151a55" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <path d="M940,945 C934,915 938,890 948,872 M948,872 C925,872 908,880 900,893 M948,872 C970,870 985,879 993,891" stroke="#151a55" stroke-width="8" fill="none" stroke-linecap="round"/></g>
+    <g style="filter: drop-shadow(0 -8px 12px rgba(0,0,10,.5))"><path d="M0,1090 C160,1050 300,1090 460,1060 C620,1030 760,1090 920,1065 C990,1055 1040,1060 1080,1065 L1080,1920 L0,1920 Z" fill="#0d1140"/></g>
+  </svg>
+  <div id="dark" class="layer" style="background: radial-gradient(circle at 50% 42%, rgba(2,3,15,0) 0%, rgba(2,3,15,.5) 42%, rgba(2,3,15,.93) 88%)"></div>
+  <canvas id="fxF" class="layer" width="1080" height="1920"></canvas>
+
+  <!-- the three surahs: they stay with us -->
+  <div id="k0" class="a card"><div class="num">١</div><div class="nm">الإخلاص</div><svg width="80" height="80" viewBox="-40 -40 80 80"><polygon id="st0" fill="#c98b2c"/></svg></div>
+  <div id="k1" class="a card"><div class="num">٢</div><div class="nm">الفلق</div><svg width="80" height="80" viewBox="-40 -40 80 80"><polygon id="st1" fill="#c98b2c"/></svg></div>
+  <div id="k2" class="a card"><div class="num">٣</div><div class="nm">الناس</div><svg width="80" height="80" viewBox="-40 -40 80 80"><polygon id="st2" fill="#c98b2c"/></svg></div>
+  <svg id="wall" class="a" width="1000" height="320" viewBox="0 0 1000 320" aria-hidden="true"></svg>
+
+  <!-- SA: the hook -->
+  <div id="SA" class="scn">
+    <div id="a1" class="a amiri" style="font-size:104px; line-height:1.1; color:#e9efff; text-shadow:0 0 40px rgba(156,140,255,.55)">ثلاثُ سورٍ قصيرة</div>
+    <div id="a2" class="a" style="font-weight:900; font-size:78px; line-height:1.1"></div>
+  </div>
+
+  <!-- SB: the night, the search -->
+  <div id="SB" class="scn">
+    <div id="bName" class="a"><span class="plate">عبد الله بن خُبيب<small>رضي الله عنه</small></span></div>
+    <div id="bRain" class="a"><span class="chip"><svg width="90" height="64" viewBox="0 0 90 64"><path d="M20,40 C6,40 4,24 18,20 C18,6 38,2 46,14 C56,6 74,14 70,28 C84,28 84,40 70,40 Z" fill="#9c8cff"/><g stroke="#ffb454" stroke-width="5" stroke-linecap="round"><path d="M24,48 l-6,14"/><path d="M44,48 l-6,14"/><path d="M64,48 l-6,14"/></g></svg>ليلة مطيرة</span></div>
+    <div id="bDark" class="a"><span class="chip" style="border-color:#9c8cff"><svg width="64" height="64" viewBox="-32 -32 64 64"><circle r="28" fill="#04051a" stroke="#9c8cff" stroke-width="4"/><circle cx="8" cy="-4" r="20" fill="#9c8cff" opacity=".25"/></svg>ظلمة شديدة</span></div>
+    <div id="bSeek" class="a" style="text-align:center"><div class="amiri" id="bSeek1" style="font-size:84px; line-height:1.15">نطلب رسول الله</div><div id="bSeek2" style="font-size:38px; font-weight:600; color:#c3c9ee">صلى الله عليه وسلم</div></div>
+    <div id="tgt" class="a" style="width:260px; height:260px; border-radius:50%; background: radial-gradient(circle, rgba(255,226,160,.95) 0%, rgba(255,180,84,.5) 36%, rgba(255,180,84,0) 70%)"></div>
+    <div id="lglow" class="a" style="width:330px; height:330px; border-radius:50%; background: radial-gradient(circle, rgba(255,226,160,.8) 0%, rgba(255,180,84,.4) 34%, rgba(255,180,84,0) 70%)"></div>
+    <svg id="lant" class="a" width="120" height="190" viewBox="0 0 300 470" aria-hidden="true">
+      <line x1="150" y1="0" x2="150" y2="170" stroke="#ffb454" stroke-width="6"/><path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#ffb454"/>
+      <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="rgba(255,226,160,.35)" stroke="#ffb454" stroke-width="10"/>
+      <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#fff2cf"/><path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#ffb454"/>
+    </svg>
+  </div>
+
+  <!-- SC: "say", and nothing said -->
+  <div id="SC" class="scn">
+    <div id="tgt2" class="a" style="width:260px; height:260px; border-radius:50%; background: radial-gradient(circle, rgba(255,226,160,.95) 0%, rgba(255,180,84,.5) 36%, rgba(255,180,84,0) 70%)"></div>
+    <div id="lglow2" class="a" style="width:330px; height:330px; border-radius:50%; background: radial-gradient(circle, rgba(255,226,160,.8) 0%, rgba(255,180,84,.4) 34%, rgba(255,180,84,0) 70%)"></div>
+    <svg id="lant2" class="a" width="120" height="190" viewBox="0 0 300 470" aria-hidden="true">
+      <line x1="150" y1="0" x2="150" y2="170" stroke="#ffb454" stroke-width="6"/><path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#ffb454"/>
+      <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="rgba(255,226,160,.35)" stroke="#ffb454" stroke-width="10"/>
+      <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#fff2cf"/><path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#ffb454"/>
+    </svg>
+    <div id="mglow" class="a" style="width:520px; height:520px; border-radius:50%; background: radial-gradient(circle, rgba(255,226,160,.85) 0%, rgba(255,180,84,.38) 36%, rgba(255,180,84,0) 70%)"></div>
+  </div>
+
+  <!-- SD: what to say -->
+  <div id="SD" class="scn">
+    <div id="dTitle" class="a amiri" style="font-size:80px; line-height:1.25; text-align:center"><div id="dT1"></div><div id="dT2"></div></div>
+    <div id="dKfy" class="a" style="font-weight:900; font-size:74px; line-height:1.15"></div>
+    <svg id="moonI" class="a" width="110" height="110" viewBox="-55 -55 110 110" aria-hidden="true"><path d="M14,-42 A44,44 0 1 0 14,42 A34,34 0 1 1 14,-42 Z" fill="#e9efff"/></svg>
+    <svg id="sunI" class="a" width="120" height="120" viewBox="-60 -60 120 120" aria-hidden="true"></svg>
+    <div id="x3" class="a kufi" style="font-size:96px; line-height:1; color:#ffb454">٣×</div>
+    <div id="sAD" class="a"><span class="chip" style="font-size:42px; border-color:#9c8cff">أبو داود</span></div>
+    <div id="sTR" class="a"><span class="chip" style="font-size:42px; border-color:#9c8cff">الترمذي</span></div>
+  </div>
+
+  <!-- SE: one minute, morning and evening, a fortress -->
+  <div id="SE" class="scn">
+    <svg id="clk" class="a" width="270" height="270" viewBox="-135 -135 270 270" aria-hidden="true">
+      <circle r="105" fill="rgba(20,24,80,.78)" stroke="rgba(233,239,255,.25)" stroke-width="14"/>
+      <circle id="clkArc" r="105" fill="none" stroke="#ffb454" stroke-width="14" stroke-linecap="butt" transform="rotate(-90)" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <div id="clkT" class="a kufi" style="font-size:104px; line-height:1; color:#e9efff">١</div>
+    <div id="clkL" class="a amiri" style="font-size:44px; color:#c3c9ee">دقيقة</div>
+    <svg id="sunE" class="a" width="120" height="120" viewBox="-60 -60 120 120" aria-hidden="true"></svg>
+    <svg id="moonE" class="a" width="110" height="110" viewBox="-55 -55 110 110" aria-hidden="true"><path d="M14,-42 A44,44 0 1 0 14,42 A34,34 0 1 1 14,-42 Z" fill="#e9efff"/></svg>
+  </div>
+
+  <!-- SF: the doctor -->
+  <div id="SF" class="scn">
+    <svg id="cross" class="a" width="300" height="300" viewBox="0 0 240 240" aria-hidden="true">
+      <circle cx="120" cy="120" r="110" fill="rgba(60,44,140,.8)" stroke="#ffb454" stroke-width="8"/>
+      <rect x="98" y="52" width="44" height="136" rx="12" fill="#f4ead6"/><rect x="52" y="98" width="136" height="44" rx="12" fill="#f4ead6"/>
+    </svg>
+    <div id="cTreat" class="a"><span class="chip">العلاج</span></div>
+    <div id="cDoc" class="a"><span class="chip">الطبيب</span></div>
+  </div>
+
+  <!-- SG: share, follow, the name -->
+  <div id="SG" class="scn">
+    <svg id="lamp" class="a" width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+      <defs><radialGradient id="lg"><stop offset="0" stop-color="#ffd98a" stop-opacity=".9"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="150" cy="300" r="150" fill="url(#lg)"/>
+      <line x1="150" y1="0" x2="150" y2="170" stroke="#ffb454" stroke-width="4"/><path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#ffb454"/>
+      <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="none" stroke="#ffb454" stroke-width="7"/>
+      <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#fff2cf"/><path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#ffb454"/><line x1="150" y1="400" x2="150" y2="440" stroke="#ffb454" stroke-width="4"/>
+    </svg>
+    <div id="name" class="a amiri" style="font-size:150px; line-height:1.2; color:#ffb454; text-shadow:0 0 50px rgba(255,180,84,.45)">في معيّة الله</div>
+    <svg id="share" class="a" width="190" height="171" viewBox="0 0 240 216" aria-hidden="true">
+      <path id="sh1" d="M30,100 L30,196 L210,196 L210,100" fill="none" stroke="#e9efff" stroke-width="12" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh2" d="M120,150 L120,18" fill="none" stroke="#ffb454" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh3" d="M72,68 L120,16 L168,68" fill="none" stroke="#ffb454" stroke-width="14" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <svg id="bell" class="a" width="170" height="190" viewBox="0 0 170 190" aria-hidden="true">
+      <path id="bl1" d="M85,18 C45,18 32,56 32,92 C32,120 20,134 12,146 L158,146 C150,134 138,120 138,92 C138,56 125,18 85,18 Z" fill="none" stroke="#ffb454" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="bl2" d="M62,164 C66,182 104,182 108,164" fill="none" stroke="#ffb454" stroke-width="12" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+  </div>
+
+  <div id="cap"><div class="ar" id="capAr"></div><div class="zh" id="capZh"></div><div class="en" id="capEn"></div></div>
+  <canvas id="grain" class="layer" width="540" height="960" style="width:1080px; height:1920px"></canvas>
+</div>
+
+<script>
+const W = 1080, H = 1920, CAPS = __CAPS__;
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const EZ = { lin: (x) => x, out: (x) => 1 - Math.pow(1 - x, 3), in: (x) => x * x * x, io: (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+  back: (x) => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+  pop: (x) => { const c1 = 2.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); } };
+function tw(t, k) {
+  if (typeof k === "number") return k; if (typeof k === "function") return k(t);
+  if (t <= k[0][0]) return k[0][1];
+  for (let i = 1; i < k.length; i++) if (t <= k[i][0]) { const [t0, v0] = k[i - 1], [t1, v1, e = "out"] = k[i]; return v0 + (v1 - v0) * EZ[e](clamp((t - t0) / ((t1 - t0) || 1))); }
+  return k[k.length - 1][1];
+}
+const rng = (seed) => { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; };
+const NS = "http://www.w3.org/2000/svg";
+const mk = (tag, at, parent) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); parent && parent.appendChild(e); return e; };
+const ITEMS = [], DRAWS = [], WORDS = [], SCN = [], RIPS = [], BURSTS = [], CUST = [];
+const A = (id, sp) => ITEMS.push([typeof id === "string" ? $(id) : id, sp]);
+const D = (el, k) => DRAWS.push([typeof el === "string" ? $(el) : el, k]);
+const SC = (id, a, b, inMode = "blur") => SCN.push({ el: $(id), a, b, inMode });
+const pop = (t, d = 0.45) => [[t - 0.001, 0.6], [t + d, 1, "pop"]];
+const on = (a, b) => [[a - 0.001, 0], [a, 1], [b, 1], [b + 0.25, 0, "in"]];  // opacity: visible from a to b
+function spread(text, a, b) {
+  const ws = text.split(/\s+/), cl = (w) => w.replace(/[ً-ْٰ]/g, ""), wt = ws.map((w) => cl(w).length + 0.6), tot = wt.reduce((p, c) => p + c, 0);
+  let c = 0; return ws.map((w, i) => { const t = a + (b - a) * c / tot; c += wt[i]; return [w, t]; });
+}
+function mount(id, items, { mode = "blur", keys = [] } = {}) {
+  const box = $(id);
+  box.innerHTML = items.map(([w], i) => `<span class="w${keys.includes(i) ? " k" : ""}" data-i="${i}">${w}</span>`).join(" ");
+  [...box.querySelectorAll(".w")].forEach((el, i) => WORDS.push({ el, t: items[i][1], mode, gold: keys.includes(i) }));
+}
+const star = (id, r1, r2, n = 8) => { const pts = []; for (let i = 0; i < n * 2; i++) { const a = i * Math.PI / n - Math.PI / 2, r = i % 2 ? r2 : r1; pts.push(`${(r * Math.cos(a)).toFixed(1)},${(r * Math.sin(a)).toFixed(1)}`); } $(id).setAttribute("points", pts.join(" ")); };
+[0, 1, 2].forEach((i) => star("st" + i, 34, 16));
+
+// ---- the story's clock -----------------------------------------------------------------------
+const C0 = spread("ثلاث سور قصيرة قال عنها النبي صلى الله عليه وسلم إنها تكفيك من كل شيء", 0.05, 5.56);
+const C1 = spread("قال عبد الله بن خبيب رضي الله عنه خرجنا في ليلة مطيرة وظلمة شديدة نطلب رسول الله صلى الله عليه وسلم ليصلي بنا", 6.22, 14.52);
+const C13 = spread("قل هو الله أحد والمعوذتين حين تمسي وحين تصبح ثلاث مرات", 25.44, 30.32);
+const C14 = spread("تكفيك من كل شيء رواه أبو داود والترمذي", 30.65, 33.85);
+const C15 = spread("ثلاث سور قصيرة تقرؤها في دقيقة صباحا ومساء فتكون حصنا لك بإذن الله", 34.42, 40.73);
+const C16 = spread("مع الأخذ بأسباب العلاج ومراجعة الطبيب عند الحاجة", 41.13, 44.13);
+const C17 = spread("شارك هذه القصة مع من تحب وتابع القناة", 44.73, 47.23);
+
+// ---- the weather -----------------------------------------------------------------------------
+const RAIN = [[0, 0], [5.9, 0], [7.4, 1, "io"], [14.8, 1], [16, .6, "io"], [24.7, .6], [26.2, .1, "io"], [30, 0]];
+const STARS = [[0, 1], [6.0, 1], [7.2, 0], [24.8, 0], [27, 1]];
+const DARK = [[0, 0], [10.4, 0], [12.4, 1, "io"], [14.7, 1], [16.2, .55, "io"], [24.5, .45], [26.6, 0, "io"]];
+A("dawn", { x: 540, y: 960, o: [[34.3, 0], [36.0, .7, "io"], [41.0, .7], [43.5, .2, "io"]] });
+A("dark", { x: 540, y: 960, o: DARK });
+A("moon", { x: 968, y: 250, o: [[0, 1], [6, 1], [8.4, 0.12, "io"], [24.8, .12], [27.2, 1, "io"]] });
+A("cloudA", { x: [[5.8, 1500], [8.2, 760, "out"], [24.8, 640, "lin"], [27.4, -300, "in"]], y: 300, o: [[5.8, 0], [6.0, 1], [27.3, 1], [27.5, 0]] });
+A("cloudB", { x: [[6.0, -300], [8.6, 300, "out"], [24.8, 420, "lin"], [27.4, 1500, "in"]], y: 430, s: 1.2, o: [[6.0, 0], [6.2, 1], [27.3, 1], [27.5, 0]] });
+A("cloudC", { x: [[6.2, 1500], [9.2, 420, "out"], [24.8, 330, "lin"], [27.4, -300, "in"]], y: 230, s: 0.9, o: [[6.2, 0], [6.4, 1], [27.3, 1], [27.5, 0]] });
+
+// ---- the three surahs (global) ---------------------------------------------------------------
+const KX = [790, 540, 290], tI = C13[1][1], tF = C13[4][1], tNs = tF + 0.28, TR = [tI, tF, tNs];
+[0, 1, 2].forEach((i) => {
+  const t = TR[i], mx = [660, 540, 420][i];
+  A("k" + i, { x: [[0, KX[i]], [34.4, KX[i]], [35.2, mx, "io"]], y: [[0, 720], [0.9, 690, "out"], [5.9, 690], [6.6, 770, "in"], [t - 0.001, 600], [t + 0.5, 560, "out"], [34.4, 560], [35.2, 480, "io"]],
+    s: [[0, 1.06], [0.9, 1.12, "out"], [5.9, 1.12], [6.6, .8, "in"], [t - 0.001, .55], [t + 0.5, .92, "pop"], [34.4, .92], [35.2, .5, "io"]],
+    r: -4 + 4 * i, o: [[0, 1], [5.9, 1], [6.5, 0, "in"], [t - 0.001, 0], [t, 1], [40.9, 1], [41.4, 0, "in"]] });
+  BURSTS.push({ t, x: KX[i], y: 560 });
+});
+
+// ---- SA: the hook -----------------------------------------------------------------------------
+SC("SA", 0, 6.3);
+A("a1", { x: 540, y: 240, s: [[0, 1.06], [0.7, 1, "out"]], o: [[0, 1], [5.9, 1], [6.3, 0, "in"]] });
+mount("a2", C0.slice(11, 15), { keys: [0] });
+A("a2", { x: 540, y: 365, o: [[0, 1], [5.9, 1], [6.3, 0, "in"]] });
+
+// ---- SB: the night ---------------------------------------------------------------------------
+SC("SB", 6.0, 14.9);
+const tName = C1[1][1], tRain = C1[10][1], tDark = C1[12][1], tSeek = C1[14][1];
+A("bName", { x: 540, y: 250, s: pop(tName), o: [[tName - 0.001, 0], [tName, 1]] });
+A("bRain", { x: 540, y: 390, s: pop(tRain), o: [[tRain - 0.001, 0], [tRain, 1]] });
+A("bDark", { x: 540, y: 520, s: pop(tDark), o: [[tDark - 0.001, 0], [tDark, 1]] });
+A("bSeek", { x: 540, y: 665, s: pop(tSeek), o: [[tSeek - 0.001, 0], [tSeek, 1]] });
+const bob = (t) => 784 + 7 * Math.sin(t * 5.2);
+const lx = [[tSeek, 1030], [14.7, 300, "io"]];
+A("lant", { x: lx, y: bob, o: [[tSeek - 0.2, 0], [tSeek, 1]] });
+A("lglow", { x: lx, y: (t) => bob(t) + 10, o: [[tSeek - 0.2, 0], [tSeek + .2, .9]], s: [[tSeek, .7], [14.7, 1, "io"]] });
+A("tgt", { x: 170, y: 818, s: [[12.3, .5], [13.3, 1, "out"]], o: [[12.3, 0], [13.0, .95]] });
+SC("SC", 14.7, 25.0);
+const lx2 = [[14.7, 300], [15.7, 238, "io"]];
+A("lant2", { x: lx2, y: bob, o: [[14.69, 0], [14.7, 1], [24.5, 1], [24.9, 0, "in"]] });
+A("lglow2", { x: lx2, y: (t) => bob(t) + 10, o: [[14.69, 0], [14.7, .9], [24.5, .9], [24.9, 0, "in"]] });
+A("tgt2", { x: 170, y: 818, s: (t) => 1 + 0.06 * Math.sin(t * 4), o: [[14.69, 0], [14.7, .95], [24.5, .95], [24.9, 0, "in"]] });
+A("mglow", { x: 215, y: 820, s: [[14.8, .6], [15.6, 1, "out"]], o: [[14.8, 0], [15.0, 1], [24.5, 1], [24.9, 0, "in"]] });
+RIPS.push({ t: 14.82, d: 1.2, r0: 40, r1: 340, c: "255,226,160", pos: () => [215, 830] });
+// ---- SC: say / nothing said ----------------------------------------------------------------------
+const QT = [16.82, 19.87, 22.84], AT = [17.46, 20.36, 23.51], AE = [18.36, 21.55, 24.33];
+{ const box = $("SC");
+  QT.forEach((t, i) => { const d = document.createElement("div"); d.id = "qb" + i; d.className = "a"; d.innerHTML = '<div class="bub">قل</div>'; box.appendChild(d);
+    A(d, { x: 660, y: 450, s: pop(t, 0.4), o: [[t - 0.001, 0], [t, 1], [AE[i] + 0.1, 1], [AE[i] + 0.35, 0, "in"]] }); BURSTS.push({ t, x: 660, y: 450 }); });
+  AT.forEach((t, i) => { const d = document.createElement("div"); d.id = "ab" + i; d.className = "a";
+    d.innerHTML = i < 2 ? '<div class="bub s"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>' : '<div class="bub s">ما أقول؟</div>'; box.appendChild(d);
+    A(d, { x: 430, y: 690, s: pop(t, 0.4), o: [[t - 0.001, 0], [t, 1], [AE[i] + 0.1, 1], [AE[i] + 0.35, 0, "in"]] });
+    if (i < 2) [...d.querySelectorAll(".dot")].forEach((dot, j) => WORDS.push({ el: dot, t: t + 0.18 * j, mode: "blur" })); }); }
+
+// ---- SD: what to say -------------------------------------------------------------------------
+SC("SD", 24.7, 34.3);
+mount("dT1", spread("قُلْ هُوَ اللَّهُ أَحَدٌ", C13[0][1], C13[3][1] + 0.4), { keys: [2] });
+mount("dT2", [["وَالْمُعَوِّذَتَيْنِ", C13[4][1]]]);
+A("dTitle", { x: 540, y: 255, o: [[tI - 0.5, 0], [tI - 0.3, 1], [C14[0][1] - 0.1, 1], [C14[0][1] + 0.2, 0, "in"]] });
+mount("dKfy", spread("تكفيك من كل شيء", C14[0][1], C14[3][1] + 0.5), { keys: [3] });
+A("dKfy", { x: 540, y: 255, o: [[C14[0][1] - 0.01, 0], [C14[0][1], 1], [33.8, 1], [34.2, 0, "in"]] });
+{ const sun = $("sunI"); mk("circle", { r: 26, fill: "#ffb454" }, sun); for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; mk("line", { x1: Math.cos(a) * 38, y1: Math.sin(a) * 38, x2: Math.cos(a) * 54, y2: Math.sin(a) * 54, stroke: "#ffb454", "stroke-width": 7, "stroke-linecap": "round" }, sun); }
+  const s2 = $("sunE"); mk("circle", { r: 26, fill: "#ffb454" }, s2); for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; mk("line", { x1: Math.cos(a) * 38, y1: Math.sin(a) * 38, x2: Math.cos(a) * 54, y2: Math.sin(a) * 54, stroke: "#ffb454", "stroke-width": 7, "stroke-linecap": "round" }, s2); } }
+const tMasa = C13[6][1], tSubh = C13[8][1], tTh = C13[9][1];
+A("moonI", { x: 820, y: 825, s: pop(tMasa), o: [[tMasa - 0.001, 0], [tMasa, 1], [30.5, 1], [30.9, 0, "in"]] });
+A("sunI", { x: 260, y: 825, s: pop(tSubh), r: [[tSubh, 0], [34, 80, "lin"]], o: [[tSubh - 0.001, 0], [tSubh, 1], [30.5, 1], [30.9, 0, "in"]] });
+A("x3", { x: 540, y: 825, s: pop(tTh), o: [[tTh - 0.001, 0], [tTh, 1], [30.5, 1], [30.9, 0, "in"]] });
+const tKul = C14[2][1], tAD = C14[5][1], tTR = C14[7][1];
+RIPS.push({ t: tKul, d: 1.5, r0: 120, r1: 980, c: "255,180,84", pos: () => [540, 560] }); RIPS.push({ t: tKul + 0.3, d: 1.5, r0: 120, r1: 980, c: "156,140,255", pos: () => [540, 560] });
+A("sAD", { x: 330, y: 905, s: pop(tAD), o: [[tAD - 0.001, 0], [tAD, 1]] }); A("sTR", { x: 750, y: 905, s: pop(tTR), o: [[tTR - 0.001, 0], [tTR, 1]] });
+BURSTS.push({ t: tKul, x: 540, y: 560 });
+
+// ---- SE: a minute, morning and evening, a fortress -----------------------------------------------
+SC("SE", 34.2, 41.2);
+const tDq = C15[5][1], tSb = C15[6][1], tMs = C15[7][1], tHsn = C15[9][1], tAllah = C15[12][1];
+A("clk", { x: 540, y: 285, s: pop(tDq - 0.3), o: [[tDq - 0.31, 0], [tDq - 0.3, 1]] });
+A("clkT", { x: 540, y: 265, s: pop(tDq - 0.3), o: [[tDq - 0.31, 0], [tDq - 0.3, 1]] });
+A("clkL", { x: 540, y: 335, o: [[tDq - 0.31, 0], [tDq - 0.1, 1]] });
+D("clkArc", [[tDq - 0.2, 1], [tDq + 1.7, 0, "io"]]);
+A("sunE", { x: 780, y: 285, s: pop(tSb), o: [[tSb - 0.001, 0], [tSb, 1]] }); A("moonE", { x: 250, y: 285, s: pop(tMs), o: [[tMs - 0.001, 0], [tMs, 1]] });
+{ const w = $("wall"), c = "#3b3aa0", c2 = "#2c2b86";
+  mk("rect", { x: 0, y: 90, width: 1000, height: 230, fill: c2 }, w);
+  for (let i = 0; i < 7; i++) mk("rect", { x: 24 + i * 140, y: 44, width: 82, height: 50, fill: c2 }, w);
+  [[40, 0], [800, 0]].forEach(([x]) => { mk("rect", { x, y: 10, width: 160, height: 310, fill: c }, w); for (let j = 0; j < 3; j++) mk("rect", { x: x + 6 + j * 56, y: -26, width: 44, height: 40, fill: c }, w); mk("rect", { x: x + 72, y: 70, width: 16, height: 54, rx: 8, fill: "#ffb454" }, w); });
+  for (let r = 0; r < 6; r++) for (let q = 0; q < 12; q++) mk("rect", { x: (r % 2 ? 40 : 0) + q * 84 + 2, y: 110 + r * 36, width: 80, height: 32, fill: "none", stroke: "rgba(233,239,255,.10)", "stroke-width": 2 }, w);
+  mk("path", { d: "M410,320 V200 Q500,100 590,200 V320 Z", fill: "#080b2c" }, w);
+  mk("path", { id: "gate", d: "M430,320 V206 Q500,128 570,206 V320 Z", fill: "#ffb454", opacity: 0 }, w); }
+A("wall", { x: 540, y: 700, o: [[tHsn - 0.4, 0], [tHsn - 0.39, 1], [41.0, 1], [41.4, 0, "in"]] });
+CUST.push((t) => { const p = clamp((t - (tHsn - 0.3)) / 1.7), e = EZ.out(p); $("wall").style.clipPath = `inset(${((1 - e) * 100).toFixed(1)}% 0 0 0)`;
+  const g = $("gate"); g.setAttribute("opacity", (0.85 * clamp((t - tAllah) / 0.5)).toFixed(2)); });
+RIPS.push({ t: tAllah, d: 1.4, r0: 80, r1: 700, c: "255,180,84", pos: () => [540, 640] }); BURSTS.push({ t: tAllah, x: 540, y: 640 });
+
+// ---- SF: the doctor ---------------------------------------------------------------------------
+SC("SF", 40.9, 44.5);
+const tTr = C16[3][1], tDc = C16[5][1];
+A("cross", { x: 540, y: 520, s: [[41.0, .5], [41.7, 1, "back"]], o: [[41.0, 0], [41.4, 1]] });
+A("cTreat", { x: 210, y: 520, s: pop(tTr), o: [[tTr - 0.001, 0], [tTr, 1]] }); A("cDoc", { x: 870, y: 520, s: pop(tDc), o: [[tDc - 0.001, 0], [tDc, 1]] });
+
+// ---- SG: share, follow, the name ----------------------------------------------------------------
+SC("SG", 44.3, 60);
+const tSh = C17[0][1], tFl = C17[6][1];
+A("lamp", { x: 540, y: 350, s: [[44.5, .78], [45.2, .66, "out"]], o: [[44.4, 0], [44.9, 1]] });
+A("name", { x: 540, y: 610, s: [[44.6, 1.1], [45.4, 1, "out"]], o: [[44.6, 0], [45.0, 1]] });
+D("sh1", [[tSh, 1], [tSh + 0.45, 0, "out"]]); D("sh2", [[tSh + 0.3, 1], [tSh + 0.7, 0, "out"]]); D("sh3", [[tSh + 0.6, 1], [tSh + 0.85, 0, "out"]]);
+A("share", { x: 380, y: 830, s: [[tSh - 0.01, .6], [tSh + .5, 1, "back"]], o: [[tSh - 0.01, 0], [tSh, 1]] });
+D("bl1", [[tFl, 1], [tFl + 0.6, 0, "out"]]); D("bl2", [[tFl + 0.5, 1], [tFl + 0.8, 0, "out"]]);
+A("bell", { x: 700, y: 830, s: [[tFl - 0.01, .6], [tFl + .5, 1, "back"]], r: [[tFl + 0.6, 0], [tFl + 0.7, 14, "out"], [tFl + 0.85, -12, "io"], [tFl + 1.0, 8, "io"], [tFl + 1.15, 0, "io"]], o: [[tFl - 0.01, 0], [tFl, 1]] });
+
+// ---- canvas: stars, rain, ripples, bursts -------------------------------------------------------
+const fb = $("fxB").getContext("2d"), ff = $("fxF").getContext("2d"), dr = rng(41), STAR = [], DROP = [];
+for (let i = 0; i < 90; i++) STAR.push({ x: dr() * W, y: dr() * 1250 + 40, r: .8 + dr() * 2, p: dr() * 6, v: 1 + dr() * 2 });
+for (let i = 0; i < 170; i++) DROP.push({ x: dr() * (W + 300) - 100, y0: dr() * (H + 200), v: 1500 + dr() * 900, len: 34 + dr() * 52, w: 1.6 + dr() * 1.6, a: .22 + dr() * .34 });
+function drawFX(t) {
+  fb.clearRect(0, 0, W, H); const sa = tw(t, STARS);
+  if (sa > 0.01) for (const s of STAR) { fb.globalAlpha = sa * (.45 + .45 * Math.sin(t * s.v + s.p)); fb.fillStyle = "#e9efff"; fb.beginPath(); fb.arc(s.x, s.y, s.r, 0, 7); fb.fill(); }
+  fb.globalAlpha = 1;
+  ff.clearRect(0, 0, W, H); const ri = tw(t, RAIN);
+  if (ri > 0.01) { ff.strokeStyle = "#b8c4ff"; ff.lineCap = "round";
+    for (const d of DROP) { const off = (d.v * t) % (H + 240), y = d.y0 + off > H + 120 ? d.y0 + off - (H + 240) : d.y0 + off, x = d.x - 0.2 * (y + 100);
+      ff.globalAlpha = d.a * ri; ff.lineWidth = d.w; ff.beginPath(); ff.moveTo(x, y); ff.lineTo(x - d.len * 0.2, y + d.len); ff.stroke(); } }
+  for (const r of RIPS) { const age = t - r.t; if (age < 0 || age > r.d) continue; const u = age / r.d, [x, y] = r.pos(r.t);
+    ff.globalAlpha = (1 - u) * .6; ff.strokeStyle = `rgb(${r.c})`; ff.lineWidth = 8 * (1 - u) + 2; ff.beginPath(); ff.arc(x, y, r.r0 + (r.r1 - r.r0) * EZ.out(u), 0, 7); ff.stroke(); }
+  for (const b of BURSTS) { const age = t - b.t; if (age < 0 || age > 0.9) continue; const u = age / 0.9;
+    for (let i = 0; i < 16; i++) { const a = i * Math.PI * 2 / 16 + b.t, v = 130 + (i % 3) * 60, d = v * EZ.out(u); ff.globalAlpha = 1 - u; ff.fillStyle = i % 2 ? "#ffb454" : "#fff2cf"; ff.beginPath(); ff.arc(b.x + Math.cos(a) * d, b.y + Math.sin(a) * d, 5.5 * (1 - u) + 1.4, 0, 7); ff.fill(); } }
+  ff.globalAlpha = 1;
+}
+const GR = []; (() => { for (let f = 0; f < 4; f++) { const c = document.createElement("canvas"); c.width = 540; c.height = 960; const g = c.getContext("2d"), im = g.createImageData(540, 960), r = rng(100 + f); for (let i = 0; i < im.data.length; i += 4) { const n = r() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = n; im.data[i + 3] = 20; } g.putImageData(im, 0, 0); GR.push(c); } })();
+
+// ---- captions ---------------------------------------------------------------------------------
+let capIdx = -2;
+function drawCaps(t) {
+  let i = -1; for (let k = 0; k < CAPS.length; k++) if (t >= CAPS[k].a && t < CAPS[k].b + 0.25) i = k;
+  if (i !== capIdx) { capIdx = i; const c = CAPS[i] || { ar: "", en: "", zh: "" }; $("capAr").textContent = c.ar; $("capZh").textContent = c.zh; $("capEn").textContent = c.en; $("capAr").style.display = c.ar ? "block" : "none"; }
+  const c = CAPS[i], box = $("cap"); if (!c) { box.style.opacity = 0; return; }
+  const inP = clamp((t - c.a) / 0.16), outP = clamp((t - (c.b + 0.1)) / 0.15), nxt = CAPS[i + 1] && CAPS[i + 1].a - c.b < 0.2 ? 0 : outP;
+  box.style.opacity = inP * (1 - nxt); box.style.filter = `blur(${((1 - inP) * 7 + nxt * 7).toFixed(1)}px)`;
+}
+
+// ---- the renderer -----------------------------------------------------------------------------
+function render(t) {
+  for (const [el, sp] of ITEMS) {
+    const x = tw(t, sp.x ?? 540), y = tw(t, sp.y ?? 900), s = tw(t, sp.s ?? 1), r = tw(t, sp.r ?? 0), o = tw(t, sp.o ?? 1), b = sp.b ? tw(t, sp.b) : 0;
+    el.style.opacity = clamp(o); el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${r}deg) scale(${s})`;
+    if (sp.b) el.style.filter = b > 0.3 ? `blur(${b.toFixed(1)}px)` : "none";
+  }
+  for (const [el, k] of DRAWS) el.setAttribute("stroke-dashoffset", clamp(tw(t, k)).toFixed(4));
+  for (const sc of SCN) { const vis = t >= sc.a - 0.01 && t <= sc.b + 0.01; sc.el.style.display = vis ? "block" : "none"; if (!vis) continue;
+    const inP = sc.a <= 0 ? 1 : clamp((t - sc.a) / 0.35), outP = clamp((t - (sc.b - 0.3)) / 0.3);
+    sc.el.style.opacity = (sc.a <= 0 ? 1 : inP) * (1 - outP); const bl = 10 * (1 - inP) + 10 * outP; sc.el.style.filter = bl > 0.3 ? `blur(${bl.toFixed(1)}px)` : "none"; }
+  for (const w of WORDS) { const p = clamp((t - w.t) / 0.18);
+    if (w.mode === "blur") { w.el.style.opacity = p; w.el.style.filter = p < 1 ? `blur(${((1 - p) * 8).toFixed(1)}px)` : "none"; }
+    else { const lit = w.gold ? [255, 180, 84] : [233, 239, 255], a = .26 + .74 * p; w.el.style.color = `rgba(${lit[0]},${lit[1]},${lit[2]},${a.toFixed(2)})`; w.el.style.opacity = 1; } }
+  for (const f of CUST) f(t);
+  drawFX(t); drawCaps(t);
+  const g = $("grain").getContext("2d"); g.clearRect(0, 0, 540, 960); g.drawImage(GR[Math.floor(t * 12) % 4], 0, 0);
+}
+window.SFX = [[6.0, "whoosh-a", .4], [6.0, "rain", .2], [tName, "pop-a", .35], [tRain, "pop-b", .35], [tDark, "pop-a", .35], [tSeek, "whoosh-b", .3], [14.82, "thump", .55],
+  [QT[0], "pop-a", .4], [AT[0], "pop-b", .3], [QT[1], "pop-a", .4], [AT[1], "pop-b", .3], [QT[2], "pop-a", .4], [AT[2], "pop-b", .3], [24.7, "whoosh-a", .35],
+  [tI, "pop-a", .45], [tF, "pop-b", .45], [tNs, "pop-a", .45], [tMasa, "pop-b", .3], [tSubh, "pop-a", .3], [tTh, "pop-b", .35], [tKul, "thump", .55], [tAD, "pop-a", .3], [tTR, "pop-b", .3],
+  [34.2, "whoosh-b", .35], [tDq - 0.3, "pop-a", .35], [tSb, "pop-b", .3], [tMs, "pop-a", .3], [tHsn, "thump", .35], [tAllah, "thump", .6], [41.0, "whoosh-a", .3], [41.4, "pop-a", .4], [tTr, "pop-b", .3], [tDc, "pop-a", .3],
+  [44.5, "whoosh-b", .3], [tSh, "pop-b", .4], [tFl, "pop-a", .4], [45.0, "pop-b", .3]];
+window.render = render;
+window.ready = (async () => {
+  await document.fonts.load('900 60px "Cairo"'); await document.fonts.load('700 60px "Amiri"'); await document.fonts.load('700 40px "Noto Sans SC"'); await document.fonts.load('700 60px "Reem Kufi"');
+  await document.fonts.ready; render(0); return true;
+})();
+</script>
+</body>
+</html>
