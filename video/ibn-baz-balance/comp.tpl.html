@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Cairo"; src: url(fonts/Cairo.ttf) format("truetype"); font-weight: 200 1000; }
+@font-face { font-family: "Reem Kufi"; src: url(fonts/ReemKufi.ttf) format("truetype"); font-weight: 400 700; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Regular.woff) format("woff"); font-weight: 400; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Bold.woff) format("woff"); font-weight: 700; }
+@font-face { font-family: "Noto Sans SC"; src: url(fonts/NotoSansSC-subset.woff2) format("woff2"); font-weight: 500 700; }
+:root { --chalk: #f4f4ec; --yel: #ffd84d; --cor: #ff7a66; --mint: #7fe3c3; --blue: #8ecbff; --vio: #c4b5ff; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #1b2a2e; }
+body { font-family: "Cairo", sans-serif; color: var(--chalk); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.a { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
+.scn { position: absolute; inset: 0; }
+.amiri { font-family: "Amiri", serif; font-weight: 700; }
+.kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+.ct { filter: url(#chalkT); }
+.cl { filter: url(#chalkL); }
+.chip { display: inline-block; border: 5px solid var(--chalk); border-radius: 22px; padding: 2px 34px 10px; font-weight: 800; font-size: 54px; color: var(--chalk); background: rgba(27,42,46,.55); }
+.chip.y { border-color: var(--yel); color: var(--yel); } .chip.c { border-color: var(--cor); color: var(--cor); } .chip.m { border-color: var(--mint); color: var(--mint); } .chip.b { border-color: var(--blue); color: var(--blue); }
+svg { overflow: visible; display: block; }
+#cap { position: absolute; left: 110px; right: 110px; top: 1002px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+#cap .ar { font-weight: 800; font-size: 54px; line-height: 1.45; color: #fbfbf4; text-shadow: 0 2px 10px rgba(10,5,0,.9); }
+#cap .zh { font-family: "Noto Sans SC", "Cairo", sans-serif; font-weight: 700; font-size: 42px; line-height: 1.4; color: #ffdf6a; direction: ltr; text-shadow: 0 2px 10px rgba(10,5,0,.9); }
+#cap .en { font-weight: 600; font-size: 35px; line-height: 1.35; color: #d7ddd0; direction: ltr; text-shadow: 0 2px 10px rgba(10,5,0,.9); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="chalkL" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence id="tL" type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="8" result="grain"/>
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  3.2 0 0 0 -0.95" result="mask"/>
+      <feComposite in="d" in2="mask" operator="in"/>
+    </filter>
+    <filter id="chalkT" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence id="tT" type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="5" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="2.2" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="12" result="grain"/>
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  3.0 0 0 0 -0.7" result="mask"/>
+      <feComposite in="d" in2="mask" operator="in"/>
+    </filter>
+  </defs>
+</svg>
+<div id="stage">
+  <div id="board" class="layer" style="background: radial-gradient(ellipse at 50% 38%, #2f4448 0%, #213236 55%, #172326 100%)"></div>
+  <canvas id="smudge" class="layer" width="540" height="960" style="width:1080px; height:1920px"></canvas>
+  <canvas id="fxB" class="layer" width="1080" height="1920"></canvas>
+  <!-- the wooden part below the board -->
+  <div id="wood" class="a" style="width:1080px; height:960px; background: linear-gradient(180deg, #4a3322 0%, #2c1d13 100%)"></div>
+  <svg id="grain" class="a" width="1080" height="960" viewBox="0 0 1080 960" aria-hidden="true" style="opacity:.14"></svg>
+  <div id="tray" class="a" style="width:1080px; height:44px; background: linear-gradient(180deg, #8a6240 0%, #5e4028 100%); box-shadow: 0 10px 18px rgba(0,0,0,.45)"></div>
+  <div id="chk1" class="a" style="width:70px; height:16px; background:#f4f4ec; border-radius:6px; transform: rotate(-8deg)"></div>
+  <div id="chk2" class="a" style="width:56px; height:15px; background:#ffd84d; border-radius:6px"></div>
+  <div id="ers" class="a" style="width:130px; height:34px; background: linear-gradient(180deg, #3b3b3b 0 50%, #c9b27a 50% 100%); border-radius:6px"></div>
+  <div id="eraser" class="a" style="width:260px; height:1500px; background: linear-gradient(90deg, rgba(244,244,236,0) 0%, rgba(244,244,236,.28) 55%, rgba(244,244,236,0) 100%); filter: blur(10px)"></div>
+
+  <!-- the sheikh's name plate: it stays as the header -->
+  <svg id="cart" class="a cl" width="660" height="250" viewBox="0 0 660 250" aria-hidden="true">
+    <path id="cA" d="M40,20 H620 Q640,20 640,40 V210 Q640,230 620,230 H40 Q20,230 20,210 V40 Q20,20 40,20 Z" fill="none" stroke="#f4f4ec" stroke-width="7" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0"/>
+    <path id="cB" d="M52,34 H608 Q626,34 626,52 V198 Q626,216 608,216 H52 Q34,216 34,198 V52 Q34,34 52,34 Z" fill="none" stroke="#ffd84d" stroke-width="3" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0"/>
+  </svg>
+  <div id="cT1" class="a amiri ct" style="font-size:96px; line-height:1.2; color:#f4f4ec">الشيخ ابن باز</div>
+  <div id="cT2" class="a ct" style="text-align:center"><div class="amiri" style="font-size:78px; line-height:1.15; color:#f4f4ec">عبد العزيز بن باز</div><div class="amiri" style="font-size:44px; color:#ffd84d">رحمه الله</div></div>
+
+  <!-- SA: the question -->
+  <div id="SA" class="scn">
+    <div id="a1" class="a amiri ct" style="font-size:150px; line-height:1.1; color:#ffd84d">ماذا حدث؟</div>
+    <div id="aChip" class="a ct"><span class="chip c">امرأة مصابة</span></div>
+    <svg id="aSw" class="a cl" width="200" height="200" viewBox="-100 -100 200 200" aria-hidden="true"><path id="aSwP" fill="none" stroke="#c4b5ff" stroke-width="6" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  </div>
+  <!-- SB: the woman, the swirl, the crescent -->
+  <div id="SB" class="scn">
+    <div id="wm" class="a ct"><span class="chip">امرأة</span></div>
+    <svg id="sw" class="a cl" width="360" height="360" viewBox="-180 -180 360 360" aria-hidden="true"><path id="swP" fill="none" stroke="#c4b5ff" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="mass" class="a amiri ct" style="font-size:72px; color:#c4b5ff">مسٌّ من الجن</div>
+    <svg id="cres" class="a cl" width="190" height="190" viewBox="-95 -95 190 190" aria-hidden="true"><path id="cresP" d="M30,-78 A80,80 0 1 0 30,78 A60,60 0 1 1 30,-78 Z" fill="none" stroke="#ffd84d" stroke-width="8" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><polygon id="cresS" fill="none" stroke="#ffd84d" stroke-width="6" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="islam" class="a amiri ct" style="font-size:84px; color:#ffd84d">أعلن إسلامه</div>
+  </div>
+  <!-- SC: some denied -->
+  <div id="SC" class="scn"></div>
+  <!-- SD: the article -->
+  <div id="SD" class="scn">
+    <div id="dChip" class="a ct"><span class="chip b">مقال</span></div>
+    <svg id="paper" class="a cl" width="360" height="440" viewBox="0 0 360 440" aria-hidden="true">
+      <path id="pA" d="M20,20 H260 L340,100 V420 H20 Z" fill="rgba(244,244,236,.06)" stroke="#f4f4ec" stroke-width="7" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="pB" d="M260,20 V100 H340" fill="none" stroke="#f4f4ec" stroke-width="6" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path class="pl" d="M60,150 H300" fill="none" stroke="#8ecbff" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path class="pl" d="M60,200 H280" fill="none" stroke="#8ecbff" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path class="pl" d="M60,250 H300" fill="none" stroke="#8ecbff" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path class="pl" d="M60,300 H250" fill="none" stroke="#8ecbff" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path class="pl" d="M60,350 H290" fill="none" stroke="#8ecbff" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <div id="tQ" class="a ct"><span class="chip y" style="font-size:48px">القرآن</span></div>
+    <div id="tS" class="a ct"><span class="chip y" style="font-size:48px">السنة</span></div>
+    <div id="tI" class="a ct"><span class="chip y" style="font-size:48px">إجماع أهل السنة</span></div>
+    <div id="deny" class="a amiri ct" style="font-size:130px; line-height:1.1; color:#f4f4ec">إنكاره</div>
+    <div id="wrong" class="a amiri ct" style="font-size:150px; line-height:1.1; color:#ff7a66">خطأ</div>
+    <svg class="layer cl" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="dX" d="M330,500 L750,640" fill="none" stroke="#ff7a66" stroke-width="14" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  </div>
+  <!-- SF: be careful -->
+  <div id="SF" class="scn">
+    <svg id="warn" class="a cl" width="300" height="270" viewBox="0 0 300 270" aria-hidden="true"><path id="wA" d="M150,18 L284,250 H16 Z" fill="rgba(255,216,77,.08)" stroke="#ffd84d" stroke-width="10" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="wB" d="M150,96 V176" stroke="#ffd84d" stroke-width="16" stroke-linecap="round" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><circle id="wC" cx="150" cy="212" r="10" fill="#ffd84d"/></svg>
+    <div id="liars" class="a amiri ct" style="font-size:120px; line-height:1.1; color:#ff7a66">كاذبون</div>
+    <div id="claim" class="a ct"><span class="chip" style="font-size:46px">مدّعو مخاطبة الجن</span></div>
+    <svg id="glass" class="a cl" width="170" height="190" viewBox="0 0 170 190" aria-hidden="true"><circle cx="76" cy="76" r="58" fill="rgba(142,203,255,.12)" stroke="#8ecbff" stroke-width="9"/><path d="M118,118 L160,176" stroke="#8ecbff" stroke-width="14" stroke-linecap="round"/></svg>
+  </div>
+  <!-- SG: do not believe everyone; not every illness -->
+  <div id="SG" class="scn">
+    <svg id="stop" class="a cl" width="340" height="340" viewBox="-170 -170 340 340" aria-hidden="true"><polygon id="stopP" fill="rgba(255,122,102,.1)" stroke="#ff7a66" stroke-width="11" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="stopT" class="a amiri ct" style="font-size:78px; line-height:1.1; color:#ff7a66; text-align:center">لا<br>تصدّق</div>
+    <div id="i1" class="a ct"><span class="chip m" style="font-size:48px">صداع</span></div><div id="i2" class="a ct"><span class="chip m" style="font-size:48px">حمّى</span></div>
+    <div id="i3" class="a ct"><span class="chip m" style="font-size:48px">أرق</span></div><div id="i4" class="a ct"><span class="chip m" style="font-size:48px">قلق</span></div>
+    <svg id="sw2" class="a cl" width="220" height="220" viewBox="-110 -110 220 220" aria-hidden="true"><path id="sw2P" fill="none" stroke="#c4b5ff" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="jn" class="a amiri ct" style="font-size:64px; color:#c4b5ff">الجن</div>
+    <svg class="layer cl" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+      <path id="g1" d="M400,700 L470,790" fill="none" stroke="#7fe3c3" stroke-width="5" stroke-dasharray="1" stroke-dashoffset="1" pathLength="1"/><path id="g2" d="M680,700 L610,790" fill="none" stroke="#7fe3c3" stroke-width="5" stroke-dasharray="1" stroke-dashoffset="1" pathLength="1"/>
+      <path id="g3" d="M400,890 L470,830" fill="none" stroke="#7fe3c3" stroke-width="5" stroke-dasharray="1" stroke-dashoffset="1" pathLength="1"/><path id="g4" d="M680,890 L610,830" fill="none" stroke="#7fe3c3" stroke-width="5" stroke-dasharray="1" stroke-dashoffset="1" pathLength="1"/>
+      <path id="gx1" d="M440,720 L640,900" fill="none" stroke="#ff7a66" stroke-width="14" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="gx2" d="M640,720 L440,900" fill="none" stroke="#ff7a66" stroke-width="14" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+  </div>
+  <!-- SH: the middle way -->
+  <div id="SH" class="scn">
+    <div id="wasat" class="a amiri ct" style="font-size:150px; line-height:1.1; color:#ffd84d">وسط</div>
+    <svg id="scale" class="a cl" width="760" height="600" viewBox="0 0 760 600" aria-hidden="true"></svg>
+  </div>
+  <!-- SI: ruqyah + doctor -->
+  <div id="SI" class="scn">
+    <svg id="mush" class="a cl" width="300" height="208" viewBox="0 0 680 470" aria-hidden="true"></svg>
+    <svg id="med" class="a cl" width="230" height="230" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="108" fill="rgba(127,227,195,.08)" stroke="#7fe3c3" stroke-width="9"/><path id="mc" d="M98,52 H142 V98 H188 V142 H142 V188 H98 V142 H52 V98 H98 Z" fill="none" stroke="#f4f4ec" stroke-width="9" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="plus" class="a amiri ct" style="font-size:150px; line-height:1; color:#ffd84d">+</div>
+    <div id="lR" class="a ct"><span class="chip y" style="font-size:46px">الرقية الشرعية</span></div>
+    <div id="lD" class="a ct"><span class="chip m" style="font-size:46px">الطبيب</span></div>
+  </div>
+  <!-- SJ: share, follow, the name -->
+  <div id="SJ" class="scn">
+    <svg id="lamp" class="a cl" width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+      <line x1="150" y1="0" x2="150" y2="170" stroke="#f4f4ec" stroke-width="6"/><path d="M108,170 L192,170 L176,198 L124,198 Z" fill="none" stroke="#ffd84d" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="rgba(255,216,77,.12)" stroke="#ffd84d" stroke-width="8"/>
+      <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#ffd84d"/><path d="M112,372 L188,372 L170,400 L130,400 Z" fill="none" stroke="#ffd84d" stroke-width="7" stroke-linejoin="round"/><line x1="150" y1="400" x2="150" y2="440" stroke="#f4f4ec" stroke-width="6"/>
+    </svg>
+    <div id="name" class="a amiri ct" style="font-size:150px; line-height:1.2; color:#ffd84d">في معيّة الله</div>
+    <svg id="share" class="a cl" width="190" height="171" viewBox="0 0 240 216" aria-hidden="true">
+      <path id="sh1" d="M30,100 L30,196 L210,196 L210,100" fill="none" stroke="#f4f4ec" stroke-width="12" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh2" d="M120,150 L120,18" fill="none" stroke="#7fe3c3" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh3" d="M72,68 L120,16 L168,68" fill="none" stroke="#7fe3c3" stroke-width="14" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <svg id="bell" class="a cl" width="170" height="190" viewBox="0 0 170 190" aria-hidden="true">
+      <path id="bl1" d="M85,18 C45,18 32,56 32,92 C32,120 20,134 12,146 L158,146 C150,134 138,120 138,92 C138,56 125,18 85,18 Z" fill="none" stroke="#ffd84d" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="bl2" d="M62,164 C66,182 104,182 108,164" fill="none" stroke="#ffd84d" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+  </div>
+
+  <div id="cap"><div class="ar" id="capAr"></div><div class="zh" id="capZh"></div><div class="en" id="capEn"></div></div>
+  <canvas id="dust" class="layer" width="540" height="960" style="width:1080px; height:1920px; opacity:.5"></canvas>
+</div>
+
+<script>
+const W = 1080, H = 1920, CAPS = __CAPS__;
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const EZ = { lin: (x) => x, out: (x) => 1 - Math.pow(1 - x, 3), in: (x) => x * x * x, io: (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+  back: (x) => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+  pop: (x) => { const c1 = 2.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); } };
+function tw(t, k) {
+  if (typeof k === "number") return k; if (typeof k === "function") return k(t);
+  if (t <= k[0][0]) return k[0][1];
+  for (let i = 1; i < k.length; i++) if (t <= k[i][0]) { const [t0, v0] = k[i - 1], [t1, v1, e = "out"] = k[i]; return v0 + (v1 - v0) * EZ[e](clamp((t - t0) / ((t1 - t0) || 1))); }
+  return k[k.length - 1][1];
+}
+const rng = (seed) => { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; };
+const NS = "http://www.w3.org/2000/svg";
+const mk = (tag, at, parent) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); parent && parent.appendChild(e); return e; };
+const ITEMS = [], DRAWS = [], SCN = [], BURSTS = [], CUST = [], SFX = [];
+const A = (id, sp) => ITEMS.push([typeof id === "string" ? $(id) : id, sp]);
+const D = (el, k) => DRAWS.push([typeof el === "string" ? $(el) : el, k]);
+const SC = (id, a, b) => SCN.push({ el: $(id), a, b });
+const pop = (t, d = 0.4) => [[t - 0.001, 0.6], [t + d, 1, "pop"]];
+const sp = (t, e = 0.12, d = 0.4) => [[t - e - 0.001, 0], [t - e, 1]]; // appear at t
+const show = (a, b, d = 0.2) => [[a - 0.001, 0], [a, 1], [b, 1], [b + d, 0, "in"]];
+const inc = (t0, t1, k = "out") => [[t0, 1], [t1, 0, k]];  // dash keys: draws from t0 to t1
+function spiral(id, turns, r) { let d = ""; for (let i = 0; i <= 60; i++) { const a = i / 60 * turns * Math.PI * 2, rr = r * (0.18 + 0.82 * i / 60); d += (i ? " L" : "M") + (rr * Math.cos(a)).toFixed(1) + "," + (rr * Math.sin(a)).toFixed(1); } $(id).setAttribute("d", d); }
+spiral("swP", 2.6, 160); spiral("aSwP", 2.4, 90); spiral("sw2P", 2.6, 100);
+function polyD(id, n, r, rot = 0) { const pts = []; for (let i = 0; i < n; i++) { const a = rot + i * Math.PI * 2 / n; pts.push(`${(r * Math.cos(a)).toFixed(1)},${(r * Math.sin(a)).toFixed(1)}`); } $(id).setAttribute("points", pts.join(" ")); }
+polyD("stopP", 8, 150, Math.PI / 8);
+{ const pts = []; for (let i = 0; i < 10; i++) { const a = i * Math.PI / 5 - Math.PI / 2, r = i % 2 ? 14 : 34; pts.push(`${(52 + r * Math.cos(a) + 6).toFixed(1)},${(r * Math.sin(a) - 8).toFixed(1)}`); } $("cresS").setAttribute("points", pts.join(" ")); }
+function spread(text, a, b) {
+  const ws = text.split(/\s+/), cl = (w) => w.replace(/[ً-ْٰ]/g, ""), wt = ws.map((w) => cl(w).length + 0.6), tot = wt.reduce((p, c) => p + c, 0);
+  let c = 0; return ws.map((w, i) => { const t = a + (b - a) * c / tot; c += wt[i]; return [w, t]; });
+}
+{ const g = $("grain"), r = rng(3); for (let i = 0; i < 40; i++) { const y = r() * 960; mk("path", { d: `M0,${y} C300,${y + (r() - .5) * 30} 700,${y + (r() - .5) * 30} 1080,${y + (r() - .5) * 20}`, stroke: "#000", "stroke-width": .8 + r() * 2.4, fill: "none" }, g); } }
+
+// ---- anchors from the voice ---------------------------------------------------------------------
+const P2 = spread("أن امرأة كانت مصابة بمس من الجن", 6.38, 9.01), tWoman = P2[1][1], tMasab = P2[4][1], tMass = P2[5][1];
+const tJinn = 9.5, tAlan = 10.3, tAnkar = 12.5, tKataba = 13.97, tMaqal = 14.8, tThabit = 17.89, tQ = 18.55, tSn = 19.0, tIj = 19.6, tWrong = 21.14;
+const C3 = spread("العلماء أنفسهم يقولون إن كثيرا من المدعين لمخاطبة الجن كاذبون", 24.13, 29.27);
+const C4 = spread("فلا تصدق كل من يدعي ذلك ولا تنسب كل مرض إلى الجن", 29.71, 33.17);
+const C6 = spread("لا إنكار للمس الثابت بالنص ولا مبالغة فيه", 35.9, 38.75);
+const C7 = spread("والجمع بين الرقية الشرعية والطبيب شارك هذا المقطع مع من تحب وتابع القناة", 39.03, 44.05);
+
+// ---- the board ----------------------------------------------------------------------------------
+A("wood", { x: 540, y: 1460, o: 1 }); A("grain", { x: 540, y: 1460, o: 1 }); A("tray", { x: 540, y: 982, o: 1 });
+A("chk1", { x: 130, y: 975, o: 1 }); A("chk2", { x: 215, y: 978, o: 1 }); A("ers", { x: 930, y: 971, o: 1 });
+
+// ---- the name plate ---------------------------------------------------------------------------------
+const CX = [[0, 540], [6.2, 540]], CY = [[0, 540], [3.9, 540], [6.8, 215, "io"], [22.2, 215]], CS = [[0, 1.05], [3.9, 1.05], [6.8, .5, "io"], [22.2, .5]];
+A("cart", { x: 540, y: CY, s: CS, o: [[0, 1], [22.2, 1], [22.6, 0, "in"]] });
+A("cT1", { x: 540, y: CY, s: CS, o: [[0, 1], [3.7, 1], [4.0, 0, "in"]] });
+A("cT2", { x: 540, y: CY, s: CS, o: [[3.95, 0], [4.25, 1], [22.2, 1], [22.6, 0, "in"]] });
+D("cA", [[0, 0], [3.9, 0]]); D("cB", [[0, 0], [3.9, 0]]);
+BURSTS.push({ t: 4.0, x: 540, y: 540 });
+
+// ---- SA ----------------------------------------------------------------------------------------------
+SC("SA", 0, 6.7);
+A("a1", { x: 540, y: 250, s: [[0, 1.05], [0.6, 1, "out"]], o: [[0, 1], [3.5, 1], [3.9, 0, "in"]] });
+A("aChip", { x: 540, y: 810, s: pop(3.0), o: [[2.999, 0], [3.0, 1], [3.9, 1], [4.2, 0, "in"]] });
+A("aSw", { x: 540, y: 810, o: [[3.2, 0], [3.25, 1], [4.0, 1], [4.3, 0, "in"]] }); D("aSwP", inc(3.2, 3.9, "io"));
+
+// ---- SB ----------------------------------------------------------------------------------------------
+SC("SB", 6.3, 12.5);
+A("wm", { x: 540, y: 760, s: pop(tWoman), o: [[tWoman - 0.001, 0], [tWoman, 1]] });
+A("sw", { x: 540, y: [[tMasab, 760], [tJinn, 760], [tJinn + 0.8, 520, "io"]], s: [[tMasab, 1], [tJinn, 1], [tJinn + 0.8, .7, "io"]], r: [[tMasab, 0], [12.4, 120, "lin"]], o: [[tMasab - 0.001, 0], [tMasab, 1], [tAlan + 1.0, 1], [tAlan + 1.4, 0, "in"]] });
+D("swP", inc(tMasab, tMass + 0.4, "io"));
+A("mass", { x: 540, y: 935, s: pop(tMass), o: [[tMass - 0.001, 0], [tMass, 1], [tJinn - 0.1, 1], [tJinn + 0.2, 0, "in"]] });
+A("cres", { x: 540, y: 400, s: [[tAlan, .6], [tAlan + 0.6, 1, "back"]], o: [[tAlan - 0.001, 0], [tAlan, 1]] });
+D("cresP", inc(tAlan, tAlan + 0.7)); D("cresS", inc(tAlan + 0.5, tAlan + 0.95));
+A("islam", { x: 540, y: 600, s: pop(tAlan + 0.5), o: [[tAlan + 0.5 - 0.001, 0], [tAlan + 0.5, 1]] });
+BURSTS.push({ t: tAlan + 0.9, x: 540, y: 400 });
+
+// ---- SC: some people denied -------------------------------------------------------------------------------
+SC("SC", 12.2, 14.0);
+{ const box = $("SC"); [[300, 600, 12.5], [780, 600, 12.85], [540, 800, 13.2]].forEach(([x, y, t], i) => {
+    const s = mk("svg", { width: 280, height: 220, viewBox: "0 0 280 220", class: "a cl" }, box); s.id = "bb" + i;
+    mk("path", { d: "M30,30 H250 Q268,30 268,48 V138 Q268,156 250,156 H120 L70,200 L82,156 H30 Q12,156 12,138 V48 Q12,30 30,30 Z", fill: "rgba(244,244,236,.05)", stroke: "#f4f4ec", "stroke-width": 7, "stroke-linejoin": "round" }, s);
+    const p1 = mk("path", { d: "M85,60 L195,128", stroke: "#ff7a66", "stroke-width": 14, "stroke-linecap": "round", fill: "none", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s);
+    const p2 = mk("path", { d: "M195,60 L85,128", stroke: "#ff7a66", "stroke-width": 14, "stroke-linecap": "round", fill: "none", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s);
+    A(s, { x, y, s: pop(t), o: [[t - 0.001, 0], [t, 1]] }); D(p1, inc(t + 0.15, t + 0.4, "out")); D(p2, inc(t + 0.3, t + 0.55, "out")); BURSTS.push({ t: t + 0.4, x, y }); }); }
+
+// ---- SD: the article ------------------------------------------------------------------------------------------
+SC("SD", 13.8, 22.7);
+A("dChip", { x: 540, y: 345, s: pop(tMaqal), o: [[tMaqal - 0.001, 0], [tMaqal, 1], [20.9, 1], [21.2, 0, "in"]] });
+A("paper", { x: 540, y: 600, s: [[tKataba, .8], [tKataba + 0.6, 1, "back"]], o: [[tKataba - 0.001, 0], [tKataba, 1], [20.9, 1], [21.2, 0, "in"]] });
+D("pA", inc(tKataba, tKataba + 0.8, "io")); D("pB", inc(tKataba + 0.6, tKataba + 0.9));
+[0, 1, 2, 3, 4].forEach((i) => D(DRAWS_PL(i), inc(tMaqal + 0.2 + i * 0.5, tMaqal + 0.2 + i * 0.5 + 0.5, "lin")));
+function DRAWS_PL(i) { return document.querySelectorAll(".pl")[i]; }
+A("tQ", { x: 790, y: 880, s: pop(tQ), o: [[tQ - 0.001, 0], [tQ, 1], [20.9, 1], [21.2, 0, "in"]] });
+A("tS", { x: 540, y: 880, s: pop(tSn), o: [[tSn - 0.001, 0], [tSn, 1], [20.9, 1], [21.2, 0, "in"]] });
+A("tI", { x: 280, y: 880, s: pop(tIj), o: [[tIj - 0.001, 0], [tIj, 1], [20.9, 1], [21.2, 0, "in"]] });
+BURSTS.push({ t: tQ, x: 790, y: 880 }, { t: tSn, x: 540, y: 880 }, { t: tIj, x: 280, y: 880 });
+A("deny", { x: 540, y: 560, s: pop(tWrong), o: [[tWrong - 0.001, 0], [tWrong, 1], [22.4, 1], [22.7, 0, "in"]] }); D("dX", inc(tWrong + 0.25, tWrong + 0.55, "out"));
+A("wrong", { x: 540, y: 740, s: [[tWrong + 0.5, 1.6], [tWrong + 0.85, 1, "out"]], r: -6, o: [[tWrong + 0.5, 0], [tWrong + 0.52, 1], [22.4, 1], [22.7, 0, "in"]] });
+BURSTS.push({ t: tWrong + 0.85, x: 540, y: 740 });
+
+// ---- SF: be careful -----------------------------------------------------------------------------------------------
+SC("SF", 22.6, 29.7);
+A("warn", { x: [[22.9, 540], [24.3, 540], [25.0, 180, "io"]], y: [[22.9, 560], [24.3, 560], [25.0, 400, "io"]], s: [[22.9, .5], [23.5, 1, "back"], [24.3, 1], [25.0, .5, "io"]], o: [[22.88, 0], [22.9, 1]] });
+D("wA", inc(22.9, 23.5, "io")); D("wB", inc(23.4, 23.7)); D("wC", [[0, 0]]);
+const bub = []; { const box = $("SF"); [900, 720, 540, 360, 180].forEach((x, i) => { const t = 25.0 + i * 0.15;
+    const s = mk("svg", { width: 170, height: 140, viewBox: "0 0 280 220", class: "a cl" }, box); mk("path", { d: "M30,30 H250 Q268,30 268,48 V138 Q268,156 250,156 H120 L70,200 L82,156 H30 Q12,156 12,138 V48 Q12,30 30,30 Z", fill: "rgba(244,244,236,.05)", stroke: "#f4f4ec", "stroke-width": 10, "stroke-linejoin": "round" }, s);
+    const q = mk("text", { x: 140, y: 125, "text-anchor": "middle", "font-size": 100, "font-family": "Amiri", "font-weight": 700, fill: "#ffd84d" }, s); q.textContent = "؟";
+    const x1 = mk("path", { d: "M70,50 L210,130", stroke: "#ff7a66", "stroke-width": 18, "stroke-linecap": "round", fill: "none", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s);
+    const x2 = mk("path", { d: "M210,50 L70,130", stroke: "#ff7a66", "stroke-width": 18, "stroke-linecap": "round", fill: "none", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s);
+    A(s, { x, y: 640, s: pop(t, .35), o: [[t - 0.001, 0], [t, 1]] });
+    if (i !== 2) { const tk = C3[9][1] + 0.1 * i; D(x1, inc(tk, tk + 0.25, "out")); D(x2, inc(tk + 0.12, tk + 0.37, "out")); } }); }
+A("claim", { x: 540, y: 470, s: pop(25.8), o: [[25.8 - 0.001, 0], [25.8, 1], [29.2, 1], [29.5, 0, "in"]] });
+A("glass", { x: [[26.0, 960], [28.0, 150, "io"]], y: [[26.0, 640], [28.0, 640]], r: -8, o: [[25.99, 0], [26.0, 1], [28.3, 1], [28.5, 0, "in"]] });
+A("liars", { x: 540, y: 850, s: [[C3[9][1], 1.5], [C3[9][1] + 0.35, 1, "out"]], r: -5, o: [[C3[9][1] - 0.001, 0], [C3[9][1], 1], [29.2, 1], [29.5, 0, "in"]] });
+BURSTS.push({ t: C3[9][1] + 0.35, x: 540, y: 850 });
+
+// ---- SG: do not believe, not every illness --------------------------------------------------------------------------------
+SC("SG", 29.5, 33.5);
+A("stop", { x: 540, y: [[29.71, 520], [31.5, 520], [32.1, 190, "io"]], s: [[29.71, .5], [30.3, 1, "back"], [31.5, 1], [32.1, .5, "io"]], o: [[29.7, 0], [29.71, 1]] });
+D("stopP", inc(29.71, 30.3, "io"));
+A("stopT", { x: 540, y: [[29.71, 520], [31.5, 520], [32.1, 190, "io"]], s: [[29.71, .5], [30.3, 1, "back"], [31.5, 1], [32.1, .5, "io"]], o: [[30.0, 0], [30.2, 1]] });
+const tMarad = C4[8][1], tIlaJ = C4[10][1];
+[["i1", 340, 640, 0], ["i2", 740, 640, .15], ["i3", 340, 960 - 70, .3], ["i4", 740, 960 - 70, .45]].forEach(([id, x, y, d]) => A(id, { x, y: id[1] < 3 ? 640 : 890, s: pop(tMarad - 0.1 + d), o: [[tMarad - 0.1 + d - 0.001, 0], [tMarad - 0.1 + d, 1], [33.2, 1], [33.5, 0, "in"]] }));
+A("sw2", { x: 540, y: 765, s: pop(tIlaJ - 0.4), r: [[tIlaJ - 0.4, 0], [33.5, 60, "lin"]], o: [[tIlaJ - 0.41, 0], [tIlaJ - 0.4, 1], [33.2, 1], [33.5, 0, "in"]] }); D("sw2P", inc(tIlaJ - 0.4, tIlaJ + 0.1, "io"));
+A("jn", { x: 540, y: 765, s: pop(tIlaJ), o: [[tIlaJ - 0.001, 0], [tIlaJ, 1], [33.2, 1], [33.5, 0, "in"]] });
+["g1", "g2", "g3", "g4"].forEach((id, i) => D(id, inc(tIlaJ - 0.3 + i * 0.05, tIlaJ + 0.1 + i * 0.05, "out")));
+D("gx1", inc(tIlaJ + 0.35, tIlaJ + 0.6)); D("gx2", inc(tIlaJ + 0.5, tIlaJ + 0.75));
+BURSTS.push({ t: tIlaJ + 0.7, x: 540, y: 765 });
+
+// ---- SH: the scale ------------------------------------------------------------------------------------------------------------
+SC("SH", 33.4, 39.1);
+const tHaq = 33.58, tWasat = 35.0, tInk = C6[1][1], tMub = C6[6][1];
+const TH = [[33.4, 0], [tInk - 0.1, 0], [tInk + 0.5, 13, "io"], [tMub - 0.2, 13], [tMub + 0.5, -13, "io"], [38.0, -13], [38.6, 0, "io"]];
+{ const svg = $("scale"); const cx = 380, cy = 150, L = 270;
+  mk("path", { id: "pole", d: `M${cx},${cy} V540`, stroke: "#f4f4ec", "stroke-width": 12, fill: "none", "stroke-linecap": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, svg);
+  mk("path", { id: "base", d: "M240,570 H520 L470,540 H290 Z", stroke: "#f4f4ec", "stroke-width": 9, fill: "rgba(244,244,236,.08)", "stroke-linejoin": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, svg);
+  const beam = mk("line", { stroke: "#ffd84d", "stroke-width": 13, "stroke-linecap": "round" }, svg), kn = mk("circle", { cx, cy, r: 18, fill: "#1b2a2e", stroke: "#ffd84d", "stroke-width": 8 }, svg);
+  const mkPan = () => { const g = mk("g", {}, svg); return { c1: mk("line", { stroke: "#f4f4ec", "stroke-width": 5 }, g), c2: mk("line", { stroke: "#f4f4ec", "stroke-width": 5 }, g), pan: mk("path", { fill: "rgba(244,244,236,.1)", stroke: "#f4f4ec", "stroke-width": 8, "stroke-linejoin": "round" }, g), tx: mk("text", { "text-anchor": "middle", "font-size": 58, "font-family": "Amiri", "font-weight": 700, fill: "#ff7a66" }, g), g }; };
+  const R = mkPan(), Lp = mkPan(); R.tx.textContent = "إنكار"; Lp.tx.textContent = "مبالغة";
+  D("pole", inc(tHaq, tHaq + 0.7, "io")); D("base", inc(tHaq + 0.3, tHaq + 0.9));
+  CUST.push((t) => { const th = tw(t, TH) * Math.PI / 180, vis = clamp((t - (tHaq + 0.6)) / 0.4);
+    const set = (P, sx, sy, on) => { const dy = 150; P.c1.setAttribute("x1", sx); P.c1.setAttribute("y1", sy); P.c1.setAttribute("x2", sx - 100); P.c1.setAttribute("y2", sy + dy); P.c2.setAttribute("x1", sx); P.c2.setAttribute("y1", sy); P.c2.setAttribute("x2", sx + 100); P.c2.setAttribute("y2", sy + dy);
+      P.pan.setAttribute("d", `M${sx - 110},${sy + dy} Q${sx},${sy + dy + 76} ${sx + 110},${sy + dy} Z`); P.tx.setAttribute("x", sx); P.tx.setAttribute("y", sy + dy - 22); P.g.setAttribute("opacity", on * vis); };
+    const xr = cx + L * Math.cos(th), yr = cy + L * Math.sin(th), xl = cx - L * Math.cos(th), yl = cy - L * Math.sin(th);
+    beam.setAttribute("x1", xl); beam.setAttribute("y1", yl); beam.setAttribute("x2", xr); beam.setAttribute("y2", yr); beam.setAttribute("opacity", vis);  kn.setAttribute("opacity", vis);
+    set(R, xr, yr, clamp((t - (tInk - 0.1)) / 0.3)); set(Lp, xl, yl, clamp((t - (tMub - 0.1)) / 0.3)); }); }
+A("scale", { x: 540, y: 640, o: 1 });
+A("wasat", { x: 540, y: 330, s: [[tWasat, 1.5], [tWasat + 0.4, 1, "out"]], o: [[tWasat - 0.001, 0], [tWasat, 1], [38.9, 1], [39.1, 0, "in"]] });
+BURSTS.push({ t: tWasat + 0.4, x: 540, y: 330 }, { t: 38.7, x: 540, y: 330 });
+
+// ---- SI: ruqyah + doctor ----------------------------------------------------------------------------------------------------------
+SC("SI", 38.9, 41.5);
+function book(svg, w, h) { const r = rng(11), cx = w / 2; mk("path", { d: `M${cx},${h * .08} L${w * .02},${h * .02} L${w * .02},${h * .94} L${cx},${h} L${w * .98},${h * .94} L${w * .98},${h * .02} Z`, fill: "rgba(127,227,195,.1)", stroke: "#7fe3c3", "stroke-width": 12, "stroke-linejoin": "round" }, svg);
+  mk("line", { x1: cx, y1: h * .06, x2: cx, y2: h * .97, stroke: "#7fe3c3", "stroke-width": 9 }, svg);
+  for (const side of [-1, 1]) for (let i = 0; i < 6; i++) { const y = h * (.2 + i * .1), x0 = side < 0 ? w * .08 : cx + w * .06; mk("line", { x1: x0, y1: y, x2: x0 + w * (.3 + r() * .1), y2: y, stroke: "#f4f4ec", "stroke-width": 8, "stroke-linecap": "round", opacity: .8 }, svg); } }
+book($("mush"), 680, 470);
+const tRq = C7[2][1], tTb = C7[4][1];
+A("mush", { x: 790, y: 580, s: [[tRq, .6], [tRq + 0.6, 1, "back"]], o: [[tRq - 0.001, 0], [tRq, 1]] }); A("lR", { x: 790, y: 770, s: pop(tRq + 0.3), o: [[tRq + 0.3 - 0.001, 0], [tRq + 0.3, 1]] });
+A("med", { x: 290, y: 580, s: [[tTb, .6], [tTb + 0.6, 1, "back"]], o: [[tTb - 0.001, 0], [tTb, 1]] }); D("mc", inc(tTb, tTb + 0.7, "io")); A("lD", { x: 290, y: 770, s: pop(tTb + 0.3), o: [[tTb + 0.3 - 0.001, 0], [tTb + 0.3, 1]] });
+A("plus", { x: 540, y: 570, s: pop(tTb + 0.5), o: [[tTb + 0.5 - 0.001, 0], [tTb + 0.5, 1]] });
+BURSTS.push({ t: tTb + 0.8, x: 540, y: 575 });
+
+// ---- SJ: the close ---------------------------------------------------------------------------------------------------------------------
+SC("SJ", 41.3, 60);
+const tSh = C7[5][1], tFl = C7[11][1];
+A("lamp", { x: 540, y: 330, s: [[41.5, .78], [42.2, .66, "out"]], o: [[41.4, 0], [41.8, 1]] });
+A("name", { x: 540, y: 600, s: [[41.6, 1.1], [42.4, 1, "out"]], o: [[41.6, 0], [42.0, 1]] });
+D("sh1", inc(tSh, tSh + 0.45)); D("sh2", inc(tSh + 0.3, tSh + 0.7)); D("sh3", inc(tSh + 0.6, tSh + 0.85));
+A("share", { x: 380, y: 830, s: [[tSh - 0.01, .6], [tSh + .5, 1, "back"]], o: [[tSh - 0.01, 0], [tSh, 1]] });
+D("bl1", inc(tFl, tFl + 0.6)); D("bl2", inc(tFl + 0.5, tFl + 0.8));
+A("bell", { x: 700, y: 830, s: [[tFl - 0.01, .6], [tFl + .5, 1, "back"]], r: [[tFl + 0.6, 0], [tFl + 0.7, 14, "out"], [tFl + 0.85, -12, "io"], [tFl + 1.0, 8, "io"], [tFl + 1.15, 0, "io"]], o: [[tFl - 0.01, 0], [tFl, 1]] });
+
+// ---- canvas: smudges, falling chalk dust, bursts ------------------------------------------------------------------------------------------
+{ const c = $("smudge").getContext("2d"), r = rng(23); for (let i = 0; i < 26; i++) { const x = r() * 540, y = r() * 480, rad = 40 + r() * 120, g = c.createRadialGradient(x, y, 0, x, y, rad); g.addColorStop(0, "rgba(244,244,236,.07)"); g.addColorStop(1, "rgba(244,244,236,0)"); c.fillStyle = g; c.beginPath(); c.arc(x, y, rad, 0, 7); c.fill(); } }
+const fb = $("fxB").getContext("2d"), dr = rng(9), DUST = [];
+for (let i = 0; i < 50; i++) DUST.push({ x: dr() * W, y0: dr() * 1000, v: 10 + dr() * 22, r: 1 + dr() * 2.4, a: .15 + dr() * .35, ph: dr() * 6 });
+function drawFX(t) {
+  fb.clearRect(0, 0, W, H);
+  for (const d of DUST) { const y = (d.y0 + d.v * t) % 1000; fb.globalAlpha = d.a; fb.fillStyle = "#f4f4ec"; fb.beginPath(); fb.arc(d.x + Math.sin(t * .4 + d.ph) * 16, y, d.r, 0, 7); fb.fill(); }
+  for (const b of BURSTS) { const age = t - b.t; if (age < 0 || age > 0.8) continue; const u = age / 0.8;
+    for (let i = 0; i < 14; i++) { const a = i * Math.PI * 2 / 14 + b.t * 3, v = 90 + (i % 3) * 50, d = v * EZ.out(u); fb.globalAlpha = (1 - u) * .9; fb.fillStyle = i % 3 ? "#f4f4ec" : "#ffd84d"; fb.beginPath(); fb.arc(b.x + Math.cos(a) * d, b.y + Math.sin(a) * d, 5 * (1 - u) + 1.2, 0, 7); fb.fill(); } }
+  fb.globalAlpha = 1;
+}
+const DU = $("dust").getContext("2d"), GN = []; (() => { for (let f = 0; f < 4; f++) { const c = document.createElement("canvas"); c.width = 540; c.height = 960; const g = c.getContext("2d"), im = g.createImageData(540, 960), r = rng(100 + f); for (let i = 0; i < im.data.length; i += 4) { const n = r() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = n; im.data[i + 3] = 22; } g.putImageData(im, 0, 0); GN.push(c); } })();
+
+// ---- captions ---------------------------------------------------------------------------------
+let capIdx = -2;
+function drawCaps(t) {
+  let i = -1; for (let k = 0; k < CAPS.length; k++) if (t >= CAPS[k].a && t < CAPS[k].b + 0.25) i = k;
+  if (i !== capIdx) { capIdx = i; const c = CAPS[i] || { ar: "", en: "", zh: "" }; $("capAr").textContent = c.ar; $("capZh").textContent = c.zh; $("capEn").textContent = c.en; $("capAr").style.display = c.ar ? "block" : "none"; }
+  const c = CAPS[i], box = $("cap"); if (!c) { box.style.opacity = 0; return; }
+  const inP = clamp((t - c.a) / 0.16), outP = clamp((t - (c.b + 0.1)) / 0.15), nxt = CAPS[i + 1] && CAPS[i + 1].a - c.b < 0.2 ? 0 : outP;
+  box.style.opacity = inP * (1 - nxt); box.style.filter = `blur(${((1 - inP) * 7 + nxt * 7).toFixed(1)}px)`;
+}
+
+// ---- the renderer -----------------------------------------------------------------------------
+function render(t) {
+  $("tL").setAttribute("seed", 1 + Math.floor(t * 8) % 7); $("tT").setAttribute("seed", 1 + Math.floor(t * 8) % 5);
+  for (const [el, sp] of ITEMS) {
+    const x = tw(t, sp.x ?? 540), y = tw(t, sp.y ?? 900), s = tw(t, sp.s ?? 1), r = tw(t, sp.r ?? 0), o = tw(t, sp.o ?? 1);
+    el.style.opacity = clamp(o); el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${r}deg) scale(${s})`;
+  }
+  for (const [el, k] of DRAWS) if (el) el.setAttribute("stroke-dashoffset", clamp(tw(t, k)).toFixed(4));
+  let erasing = null;
+  for (const sc of SCN) { const vis = t >= sc.a - 0.01 && t <= sc.b + 0.01; sc.el.style.display = vis ? "block" : "none"; if (!vis) continue;
+    const out = sc.b > 59 ? 0 : clamp((t - (sc.b - 0.45)) / 0.45);
+    if (out > 0) { const X = out * 112; sc.el.style.webkitMaskImage = sc.el.style.maskImage = `linear-gradient(to left, transparent ${X - 14}%, #000 ${X}%)`; erasing = X / 100; }
+    else sc.el.style.webkitMaskImage = sc.el.style.maskImage = "none"; }
+  const er = $("eraser"); if (erasing !== null && erasing < 1.05) { er.style.visibility = "visible"; er.style.opacity = 1; er.style.transform = `translate(${(W * (1 - erasing)).toFixed(0)}px, 520px) translate(-50%, -50%)`; } else er.style.visibility = "hidden";
+  for (const f of CUST) f(t);
+  drawFX(t); drawCaps(t);
+  DU.clearRect(0, 0, 540, 960); DU.drawImage(GN[Math.floor(t * 12) % 4], 0, 0);
+}
+window.SFX = [[3.0, "chalk", .5], [4.0, "pop-a", .35], [tWoman, "pop-b", .35], [tMasab, "chalk", .5], [tJinn, "puff", .4], [tAlan + 0.1, "chalk", .55], [tAlan + 0.9, "pop-a", .4],
+  [12.2, "erase", .4], [12.5, "pop-b", .35], [12.85, "pop-a", .35], [13.2, "pop-b", .35], [13.75, "erase", .4], [tKataba, "chalk", .5], [tMaqal, "pop-a", .35], [tQ, "pop-b", .4], [tSn, "pop-a", .4], [tIj, "pop-b", .4], [tWrong, "thump", .5], [tWrong + 0.85, "pop-a", .5], [22.35, "erase", .4],
+  [22.9, "chalk", .5], [24.3, "whoosh-a", .25], [25.0, "pop-b", .3], [26.0, "whoosh-b", .3], [C3[9][1], "thump", .5], [29.2, "erase", .4], [29.71, "chalk", .5], [tMarad, "pop-a", .35], [tIlaJ, "pop-b", .4], [tIlaJ + 0.35, "thump", .4], [33.0, "erase", .4],
+  [tHaq, "chalk", .5], [tWasat, "pop-a", .5], [tInk, "thump", .35], [tMub, "thump", .35], [38.7, "pop-b", .5], [38.65, "erase", .4], [tRq, "pop-b", .4], [tTb, "pop-a", .4], [tTb + 0.5, "pop-b", .4], [41.0, "erase", .4], [tSh, "pop-b", .4], [tFl, "pop-a", .4], [41.6, "pop-b", .3]];
+window.render = render;
+window.ready = (async () => {
+  await document.fonts.load('900 60px "Cairo"'); await document.fonts.load('700 60px "Amiri"'); await document.fonts.load('700 40px "Noto Sans SC"'); await document.fonts.load('700 60px "Reem Kufi"');
+  await document.fonts.ready; render(0); return true;
+})();
+</script>
+</body>
+</html>
