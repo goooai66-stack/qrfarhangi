@@ -78,7 +78,7 @@ svg { overflow: visible; display: block; }
     <div id="khas" class="a amiri" style="font-size:200px; line-height:1.1; color:#e4572e">خاصّ</div>
     <svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="ul" d="M360,400 Q540,430 720,396" fill="none" stroke="#e0a100" stroke-width="12" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
       <path id="gx1" d="M390,640 L690,800" fill="none" stroke="#e4572e" stroke-width="18" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="gx2" d="M690,640 L390,800" fill="none" stroke="#e4572e" stroke-width="18" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
-    <div id="gP" class="a"><span class="chip y">النبي ﷺ</span></div><div id="gS" class="a"><span class="chip b">أهل العلم</span></div>
+    <div id="gP" class="a"><span class="chip y" style="font-family:Amiri; font-weight:700; font-size:62px">النبي ﷺ</span></div><div id="gS" class="a"><span class="chip b">أهل العلم</span></div>
     <div id="gA" class="a"><span class="chip c" style="font-size:58px">مع كل مريض</span></div>
   </div>
   <!-- SH: physical or psychological, then protection -->
@@ -179,7 +179,7 @@ const T12 = spread("شارك هذه القصة مع من تحب وتابع ال�
 const tMom = T1[1][1], tPro = T1[3][1], tKid = T1[8][1], tSwirl = T3[10][1] - 0.1, tHeal = 16.02 + 0.9;
 
 // ---- the paper bottom --------------------------------------------------------------------------------------
-A("low", { x: 540, y: 1440, o: 1 }); A("pat2", { x: 540, y: 1440, o: 1 }); A("band", { x: 540, y: 967, o: 1 });
+A("low", { x: 540, y: 1440, o: 1 }); A("pat2", { x: 540, y: 1440, o: .03 }); A("band", { x: 540, y: 967, o: 1 });
 
 // ---- actors: the Prophet (a gold star), the mother, the child ----------------------------------------------------
 A("pr", { x: 290, y: 650, s: [[tPro - 0.001, .6], [tPro + 0.45, 1, "pop"], [17.8, 1], [21.89, .6], [22.3, 1, "pop"]], o: [[tPro - 0.001, 0], [tPro, 1], [17.8, 1], [18.05, 0, "in"], [21.9, 0], [21.91, 1], [28.1, 1], [28.35, 0, "in"]] });
