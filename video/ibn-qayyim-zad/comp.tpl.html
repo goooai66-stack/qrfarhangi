@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Cairo"; src: url(fonts/Cairo.ttf) format("truetype"); font-weight: 200 1000; }
+@font-face { font-family: "Reem Kufi"; src: url(fonts/ReemKufi.ttf) format("truetype"); font-weight: 400 700; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Regular.woff) format("woff"); font-weight: 400; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Bold.woff) format("woff"); font-weight: 700; }
+@font-face { font-family: "Noto Sans SC"; src: url(fonts/NotoSansSC-subset.woff2) format("woff2"); font-weight: 500 700; }
+:root { --ink: #12404a; --paper: #f6ebd4; --cream: #fff8e8; --gold: #e0a100; --cor: #e4572e; --grn: #2a9d8f; --vio: #7b6cd9; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #e6d3a8; }
+body { font-family: "Cairo", sans-serif; color: var(--ink); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.a { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
+.scn { position: absolute; inset: 0; }
+.amiri { font-family: "Amiri", serif; font-weight: 700; }
+svg { overflow: visible; display: block; }
+.chip { display: inline-block; background: var(--cream); border: 5px solid var(--ink); border-radius: 26px; padding: 2px 36px 10px; font-weight: 800; font-size: 54px; color: var(--ink); box-shadow: 0 9px 0 rgba(18,64,74,.2); }
+.chip.y { background: #ffe9a8; border-color: #b98300; } .chip.c { background: #ffd9cc; border-color: var(--cor); color: #a8320f; } .chip.m { background: #cdeedd; border-color: var(--grn); } .chip.b { background: #d9e8ff; border-color: #3b6fb6; }
+.bub { position: relative; background: var(--cream); border: 6px solid var(--ink); border-radius: 40px; padding: 4px 54px 22px; font-family: "Amiri"; font-weight: 700; font-size: 82px; line-height: 1.3; color: var(--ink); box-shadow: 0 12px 0 rgba(18,64,74,.2); }
+.bub.mid::after { left: calc(50% - 26px); }
+.bub::after { content: ""; position: absolute; bottom: -40px; left: 200px; border-left: 26px solid transparent; border-right: 26px solid transparent; border-top: 40px solid var(--ink); }
+#cap { position: absolute; left: 110px; right: 110px; top: 1002px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+#cap .ar { font-weight: 800; font-size: 54px; line-height: 1.45; color: #10302a; text-shadow: none; }
+#cap .zh { font-family: "Noto Sans SC", "Cairo", sans-serif; font-weight: 700; font-size: 42px; line-height: 1.4; color: #8a5a00; direction: ltr; text-shadow: none; }
+#cap .en { font-weight: 600; font-size: 35px; line-height: 1.35; color: #3f524c; direction: ltr; text-shadow: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper" class="layer" style="background: radial-gradient(ellipse at 50% 35%, #12665a 0%, #0c4a40 55%, #06281f 100%)"></div>
+  <svg id="pat" class="layer" width="1080" height="960" viewBox="0 0 1080 960" aria-hidden="true" style="opacity:.1"></svg>
+  <canvas id="fxB" class="layer" width="1080" height="1920"></canvas>
+  <div id="low" class="a" style="width:1080px; height:960px; background: linear-gradient(180deg, #f6ead0 0%, #e6d3a8 100%)"></div>
+  <svg id="pat2" class="a" width="1080" height="960" viewBox="0 0 1080 960" aria-hidden="true" style="opacity:1"></svg>
+  <div id="band" class="a" style="width:1080px; height:14px; background: linear-gradient(90deg, #b98300, #ffd666, #b98300)"></div>
+
+  <!-- actors -->
+  <div id="p1" class="a"><span class="chip y" style="font-size:66px; font-family:Amiri; font-weight:700">ابن تيمية</span></div>
+  <div id="p2" class="a"><span class="chip m" style="font-size:66px; font-family:Amiri; font-weight:700">ابن القيم</span></div>
+  <svg id="ch" class="a" width="210" height="210" viewBox="-105 -105 210 210" aria-hidden="true">
+    <circle id="chR" r="84" fill="#ffe3d6" stroke="#e4572e" stroke-width="8" stroke-dasharray="16 11"/>
+    <text x="0" y="16" text-anchor="middle" font-family="Cairo" font-weight="800" font-size="38" fill="#12404a">المصروع</text>
+    <g id="chB"><circle cx="-66" cy="-66" r="26" fill="#e4572e"/><path d="M-66,-80 V-52 M-80,-66 H-52" stroke="#fff" stroke-width="8" stroke-linecap="round"/></g>
+    <path id="chT" d="M-40,-68 L-14,-42 L36,-96" fill="none" stroke="#2a9d8f" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+  </svg>
+  <svg id="sw" class="a" width="280" height="280" viewBox="-140 -140 280 280" aria-hidden="true"><path id="swP" fill="none" stroke="#b9a8ff" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  <svg id="ch2" class="a" width="210" height="210" viewBox="-105 -105 210 210" aria-hidden="true"><circle r="84" fill="#ffe3d6" stroke="#e4572e" stroke-width="8" stroke-dasharray="16 11"/><text x="0" y="16" text-anchor="middle" font-family="Cairo" font-weight="800" font-size="44" fill="#12404a">نفسك</text></svg>
+
+  <!-- SA: who and who told it -->
+  <div id="SA" class="scn"><svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="ar1" d="M650,330 L440,330 M480,296 L436,330 L480,364" fill="none" stroke="#e8c872" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="stu" class="a"><span class="chip" style="font-size:44px">تلميذه</span></div></div>
+  <!-- SB: the book -->
+  <div id="SB" class="scn">
+    <svg id="bk" class="a" width="330" height="420" viewBox="0 0 330 420" aria-hidden="true"><rect x="22" y="14" width="296" height="392" rx="22" fill="#0f5a4d" stroke="#e8c872" stroke-width="10"/><rect x="48" y="40" width="244" height="340" rx="14" fill="none" stroke="#e8c872" stroke-width="4" stroke-dasharray="2 10" stroke-linecap="round"/>
+      <path d="M54,14 V406" stroke="#e8c872" stroke-width="6"/><text x="180" y="170" text-anchor="middle" font-family="Amiri" font-weight="700" font-size="70" fill="#fff4d6">زاد</text><text x="180" y="256" text-anchor="middle" font-family="Amiri" font-weight="700" font-size="70" fill="#fff4d6">المعاد</text>
+      <polygon id="bkS" fill="none" stroke="#e8c872" stroke-width="5" stroke-linejoin="round" transform="translate(180,330)"/></svg></div>
+  <!-- SC: sending someone to speak to the spirit -->
+  <div id="SC" class="scn">
+    <svg id="env" class="a" width="190" height="150" viewBox="0 0 190 150" aria-hidden="true"><rect x="10" y="20" width="170" height="110" rx="14" fill="#fff4d6" stroke="#e8c872" stroke-width="8"/><path d="M14,26 L95,86 L176,26" fill="none" stroke="#12404a" stroke-width="7" stroke-linejoin="round"/></svg>
+    <div id="spk" class="a"><span class="chip b" style="font-size:50px">يخاطب الروح</span></div></div>
+  <!-- SD: the words -->
+  <div id="SD" class="scn"><div id="b1" class="a"><div class="bub mid">قال لك الشيخ: اخرجي</div></div><div id="b2" class="a"><div class="bub mid" style="color:#a8320f">فإن هذا لا يحل لك</div></div></div>
+  <!-- SE: himself -->
+  <div id="SE" class="scn"><svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="bm" d="M740,400 L620,640 M600,600 L612,672 L664,622" fill="none" stroke="#e8c872" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="nh" class="a"><span class="chip c" style="font-size:48px">ينهاها عن الظلم</span></div><div id="rm" class="a"><span class="chip y" style="font-size:48px">يذكّرها بالله</span></div></div>
+  <!-- SF: not everyone who claims is truthful -->
+  <div id="SF" class="scn">
+    <svg id="warn" class="a" width="300" height="270" viewBox="0 0 300 270" aria-hidden="true"><path id="wA" d="M150,18 L284,250 H16 Z" fill="rgba(232,200,114,.15)" stroke="#e8c872" stroke-width="10" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="wB" d="M150,96 V176" stroke="#e8c872" stroke-width="16" stroke-linecap="round" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><circle cx="150" cy="212" r="10" fill="#e8c872"/></svg>
+    <div id="cl" class="a"><span class="chip" style="font-size:46px">كل من يدّعي مخاطبة الجن</span></div>
+    <div id="notall" class="a amiri" style="font-size:96px; line-height:1.1; color:#ff8a65">ليسوا كلّهم صادقين</div></div>
+  <!-- SG: charlatans -->
+  <div id="SG" class="scn">
+    <div id="dj" class="a"><span class="chip c" style="font-size:60px">دجّالون</span></div>
+    <div id="tk" class="a"><span class="chip" style="font-size:50px">تكلّف مثل هذا</span></div>
+    <svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="gx1" d="M380,590 L700,720" fill="none" stroke="#ff8a65" stroke-width="16" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="gx2" d="M700,590 L380,720" fill="none" stroke="#ff8a65" stroke-width="16" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <svg id="pt" class="a" width="190" height="190" viewBox="-95 -95 190 190" aria-hidden="true"><circle r="72" fill="#ffe3d6" stroke="#e4572e" stroke-width="8" stroke-dasharray="14 10"/><text x="0" y="14" text-anchor="middle" font-family="Cairo" font-weight="800" font-size="36" fill="#12404a">المريض</text></svg>
+    <div id="ad" class="a amiri" style="font-size:80px; color:#ff8a65">الأذى</div></div>
+  <!-- SH: what leaves a person exposed -->
+  <div id="SH" class="scn">
+    <svg id="sw3" class="a" width="420" height="420" viewBox="-210 -210 420 420" aria-hidden="true"><path id="sw3P" fill="none" stroke="#b9a8ff" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <svg id="hl" class="a" width="250" height="250" viewBox="-125 -125 250 250" aria-hidden="true"><circle r="104" fill="#ffe3d6" stroke="#e4572e" stroke-width="8" stroke-dasharray="16 11"/><text x="0" y="-6" text-anchor="middle" font-family="Cairo" font-weight="800" font-size="42" fill="#12404a">من قلّ</text><text x="0" y="46" text-anchor="middle" font-family="Cairo" font-weight="800" font-size="42" fill="#12404a">دينه</text></svg>
+    <svg id="ht" class="a" width="190" height="190" viewBox="0 0 190 190" aria-hidden="true"><path d="M95,170 C20,112 28,40 74,40 C86,40 92,48 95,58 C98,48 106,40 118,40 C164,40 172,112 95,170 Z" fill="none" stroke="#ff8a65" stroke-width="10" stroke-linejoin="round" stroke-dasharray="14 10"/><path d="M92,52 L110,84 L82,104 L102,138" fill="none" stroke="#ff8a65" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div id="g1" class="a"><span class="chip" style="font-size:46px; border-style:dashed; opacity:.85">الذكر</span></div>
+    <div id="g2" class="a"><span class="chip" style="font-size:46px; border-style:dashed; opacity:.85">التعاويذ</span></div>
+    <div id="g3" class="a"><span class="chip" style="font-size:46px; border-style:dashed; opacity:.85">التحصينات النبوية</span></div>
+  </div>
+  <!-- SI: protect yourself -->
+  <div id="SI" class="scn">
+    <svg id="shield" class="a" width="330" height="380" viewBox="0 0 330 380"><path id="shP" d="M165,14 C120,44 70,50 22,50 V190 C22,280 90,336 165,368 C240,336 308,280 308,190 V50 C260,50 210,44 165,14 Z" fill="rgba(232,200,114,.14)" stroke="#e8c872" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <svg id="mush" class="a" width="300" height="208" viewBox="0 0 680 470" aria-hidden="true"></svg><div id="lQ" class="a"><span class="chip m" style="font-size:48px">القرآن</span></div>
+    <svg id="star2" class="a" width="190" height="190" viewBox="-95 -95 190 190"><polygon id="st2P" fill="#ffe9a8" stroke="#b98300" stroke-width="8" stroke-linejoin="round"/></svg><div id="lA" class="a"><span class="chip y" style="font-size:48px">الأذكار</span></div>
+  </div>
+  <!-- SL: the doctor -->
+  <div id="SL" class="scn">
+    <svg id="med" class="a" width="260" height="260" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="108" fill="#cdeedd" stroke="#2a9d8f" stroke-width="9"/><path id="mc" d="M98,52 H142 V98 H188 V142 H142 V188 H98 V142 H52 V98 H98 Z" fill="#fff" stroke="#12404a" stroke-width="9" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="lD" class="a"><span class="chip m" style="font-size:56px">الطبيب</span></div><div id="sym" class="a"><span class="chip c" style="font-size:48px">إن استمرت الأعراض</span></div>
+    <svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="ar2" d="M670,540 L470,540 M510,500 L460,540 L510,580" fill="none" stroke="#e8c872" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  </div>
+  <!-- SJ: close -->
+  <div id="SJ" class="scn">
+    <svg id="lamp" class="a" width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+      <line x1="150" y1="0" x2="150" y2="170" stroke="#e8c872" stroke-width="6"/><path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#f6c445" stroke="#e8c872" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="#fff4cf" stroke="#e8c872" stroke-width="8"/>
+      <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#e4572e"/><path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#f6c445" stroke="#e8c872" stroke-width="7" stroke-linejoin="round"/><line x1="150" y1="400" x2="150" y2="440" stroke="#e8c872" stroke-width="6"/>
+    </svg>
+    <div id="name" class="a amiri" style="font-size:150px; line-height:1.2; color:#fff4d6; text-shadow: 0 6px 0 rgba(0,0,0,.3)">في معيّة الله</div>
+    <svg id="share" class="a" width="190" height="171" viewBox="0 0 240 216" aria-hidden="true">
+      <path id="sh1" d="M30,100 L30,196 L210,196 L210,100" fill="none" stroke="#fff4d6" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh2" d="M120,150 L120,18" fill="none" stroke="#7fe3c3" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh3" d="M72,68 L120,16 L168,68" fill="none" stroke="#7fe3c3" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <svg id="bell" class="a" width="170" height="190" viewBox="0 0 170 190" aria-hidden="true">
+      <path id="bl1" d="M85,18 C45,18 32,56 32,92 C32,120 20,134 12,146 L158,146 C150,134 138,120 138,92 C138,56 125,18 85,18 Z" fill="#ffe9a8" stroke="#e8c872" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="bl2" d="M62,164 C66,182 104,182 108,164" fill="none" stroke="#e8c872" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+  </div>
+
+  <div id="cap"><div class="ar" id="capAr"></div><div class="zh" id="capZh"></div><div class="en" id="capEn"></div></div>
+  <canvas id="grn" class="layer" width="540" height="960" style="width:1080px; height:1920px; opacity:.45"></canvas>
+</div>
+
+<script>
+const W = 1080, H = 1920, CAPS = __CAPS__;
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const EZ = { lin: (x) => x, out: (x) => 1 - Math.pow(1 - x, 3), in: (x) => x * x * x, io: (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+  back: (x) => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+  pop: (x) => { const c1 = 2.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); } };
+function tw(t, k) {
+  if (typeof k === "number") return k; if (typeof k === "function") return k(t);
+  if (t <= k[0][0]) return k[0][1];
+  for (let i = 1; i < k.length; i++) if (t <= k[i][0]) { const [t0, v0] = k[i - 1], [t1, v1, e = "out"] = k[i]; return v0 + (v1 - v0) * EZ[e](clamp((t - t0) / ((t1 - t0) || 1))); }
+  return k[k.length - 1][1];
+}
+const rng = (seed) => { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; };
+const NS = "http://www.w3.org/2000/svg";
+const mk = (tag, at, parent) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); parent && parent.appendChild(e); return e; };
+const ITEMS = [], DRAWS = [], SCN = [], BURSTS = [], CUST = [];
+const A = (id, sp) => ITEMS.push([typeof id === "string" ? $(id) : id, sp]);
+const D = (el, k) => DRAWS.push([typeof el === "string" ? $(el) : el, k]);
+const SC = (id, a, b) => SCN.push({ el: $(id), a, b });
+const pop = (t, d = 0.4) => [[t - 0.001, 0.6], [t + d, 1, "pop"]];
+const inc = (t0, t1, k = "out") => [[t0, 1], [t1, 0, k]];
+const on = (a, b, d = 0.2) => [[a - 0.001, 0], [a, 1], [b, 1], [b + d, 0, "in"]];
+function spiral(id, turns, r) { let d = ""; for (let i = 0; i <= 60; i++) { const a = i / 60 * turns * Math.PI * 2, rr = r * (0.18 + 0.82 * i / 60); d += (i ? " L" : "M") + (rr * Math.cos(a)).toFixed(1) + "," + (rr * Math.sin(a)).toFixed(1); } $(id).setAttribute("d", d); }
+function star(id, r, ri) { const pts = []; for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8 - Math.PI / 2, q = i % 2 ? ri : r; pts.push(`${(q * Math.cos(a)).toFixed(1)},${(q * Math.sin(a)).toFixed(1)}`); } $(id).setAttribute("points", pts.join(" ")); }
+spiral("swP", 2.6, 118); star("bkS", 28, 14); spiral("sw3P", 2.4, 200); star("st2P", 86, 62);
+function spread(text, a, b) {
+  const ws = text.split(/\s+/), cl = (w) => w.replace(/[ً-ْٰ]/g, ""), wt = ws.map((w) => cl(w).length + 0.6), tot = wt.reduce((p, c) => p + c, 0);
+  let c = 0; return ws.map((w, i) => { const t = a + (b - a) * c / tot; c += wt[i]; return [w, t]; });
+}
+// background pattern: 8-point stars
+for (const [svg, w, h] of [[$("pat"), 1080, 960], [$("pat2"), 1080, 960]]) { const col = svg === $("pat") ? "#e8c872" : "#12404a"; for (let y = 0; y < h + 120; y += 120) for (let x = 0; x < w + 120; x += 120) { const o = (y / 120) % 2 ? 60 : 0;
+  mk("rect", { x: x + o - 34, y: y - 34, width: 68, height: 68, fill: "none", stroke: col, "stroke-width": 3 }, svg); mk("rect", { x: x + o - 34, y: y - 34, width: 68, height: 68, fill: "none", stroke: col, "stroke-width": 3, transform: `rotate(45 ${x + o} ${y})` }, svg); } }
+function book(svg, w, h) { const r = rng(11), cx = w / 2; mk("path", { d: `M${cx},${h * .08} L${w * .02},${h * .02} L${w * .02},${h * .94} L${cx},${h} L${w * .98},${h * .94} L${w * .98},${h * .02} Z`, fill: "#cdeedd", stroke: "#2a9d8f", "stroke-width": 14, "stroke-linejoin": "round" }, svg);
+  mk("line", { x1: cx, y1: h * .06, x2: cx, y2: h * .97, stroke: "#2a9d8f", "stroke-width": 10 }, svg);
+  for (const side of [-1, 1]) for (let i = 0; i < 6; i++) { const y = h * (.2 + i * .1), x0 = side < 0 ? w * .08 : cx + w * .06; mk("line", { x1: x0, y1: y, x2: x0 + w * (.3 + r() * .1), y2: y, stroke: "#12404a", "stroke-width": 9, "stroke-linecap": "round", opacity: .75 }, svg); } }
+book($("mush"), 680, 470);
+
+// ---- anchors from the voice ------------------------------------------------------------------------
+const Q1 = spread("قصة شيخ الإسلام ابن تيمية مع المصروع", 0.29, 2.69);
+const Q2 = spread("كما رواها تلميذه ابن القيم", 2.99, 4.61);
+const Q3 = spread("يقول ابن القيم في زاد المعاد", 5.27, 6.91);
+const Q4 = spread("وشهدت شيخنا يرسل إلى المصروع من يخاطب الروح التي فيه", 7.3, 11.09);
+const Q6 = spread("فإن هذا لا يحل لك فيفيق المصروع", 14.1, 17.09);
+const Q8 = spread("وكان ينهاها عن الظلم ويذكرها بالله", 19.03, 21.38);
+const Q9 = spread("وليس معنى هذا أن كل من يدعي مخاطبة الجني صادق", 22.18, 25.23);
+const Q10 = spread("فكثير من الدجالين يستغلون ذلك ولا ينبغي للعامة أن تتكلف مثل هذا أو تعرض المريض للأذى", 25.5, 32.06);
+const Q11 = spread("وذكر ابن القيم أن أكثر ما تتسلط الأرواح الخبيثة على من قل دينه وخرب قلبه ولسانه من الذكر والتعاويذ والتحصينات النبوية", 32.93, 41.48);
+const Q12 = spread("فحصن نفسك بالقرآن والأذكار", 41.76, 43.9);
+const Q13 = spread("وراجع الطبيب إن استمرت الأعراض", 44.21, 46.15);
+const Q14 = spread("شارك هذه القصة مع من تحب", 46.67, 48.38), tFol = 48.69;
+const tSh = Q1[3][1] - 0.1, tPt = Q1[6][1];
+
+// ---- the parchment bottom ----------------------------------------------------------------------------------
+A("low", { x: 540, y: 1440, o: 1 }); A("pat2", { x: 540, y: 1440, o: .06 }); A("band", { x: 540, y: 967, o: 1 });
+
+// ---- actors: Ibn Taymiyyah, Ibn al-Qayyim, the afflicted person ----------------------------------------------------------
+A("p1", { x: 780, y: 330, s: [[tSh - 0.001, .6], [tSh + 0.45, 1, "pop"]], o: [[tSh - 0.001, 0], [tSh, 1], [21.5, 1], [21.8, 0, "in"]] });
+A("p2", { x: 300, y: 330, s: [[Q2[3][1] - 0.001, .6], [Q2[3][1] + 0.45, 1, "pop"], [32.9, 1], [32.99, .6], [33.4, 1, "pop"]], o: [[Q2[3][1] - 0.001, 0], [Q2[3][1], 1], [7.1, 1], [7.35, 0, "in"], [32.98, 0], [32.99, 1], [41.4, 1], [41.7, 0, "in"]] });
+D("ar1", [[Q2[1][1], 1], [Q2[2][1] + 0.4, 0, "io"], [4.7, 0], [4.9, 1]]);
+A("stu", { x: 545, y: 262, s: pop(Q2[2][1]), o: [[Q2[2][1] - 0.001, 0], [Q2[2][1], 1], [4.7, 1], [4.9, 0, "in"]] });
+A("ch", { x: 540, y: 760, s: [[tPt - 0.001, .6], [tPt + 0.45, 1, "pop"], [17.2, 1], [17.55, .6], [17.95, 1, "pop"]], o: [[tPt - 0.001, 0], [tPt, 1], [17.2, 1], [17.45, 0, "in"], [17.55, 0], [17.56, 1], [21.3, 1], [21.6, 0, "in"]] });
+CUST.push((t) => { const sick = !(t >= 16.35 && t < 17.45); const R = $("chR");
+  R.setAttribute("fill", sick ? "#ffe3d6" : "#cdeedd"); R.setAttribute("stroke", sick ? "#e4572e" : "#2a9d8f"); R.setAttribute("stroke-dasharray", sick ? "16 11" : "none"); $("chB").setAttribute("opacity", sick ? 1 : 0); });
+D("chT", [[16.35, 1], [16.85, 0, "out"], [17.4, 0], [17.41, 1]]);
+BURSTS.push({ t: 16.85, x: 540, y: 760 });
+A("sw", { x: 540, y: 760, s: (t) => t < 17 ? tw(t, [[2.4, .4], [2.9, 1, "back"], [15.2, 1], [16.0, .05, "in"]]) : tw(t, [[17.7, .4], [18.2, 1, "back"], [21.0, 1], [21.3, .05, "in"]]), r: (t) => t * 40,
+  o: [[2.39, 0], [2.4, 1], [15.9, 1], [16.05, 0], [17.69, 0], [17.7, 1], [21.2, 1], [21.3, 0]] });
+D("swP", [[2.4, 1], [3.1, 0, "io"], [17.69, 0], [17.7, 1], [18.4, 0, "io"]]);
+
+// ---- SA ------------------------------------------------------------------------------------------------------------------
+SC("SA", 0.2, 4.95);
+// ---- SB ------------------------------------------------------------------------------------------------------------------
+SC("SB", 4.9, 7.25);
+A("bk", { x: 540, y: 600, s: [[Q3[4][1] - 0.2, .6], [Q3[4][1] + 0.4, 1, "pop"]], r: -3, o: [[Q3[4][1] - 0.201, 0], [Q3[4][1] - 0.2, 1], [7.0, 1], [7.25, 0, "in"]] }); BURSTS.push({ t: Q3[4][1] + 0.3, x: 540, y: 600 });
+// ---- SC ------------------------------------------------------------------------------------------------------------------
+SC("SC", 7.2, 11.4);
+A("env", { x: [[Q4[2][1], 780], [Q4[4][1] + 0.3, 600, "io"]], y: [[Q4[2][1], 450], [Q4[4][1] + 0.3, 650, "io"]], s: [[Q4[2][1] - 0.001, .5], [Q4[2][1] + 0.4, 1, "pop"]], o: [[Q4[2][1] - 0.001, 0], [Q4[2][1], 1], [11.2, 1], [11.4, 0, "in"]] });
+A("spk", { x: 250, y: 560, s: pop(Q4[6][1]), o: [[Q4[6][1] - 0.001, 0], [Q4[6][1], 1], [11.2, 1], [11.4, 0, "in"]] });
+// ---- SD ------------------------------------------------------------------------------------------------------------------
+SC("SD", 11.3, 17.4);
+A("b1", { x: 540, y: 520, s: pop(12.19, .45), o: [[12.189, 0], [12.19, 1], [13.95, 1], [14.1, 0, "in"]] });
+A("b2", { x: 540, y: 520, s: pop(14.1, .45), o: [[14.099, 0], [14.1, 1], [16.9, 1], [17.2, 0, "in"]] }); BURSTS.push({ t: 12.4, x: 540, y: 520 }, { t: 14.3, x: 540, y: 520 });
+// ---- SE ------------------------------------------------------------------------------------------------------------------
+SC("SE", 17.5, 21.65);
+D("bm", [[17.65, 1], [18.5, 0, "io"]]);
+A("nh", { x: 270, y: 520, s: pop(Q8[1][1]), o: [[Q8[1][1] - 0.001, 0], [Q8[1][1], 1], [21.2, 1], [21.45, 0, "in"]] });
+A("rm", { x: 270, y: 900, s: pop(Q8[4][1]), o: [[Q8[4][1] - 0.001, 0], [Q8[4][1], 1], [21.2, 1], [21.45, 0, "in"]] });
+// ---- SF ------------------------------------------------------------------------------------------------------------------
+SC("SF", 21.85, 25.45);
+A("warn", { x: 540, y: 400, s: [[22.1, .5], [22.7, 1, "back"]], o: [[22.09, 0], [22.1, 1]] }); D("wA", inc(22.1, 22.7, "io")); D("wB", inc(22.6, 22.9));
+A("cl", { x: 540, y: 650, s: pop(Q9[4][1]), o: [[Q9[4][1] - 0.001, 0], [Q9[4][1], 1], [25.2, 1], [25.45, 0, "in"]] });
+A("notall", { x: 540, y: 820, s: [[Q9[9][1] - 0.001, 1.6], [Q9[9][1] + 0.35, 1, "out"]], r: -4, o: [[Q9[9][1] - 0.001, 0], [Q9[9][1], 1], [25.2, 1], [25.45, 0, "in"]] }); BURSTS.push({ t: Q9[9][1] + 0.35, x: 540, y: 820 });
+// ---- SG ------------------------------------------------------------------------------------------------------------------
+SC("SG", 25.45, 32.5);
+A("dj", { x: 770, y: 400, s: pop(Q10[2][1]), o: [[Q10[2][1] - 0.001, 0], [Q10[2][1], 1], [29.0, 1], [29.25, 0, "in"]] });
+A("tk", { x: 540, y: 655, s: pop(Q10[9][1]), o: [[Q10[9][1] - 0.001, 0], [Q10[9][1], 1], [32.2, 1], [32.45, 0, "in"]] });
+D("gx1", inc(Q10[9][1] + 0.6, Q10[9][1] + 0.9)); D("gx2", inc(Q10[9][1] + 0.75, Q10[9][1] + 1.05)); BURSTS.push({ t: Q10[9][1] + 1.0, x: 540, y: 655 });
+A("pt", { x: 540, y: 850, s: pop(Q10[14][1]), o: [[Q10[14][1] - 0.001, 0], [Q10[14][1], 1], [32.2, 1], [32.45, 0, "in"]] });
+A("ad", { x: 540, y: 430, s: [[Q10[15][1] - 0.001, 1.5], [Q10[15][1] + 0.35, 1, "out"]], r: 3, o: [[Q10[15][1] - 0.001, 0], [Q10[15][1], 1], [32.2, 1], [32.45, 0, "in"]] });
+// ---- SH ------------------------------------------------------------------------------------------------------------------
+SC("SH", 32.8, 41.6);
+A("hl", { x: 540, y: 660, s: pop(Q11[10][1]), o: [[Q11[10][1] - 0.001, 0], [Q11[10][1], 1], [41.2, 1], [41.5, 0, "in"]] });
+A("sw3", { x: 540, y: 660, s: [[Q11[7][1], .4], [Q11[7][1] + 0.5, 1, "back"]], r: (t) => t * 36, o: [[Q11[7][1] - 0.001, 0], [Q11[7][1], 1], [41.2, 1], [41.5, 0, "in"]] }); D("sw3P", inc(Q11[7][1], Q11[7][1] + 0.8, "io"));
+A("ht", { x: 225, y: 560, s: pop(Q11[14][1]), o: [[Q11[14][1] - 0.001, 0], [Q11[14][1], 1], [41.2, 1], [41.5, 0, "in"]] });
+A("g1", { x: 820, y: 540, s: pop(Q11[17][1]), o: [[Q11[17][1] - 0.001, 0], [Q11[17][1], 1], [41.2, 1], [41.5, 0, "in"]] });
+A("g2", { x: 300, y: 880, s: pop(Q11[18][1]), o: [[Q11[18][1] - 0.001, 0], [Q11[18][1], 1], [41.2, 1], [41.5, 0, "in"]] });
+A("g3", { x: 765, y: 880, s: pop(Q11[19][1]), o: [[Q11[19][1] - 0.001, 0], [Q11[19][1], 1], [41.2, 1], [41.5, 0, "in"]] });
+// ---- SI ------------------------------------------------------------------------------------------------------------------
+SC("SI", 41.65, 44.25);
+A("ch2", { x: [[Q12[1][1], 540], [44.15, 540], [44.5, 770, "io"]], y: [[Q12[1][1], 330], [44.15, 330], [44.5, 540, "io"]], s: [[Q12[1][1] - 0.001, .6], [Q12[1][1] + 0.45, 1.25, "pop"], [44.15, 1.25], [44.5, 1, "io"]], o: [[Q12[1][1] - 0.001, 0], [Q12[1][1], 1], [46.3, 1], [46.55, 0, "in"]] });
+A("shield", { x: 540, y: 350, s: .84, o: [[Q12[0][1] - 0.001, 0], [Q12[0][1], 1], [44.0, 1], [44.25, 0, "in"]] }); D("shP", inc(Q12[0][1], Q12[0][1] + 0.7, "io")); BURSTS.push({ t: Q12[0][1] + 0.7, x: 540, y: 350 });
+A("mush", { x: 770, y: 720, s: [[Q12[2][1], .6], [Q12[2][1] + 0.5, 1, "back"]], o: [[Q12[2][1] - 0.001, 0], [Q12[2][1], 1], [44.0, 1], [44.25, 0, "in"]] });
+A("lQ", { x: 770, y: 860, s: pop(Q12[2][1] + 0.25), o: [[Q12[2][1] + 0.249, 0], [Q12[2][1] + 0.25, 1], [44.0, 1], [44.25, 0, "in"]] });
+A("star2", { x: 310, y: 720, s: [[Q12[3][1], .6], [Q12[3][1] + 0.5, 1, "back"]], r: (t) => t * 20, o: [[Q12[3][1] - 0.001, 0], [Q12[3][1], 1], [44.0, 1], [44.25, 0, "in"]] });
+A("lA", { x: 310, y: 860, s: pop(Q12[3][1] + 0.25), o: [[Q12[3][1] + 0.249, 0], [Q12[3][1] + 0.25, 1], [44.0, 1], [44.25, 0, "in"]] });
+// ---- SL ------------------------------------------------------------------------------------------------------------------
+SC("SL", 44.2, 46.6);
+A("med", { x: 310, y: 540, s: [[Q13[1][1] - 0.4, .6], [Q13[1][1] + 0.2, 1.15, "back"]], o: [[Q13[1][1] - 0.401, 0], [Q13[1][1] - 0.4, 1], [46.3, 1], [46.55, 0, "in"]] }); D("mc", inc(Q13[1][1] - 0.2, Q13[1][1] + 0.4, "io"));
+A("lD", { x: 310, y: 740, s: pop(Q13[1][1] + 0.1), o: [[Q13[1][1] + 0.099, 0], [Q13[1][1] + 0.1, 1], [46.3, 1], [46.55, 0, "in"]] });
+D("ar2", inc(44.5, 45.0, "io"));
+A("sym", { x: 540, y: 340, s: pop(Q13[3][1]), o: [[Q13[3][1] - 0.001, 0], [Q13[3][1], 1], [46.3, 1], [46.55, 0, "in"]] }); BURSTS.push({ t: Q13[3][1] + 0.3, x: 540, y: 340 });
+// ---- SJ ------------------------------------------------------------------------------------------------------------------
+SC("SJ", 46.5, 70);
+A("lamp", { x: 540, y: 330, s: [[46.7, .78], [47.4, .66, "out"]], o: [[46.6, 0], [47.0, 1]] });
+A("name", { x: 540, y: 600, s: [[46.8, 1.1], [47.6, 1, "out"]], o: [[46.8, 0], [47.2, 1]] });
+D("sh1", inc(Q14[0][1], Q14[0][1] + 0.45)); D("sh2", inc(Q14[0][1] + 0.3, Q14[0][1] + 0.7)); D("sh3", inc(Q14[0][1] + 0.6, Q14[0][1] + 0.85));
+A("share", { x: 380, y: 830, s: [[Q14[0][1] - 0.01 + 0.5, .6], [Q14[0][1] + 1.0, 1, "back"]], o: [[Q14[0][1] + 0.49, 0], [Q14[0][1] + 0.5, 1]] });
+A("bell", { x: 700, y: 830, s: [[tFol - 0.01, .6], [tFol + .5, 1, "back"]], r: [[tFol + 0.6, 0], [tFol + 0.7, 14, "out"], [tFol + 0.85, -12, "io"], [tFol + 1.0, 8, "io"], [tFol + 1.15, 0, "io"]], o: [[tFol - 0.01, 0], [tFol, 1]] });
+D("bl1", inc(tFol, tFol + 0.6)); D("bl2", inc(tFol + 0.5, tFol + 0.8));
+
+// ---- canvas: rain, bursts, paper grain -------------------------------------------------------------------------------------
+const fb = $("fxB").getContext("2d"), dr = rng(9), RAIN = [];
+for (let i = 0; i < 70; i++) RAIN.push({ x: dr() * 1200 - 60, y0: dr() * 1000, v: 260 + dr() * 220, l: 40 + dr() * 60, a: .05 + dr() * .09 });
+function drawFX(t) {
+  fb.clearRect(0, 0, W, H); fb.lineWidth = 3; fb.lineCap = "round";
+  for (const d of RAIN) { const y = (d.y0 + d.v * t) % 1060 - 60, x = d.x - y * 0.18; fb.globalAlpha = d.a; fb.strokeStyle = "#e8c872"; fb.beginPath(); fb.moveTo(x, y); fb.lineTo(x - d.l * 0.18, y + d.l); fb.stroke(); }
+  for (const b of BURSTS) { const age = t - b.t; if (age < 0 || age > 0.8) continue; const u = age / 0.8;
+    for (let i = 0; i < 14; i++) { const a = i * Math.PI * 2 / 14 + b.t * 3, v = 90 + (i % 3) * 50, d = v * EZ.out(u); fb.globalAlpha = (1 - u) * .95; fb.fillStyle = ["#e0a100", "#e4572e", "#2a9d8f"][i % 3]; fb.beginPath(); fb.arc(b.x + Math.cos(a) * d, b.y + Math.sin(a) * d, 6 * (1 - u) + 1.6, 0, 7); fb.fill(); } }
+  fb.globalAlpha = 1;
+}
+const DU = $("grn").getContext("2d"), GN = []; (() => { for (let f = 0; f < 4; f++) { const c = document.createElement("canvas"); c.width = 540; c.height = 960; const g = c.getContext("2d"), im = g.createImageData(540, 960), r = rng(100 + f); for (let i = 0; i < im.data.length; i += 4) { const n = r() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = n; im.data[i + 3] = 12; } g.putImageData(im, 0, 0); GN.push(c); } })();
+
+// ---- captions ---------------------------------------------------------------------------------
+let capIdx = -2;
+function drawCaps(t) {
+  let i = -1; for (let k = 0; k < CAPS.length; k++) if (t >= CAPS[k].a && t < CAPS[k].b + 0.25) i = k;
+  if (i !== capIdx) { capIdx = i; const c = CAPS[i] || { ar: "", en: "", zh: "" }; $("capAr").textContent = c.ar; $("capZh").textContent = c.zh; $("capEn").textContent = c.en; $("capAr").style.display = c.ar ? "block" : "none"; }
+  const c = CAPS[i], box = $("cap"); if (!c) { box.style.opacity = 0; return; }
+  const inP = clamp((t - c.a) / 0.16), outP = clamp((t - (c.b + 0.1)) / 0.15), nxt = CAPS[i + 1] && CAPS[i + 1].a - c.b < 0.2 ? 0 : outP;
+  box.style.opacity = inP * (1 - nxt); box.style.filter = `blur(${((1 - inP) * 7 + nxt * 7).toFixed(1)}px)`;
+}
+
+// ---- the renderer -----------------------------------------------------------------------------
+function render(t) {
+  for (const [el, sp] of ITEMS) {
+    const x = tw(t, sp.x ?? 540), y = tw(t, sp.y ?? 900), s = tw(t, sp.s ?? 1), r = tw(t, sp.r ?? 0), o = tw(t, sp.o ?? 1);
+    el.style.opacity = clamp(o); el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${r}deg) scale(${s})`;
+  }
+  for (const [el, k] of DRAWS) if (el) el.setAttribute("stroke-dashoffset", clamp(tw(t, k)).toFixed(4));
+  for (const sc of SCN) { const vis = t >= sc.a - 0.01 && t <= sc.b + 0.01; sc.el.style.display = vis ? "block" : "none"; if (!vis) continue;
+    const out = sc.b > 59 ? 0 : clamp((t - (sc.b - 0.4)) / 0.4);
+    if (out > 0) { const X = out * 112; sc.el.style.webkitMaskImage = sc.el.style.maskImage = `linear-gradient(to left, transparent ${X - 14}%, #000 ${X}%)`; }
+    else sc.el.style.webkitMaskImage = sc.el.style.maskImage = "none"; }
+  for (const f of CUST) f(t);
+  drawFX(t); drawCaps(t);
+  DU.clearRect(0, 0, 540, 960); DU.drawImage(GN[Math.floor(t * 12) % 4], 0, 0);
+}
+window.SFX = [[tSh, "pop-b", .4], [tPt, "pop-a", .35], [Q2[3][1], "pop-a", .4], [Q2[1][1], "whoosh-a", .25], [2.4, "puff", .35], [4.8, "erase", .35], [Q3[4][1] - 0.2, "pop-b", .45], [7.1, "erase", .3],
+  [Q4[2][1], "whoosh-b", .3], [Q4[6][1], "pop-a", .35], [11.3, "erase", .3], [12.19, "pop-b", .5], [14.1, "pop-a", .5], [16.85, "pop-b", .5], [17.3, "erase", .3], [17.65, "whoosh-a", .3], [Q8[1][1], "pop-a", .4], [Q8[4][1], "pop-b", .4], [21.4, "erase", .3],
+  [22.1, "chalk", .45], [Q9[4][1], "pop-a", .4], [Q9[9][1], "thump", .55], [25.4, "erase", .3], [Q10[2][1], "pop-b", .45], [Q10[9][1], "pop-a", .4], [Q10[9][1] + 0.6, "thump", .4], [Q10[14][1], "pop-b", .4], [Q10[15][1], "thump", .45], [32.4, "erase", .3],
+  [Q11[7][1], "puff", .4], [Q11[10][1], "pop-a", .4], [Q11[14][1], "pop-b", .4], [Q11[17][1], "pop-a", .35], [Q11[18][1], "pop-b", .35], [Q11[19][1], "pop-a", .35], [41.5, "erase", .3],
+  [Q12[0][1], "chalk", .45], [Q12[1][1], "pop-b", .4], [Q12[2][1], "pop-a", .4], [Q12[3][1], "pop-b", .4], [44.1, "erase", .3], [Q13[1][1] - 0.4, "pop-a", .4], [Q13[3][1], "thump", .45], [46.5, "erase", .3], [Q14[0][1] + 0.5, "pop-b", .4], [tFol, "pop-a", .4], [46.9, "pop-b", .3]];
+window.render = render;
+window.ready = (async () => {
+  await document.fonts.load('900 60px "Cairo"'); await document.fonts.load('700 60px "Amiri"'); await document.fonts.load('700 40px "Noto Sans SC"');
+  await document.fonts.ready; render(0); return true;
+})();
+</script>
+</body>
+</html>
