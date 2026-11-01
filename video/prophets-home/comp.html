@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Cairo"; src: url(fonts/Cairo.ttf) format("truetype"); font-weight: 200 1000; }
+@font-face { font-family: "Reem Kufi"; src: url(fonts/ReemKufi.ttf) format("truetype"); font-weight: 400 700; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Regular.woff) format("woff"); font-weight: 400; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Bold.woff) format("woff"); font-weight: 700; }
+@font-face { font-family: "Noto Sans SC"; src: url(fonts/NotoSansSC-subset.woff2) format("woff2"); font-weight: 500 700; }
+:root { --ink: #2a1d14; --terra: #c8553d; --teal: #0f5e63; --gold: #b07a14; --gold2: #e0a82e; --sand: #f6ead3; --paper: #fff8ea; --rose: #d98a7a; --cream: #fff6e3; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #ecd7b1; }
+body { font-family: "Cairo", sans-serif; color: var(--ink); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.a { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
+.scn { position: absolute; inset: 0; }
+.amiri { font-family: "Amiri", serif; font-weight: 700; }
+.kufi { font-family: "Reem Kufi", sans-serif; font-weight: 700; }
+.w { display: inline-block; }
+.w.k { color: var(--terra); }
+svg { overflow: visible; display: block; }
+.chip { display: inline-flex; align-items: center; gap: 14px; background: var(--paper); border: 4px solid var(--terra); border-radius: 999px; padding: 4px 38px 12px;
+  font-weight: 800; font-size: 52px; color: var(--ink); box-shadow: 0 10px 0 rgba(120,70,30,.28); }
+.chip.t { border-color: var(--teal); }
+.plate { display: inline-block; background: var(--teal); color: var(--cream); border-radius: 16px; padding: 6px 40px 14px; font-weight: 800; font-size: 56px; box-shadow: 0 10px 0 rgba(6,40,44,.4); }
+.plate small { display: block; font-size: 34px; font-weight: 600; color: #bfe0dc; margin-top: -8px; }
+.mc { width: 130px; height: 176px; border-radius: 14px; background: var(--paper); border: 5px solid var(--terra); text-align: center; box-shadow: 0 12px 0 rgba(120,70,30,.28); }
+.mc b { display: block; margin-top: 18px; font-family: "Reem Kufi"; font-size: 44px; color: var(--terra); }
+.mc i { display: block; font-style: normal; font-family: "Amiri"; font-weight: 700; font-size: 34px; margin-top: 14px; color: var(--ink); }
+.glow { border-radius: 50%; }
+#cap { position: absolute; left: 110px; right: 110px; bottom: 600px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+#cap .ar { font-weight: 800; font-size: 54px; line-height: 1.45; color: var(--cream); text-shadow: 0 2px 10px rgba(0,30,34,.9); }
+#cap .zh { font-family: "Noto Sans SC", "Cairo", sans-serif; font-weight: 700; font-size: 42px; line-height: 1.4; color: #ffd37a; direction: ltr; text-shadow: 0 2px 10px rgba(0,30,34,.9); }
+#cap .en { font-weight: 600; font-size: 35px; line-height: 1.35; color: #cfe6e2; direction: ltr; text-shadow: 0 2px 10px rgba(0,30,34,.9); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="wall" class="layer" style="background: linear-gradient(180deg, #f8edd7 0%, #efdcb6 100%)"></div>
+  <svg id="latO" class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true" style="opacity:.16">
+    <defs><pattern id="latp" width="120" height="120" patternUnits="userSpaceOnUse"><polygon id="lstar" fill="none" stroke="#c8553d" stroke-width="3"/><rect x="42" y="42" width="36" height="36" fill="none" stroke="#c8553d" stroke-width="2" transform="rotate(45 60 60)"/></pattern></defs>
+    <rect width="1080" height="1920" fill="url(#latp)"/>
+  </svg>
+  <div id="sunH" class="a glow" style="width:900px; height:900px; background: radial-gradient(circle, rgba(255,214,120,.75) 0%, rgba(255,190,90,.3) 40%, rgba(255,190,90,0) 70%)"></div>
+  <svg id="beams" class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+    <defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4c8" stop-opacity=".55"/><stop offset="1" stop-color="#fff4c8" stop-opacity="0"/></linearGradient></defs>
+    <polygon points="420,430 520,430 820,1000 620,1000" fill="url(#bg1)"/><polygon points="540,430 600,430 960,1000 820,1000" fill="url(#bg1)"/><polygon points="330,430 400,430 560,1000 400,1000" fill="url(#bg1)"/>
+  </svg>
+  <canvas id="fxB" class="layer" width="1080" height="1920"></canvas>
+  <div id="floor" class="a" style="width:1080px; height:1000px; background: linear-gradient(180deg, #11696f 0%, #0a3f45 100%)"></div>
+  <svg id="floorP" class="a" width="1080" height="1000" viewBox="0 0 1080 1000" aria-hidden="true" style="opacity:.14"><defs><pattern id="fp" width="140" height="140" patternUnits="userSpaceOnUse"><polygon id="fstar" fill="none" stroke="#fff6e3" stroke-width="3"/><rect x="45" y="45" width="50" height="50" fill="none" stroke="#fff6e3" stroke-width="2" transform="rotate(45 70 70)"/></pattern></defs><rect width="1080" height="1000" fill="url(#fp)"/></svg>
+  <svg id="trim" class="a" width="1080" height="30" viewBox="0 0 1080 30" aria-hidden="true"></svg>
+
+  <!-- the house (hook) -->
+  <svg id="house" class="a" width="760" height="620" viewBox="0 0 760 620" aria-hidden="true">
+    <defs><radialGradient id="dg" cx=".5" cy=".7"><stop offset="0" stop-color="#fff0b8"/><stop offset="1" stop-color="#ffb850"/></radialGradient><pattern id="wl" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M0,0 L26,26 M26,0 L0,26" stroke="#5a371a" stroke-width="4"/></pattern></defs>
+    <ellipse cx="380" cy="590" rx="360" ry="22" fill="rgba(90,55,25,.25)"/>
+    <rect x="80" y="170" width="600" height="420" fill="#dba865"/><rect x="80" y="170" width="600" height="26" fill="#c58e4e"/>
+    <g fill="#c58e4e"><rect x="86" y="130" width="64" height="44"/><rect x="180" y="130" width="64" height="44"/><rect x="274" y="130" width="64" height="44"/><rect x="368" y="130" width="64" height="44"/><rect x="462" y="130" width="64" height="44"/><rect x="556" y="130" width="64" height="44"/></g>
+    <g><path d="M130,430 V330 Q200,260 270,330 V430 Z" fill="url(#dg)"/><path d="M130,430 V330 Q200,260 270,330 V430 Z" fill="url(#wl)"/><path d="M130,430 V330 Q200,260 270,330 V430 Z" fill="none" stroke="#7a4a22" stroke-width="10"/></g>
+    <g><path d="M490,430 V330 Q560,260 630,330 V430 Z" fill="url(#dg)"/><path d="M490,430 V330 Q560,260 630,330 V430 Z" fill="url(#wl)"/><path d="M490,430 V330 Q560,260 630,330 V430 Z" fill="none" stroke="#7a4a22" stroke-width="10"/></g>
+    <path d="M300,590 V400 Q380,310 460,400 V590 Z" fill="#fff0b8"/><path id="doorIn" d="M312,590 V404 Q380,326 448,404 V590 Z" fill="url(#dg)"/><path d="M300,590 V400 Q380,310 460,400 V590 Z" fill="none" stroke="#7a4a22" stroke-width="12"/>
+    <path d="M700,590 C694,520 698,460 712,410" stroke="#5a3a1c" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <g fill="#6b7a3a"><path d="M712,410 C680,380 650,384 632,402 C660,392 690,396 712,410 Z"/><path d="M712,410 C744,380 774,384 790,402 C764,392 734,396 712,410 Z"/><path d="M712,410 C700,370 712,346 730,334 C722,360 718,388 712,410 Z"/><path d="M712,410 C690,380 668,368 648,372 C672,380 694,392 712,410 Z"/></g>
+  </svg>
+
+  <!-- the room -->
+  <svg id="win" class="a" width="440" height="460" viewBox="0 0 440 460" aria-hidden="true">
+    <defs><pattern id="wl2" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M0,0 L38,38 M38,0 L0,38" stroke="#6b3f1d" stroke-width="5"/></pattern></defs>
+    <path d="M20,460 V210 Q20,20 220,20 Q420,20 420,210 V460 Z" fill="#ffe9b0"/><path d="M20,460 V210 Q20,20 220,20 Q420,20 420,210 V460 Z" fill="url(#wl2)"/>
+    <path d="M20,460 V210 Q20,20 220,20 Q420,20 420,210 V460 Z" fill="none" stroke="#7a4a22" stroke-width="18"/>
+  </svg>
+  <svg id="bed" class="a" width="640" height="170" viewBox="0 0 640 170" aria-hidden="true">
+    <rect x="30" y="100" width="40" height="64" rx="6" fill="#6a3f1c"/><rect x="570" y="100" width="40" height="64" rx="6" fill="#6a3f1c"/>
+    <rect x="0" y="62" width="640" height="46" rx="12" fill="#7a4a22"/><rect x="18" y="22" width="604" height="56" rx="26" fill="#f6ead3" stroke="#d8c49a" stroke-width="3"/>
+    <rect x="210" y="12" width="412" height="68" rx="28" fill="#d98a7a"/><ellipse cx="96" cy="30" rx="74" ry="24" fill="#fff8ea" stroke="#d8c49a" stroke-width="3"/>
+  </svg>
+  <svg id="cush" class="a" width="230" height="80" viewBox="0 0 230 80" aria-hidden="true"><ellipse cx="115" cy="44" rx="108" ry="32" fill="#c8553d"/><ellipse cx="115" cy="34" rx="96" ry="26" fill="#d96b52"/><path d="M40,34 H190" stroke="#fff8ea" stroke-width="4" stroke-dasharray="10 10"/></svg>
+  <svg id="stand" class="a" width="250" height="250" viewBox="0 0 250 250" aria-hidden="true">
+    <path d="M60,240 L190,120 M190,240 L60,120" stroke="#7a4a22" stroke-width="16" stroke-linecap="round"/>
+    <path d="M30,140 L125,120 L220,140 L220,60 L125,40 L30,60 Z" fill="#fff8ea" stroke="#d8c49a" stroke-width="3"/><path d="M125,40 V120" stroke="#b9a275" stroke-width="3"/>
+    <g stroke="#2a1d14" stroke-width="5" stroke-linecap="round" opacity=".5"><path d="M50,78 L108,88"/><path d="M50,98 L108,108"/><path d="M142,88 L200,78"/><path d="M142,108 L200,98"/></g>
+  </svg>
+
+  <!-- presence as light -->
+  <div id="orbG" class="a glow" style="width:420px; height:420px; background: radial-gradient(circle, #fff3c4 0%, #ffd470 24%, rgba(255,190,80,.55) 50%, rgba(255,190,80,0) 72%)"></div>
+  <div id="orbA" class="a glow" style="width:420px; height:420px; background: radial-gradient(circle, #ffd0b0 0%, #f08a62 24%, rgba(224,100,70,.55) 50%, rgba(224,100,70,0) 72%)"></div>
+  <div id="aisha" class="a glow" style="width:300px; height:300px; background: radial-gradient(circle, #ffe6e0 0%, #f4a79b 28%, rgba(217,138,122,.5) 52%, rgba(217,138,122,0) 72%)"></div>
+  <svg id="hand" class="a" width="236" height="314" viewBox="0 0 240 320" aria-hidden="true"><g fill="rgba(255,248,234,.55)" stroke="#2a1d14" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M40,250 C30,190 34,150 52,110 L52,40 Q52,24 66,24 Q80,24 80,40 L80,110 L82,20 Q82,4 96,4 Q110,4 110,20 L110,108 L114,26 Q114,10 128,10 Q142,10 142,26 L142,112 L146,50 Q146,36 160,36 Q174,36 174,52 L172,170 C190,150 204,140 220,146 Q232,152 222,170 C200,206 186,240 176,262 C160,296 120,312 84,306 C60,302 46,284 40,250 Z"/></g></svg>
+  <svg id="thr" class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true">
+    <path id="th1" d="M800,740 C740,700 680,730 640,780" fill="none" stroke="#e0a82e" stroke-width="7" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    <path id="th2" d="M810,770 C750,770 690,790 650,810" fill="none" stroke="#e0a82e" stroke-width="7" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    <path id="th3" d="M800,800 C750,830 700,840 660,830" fill="none" stroke="#e0a82e" stroke-width="7" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+  </svg>
+
+  <!-- SA: the hook -->
+  <div id="SA" class="scn">
+    <div id="t1" class="a amiri" style="font-size:112px; line-height:1.1; color:#2a1d14"></div>
+    <div id="cAi" class="a"><span class="plate">عائشة</span></div>
+    <div id="cNb" class="a"><span class="plate" style="background:#c8553d; box-shadow:0 10px 0 rgba(120,40,20,.4)">النبي</span></div>
+    <svg id="thread" class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="thr0" d="M690,372 C620,320 460,320 390,372" fill="none" stroke="#e0a82e" stroke-width="9" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  </div>
+  <!-- SB -->
+  <div id="SB" class="scn">
+    <div id="bAi" class="a"><span class="plate">عائشة<small>رضي الله عنها</small></span></div>
+    <div id="m0" class="a mc"><b>١</b><i>الإخلاص</i></div>
+    <div id="m1" class="a mc"><b>٢</b><i>الفلق</i></div>
+    <div id="m2" class="a mc"><b>٣</b><i>الناس</i></div>
+  </div>
+  <!-- SC -->
+  <div id="SC" class="scn">
+    <div id="cAisha" class="a"><span class="chip">عائشة</span></div>
+    <div id="cBar" class="a"><span class="chip t">بركتها</span></div>
+  </div>
+  <!-- SD -->
+  <div id="SD" class="scn">
+    <div id="dT" class="a amiri" style="font-size:86px; line-height:1.15"></div>
+    <svg id="med" class="a" width="470" height="470" viewBox="-235 -235 470 470" aria-hidden="true"><defs><clipPath id="mc"><circle r="220"/></clipPath><radialGradient id="mgl"><stop offset="0" stop-color="#ffe9a0" stop-opacity=".9"/><stop offset="1" stop-color="#ffe9a0" stop-opacity="0"/></radialGradient></defs>
+      <circle r="226" fill="#0a3f45" stroke="#e0a82e" stroke-width="10"/><g id="medStars" clip-path="url(#mc)"></g><circle r="170" fill="url(#mgl)"/><g id="medRays" stroke="#ffe9a0" stroke-width="4" stroke-linecap="round" opacity=".5"></g><polygon id="bigStar" fill="#ffd55a" stroke="#fff4c8" stroke-width="3"/></svg>
+    <svg id="mush" class="a" width="400" height="280" viewBox="0 0 680 470" aria-hidden="true"></svg>
+    <div id="sick" class="a glow" style="width:150px; height:150px; background: radial-gradient(circle, #ffd0b0 0%, #f08a62 24%, rgba(224,100,70,.55) 54%, rgba(224,100,70,0) 74%)"></div>
+    <div id="sickL" class="a"><span class="chip" style="font-size:44px; border-color:#c8553d">المرض</span></div>
+    <svg id="arr" class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="arrP" d="M150,630 C150,770 290,820 392,820" fill="none" stroke="#c8553d" stroke-width="10" stroke-linecap="butt" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="arrH" d="M360,790 L402,820 L360,852" fill="none" stroke="#c8553d" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  </div>
+  <!-- SE -->
+  <div id="SE" class="scn">
+    <div id="e1" class="a glow" style="width:300px; height:300px; background: radial-gradient(circle, #fff3c4 0%, #ffd470 30%, rgba(255,190,80,.55) 56%, rgba(255,190,80,0) 74%)"></div>
+    <div id="e2" class="a glow" style="width:300px; height:300px; background: radial-gradient(circle, #ffe6e0 0%, #f4a79b 30%, rgba(217,138,122,.55) 56%, rgba(217,138,122,0) 74%)"></div>
+    <div id="n1" class="a kufi" style="font-size:110px; color:#2a1d14">١</div><div id="n2" class="a kufi" style="font-size:110px; color:#2a1d14">٢</div>
+    <div id="l1" class="a"><span class="chip">نفسه</span></div><div id="l2" class="a"><span class="chip">زوجته</span></div>
+    <div id="lp" class="a"><span class="chip t" style="font-size:42px">عند اشتداد الألم</span></div>
+    <svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="eA" d="M700,450 C620,360 460,360 380,450" fill="none" stroke="#c8553d" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="eH" d="M410,410 L376,454 L428,470" fill="none" stroke="#c8553d" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  </div>
+  <!-- SF -->
+  <div id="SF" class="scn">
+    <div id="f1" class="a"><span class="chip" style="font-size:64px">شيخ</span></div>
+    <div id="f2" class="a"><span class="chip" style="font-size:64px">قارئ مشهور</span></div>
+    <svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="x1a" d="M330,360 L750,520" stroke="#c8553d" stroke-width="16" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="x2a" d="M270,560 L810,720" stroke="#c8553d" stroke-width="16" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  </div>
+  <!-- SG -->
+  <div id="SG" class="scn">
+    <svg id="hs" class="a" width="560" height="440" viewBox="0 0 560 440" aria-hidden="true"><path id="hsA" d="M30,200 L280,20 L530,200" fill="none" stroke="#2a1d14" stroke-width="18" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="hsB" d="M70,180 V420 H490 V180" fill="none" stroke="#2a1d14" stroke-width="18" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="g0" class="a glow" style="width:300px; height:300px; background: radial-gradient(circle, #fff3c4 0%, #ffd470 28%, rgba(255,190,80,.55) 54%, rgba(255,190,80,0) 74%)"></div>
+    <div id="g1" class="a glow" style="width:170px; height:170px; background: radial-gradient(circle, #ffe6e0 0%, #f4a79b 30%, rgba(217,138,122,.55) 56%, rgba(217,138,122,0) 74%)"></div>
+    <div id="g2" class="a glow" style="width:170px; height:170px; background: radial-gradient(circle, #ffe6e0 0%, #f4a79b 30%, rgba(217,138,122,.55) 56%, rgba(217,138,122,0) 74%)"></div>
+    <div id="g3" class="a glow" style="width:150px; height:150px; background: radial-gradient(circle, #ffe6e0 0%, #f4a79b 30%, rgba(217,138,122,.55) 56%, rgba(217,138,122,0) 74%)"></div>
+    <div id="g4" class="a glow" style="width:150px; height:150px; background: radial-gradient(circle, #ffe6e0 0%, #f4a79b 30%, rgba(217,138,122,.55) 56%, rgba(217,138,122,0) 74%)"></div>
+    <svg id="star" class="a" width="210" height="210" viewBox="-105 -105 210 210" aria-hidden="true"><polygon id="hStar" fill="#e0a82e" stroke="#fff4c8" stroke-width="3"/></svg>
+    <div id="gAnta" class="a"><span class="chip t" style="font-size:46px">أنتَ</span></div>
+    <div id="gAhl" class="a"><span class="chip" style="font-size:46px">أهل بيتك</span></div>
+  </div>
+  <!-- SH -->
+  <div id="SH" class="scn">
+    <svg id="lamp" class="a" width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+      <defs><radialGradient id="lg"><stop offset="0" stop-color="#ffd98a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="150" cy="300" r="150" fill="url(#lg)"/>
+      <line x1="150" y1="0" x2="150" y2="170" stroke="#7a4a22" stroke-width="5"/><path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#b07a14"/>
+      <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="rgba(255,226,160,.5)" stroke="#b07a14" stroke-width="9"/>
+      <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#fff2cf"/><path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#b07a14"/><line x1="150" y1="400" x2="150" y2="440" stroke="#7a4a22" stroke-width="5"/>
+    </svg>
+    <div id="name" class="a amiri" style="font-size:150px; line-height:1.2; color:#2a1d14">في معيّة الله</div>
+    <svg id="share" class="a" width="190" height="171" viewBox="0 0 240 216" aria-hidden="true">
+      <path id="sh1" d="M30,100 L30,196 L210,196 L210,100" fill="none" stroke="#2a1d14" stroke-width="12" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh2" d="M120,150 L120,18" fill="none" stroke="#c8553d" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh3" d="M72,68 L120,16 L168,68" fill="none" stroke="#c8553d" stroke-width="14" stroke-linejoin="miter" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <svg id="bell" class="a" width="170" height="190" viewBox="0 0 170 190" aria-hidden="true">
+      <path id="bl1" d="M85,18 C45,18 32,56 32,92 C32,120 20,134 12,146 L158,146 C150,134 138,120 138,92 C138,56 125,18 85,18 Z" fill="none" stroke="#c8553d" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="bl2" d="M62,164 C66,182 104,182 108,164" fill="none" stroke="#c8553d" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+  </div>
+
+  <div id="cap"><div class="ar" id="capAr"></div><div class="zh" id="capZh"></div><div class="en" id="capEn"></div></div>
+  <canvas id="grain" class="layer" width="540" height="960" style="width:1080px; height:1920px; mix-blend-mode:multiply; opacity:.55"></canvas>
+</div>
+
+<script>
+const W = 1080, H = 1920, CAPS = [{"a": 0.34, "b": 1.53, "ar": "قصةٌ من بيت النبوة", "en": "A story from the household of the Prophet.", "zh": "来自先知家中的一个故事。"}, {"a": 1.95, "b": 4.62, "ar": "كيف رقَتْ عائشةُ النبيَّ صلى الله عليه وسلم", "en": "How ‘A’ishah performed ruqyah for the Prophet (peace be upon him)", "zh": "阿伊莎如何为先知(愿主福安之)诵经祛病"}, {"a": 5.14, "b": 6.95, "ar": "تقول عائشة رضي الله عنها", "en": "‘A’ishah (may Allah be pleased with her) said:", "zh": "阿伊莎(愿真主喜悦她)说:"}, {"a": 7.37, "b": 11.65, "ar": "كان النبيُّ صلى الله عليه وسلم إذا اشتكى يقرأ على نفسه بالمعوّذات", "en": "When the Prophet (peace be upon him) fell ill, he would recite the Mu‘awwidhat over himself,", "zh": "先知(愿主福安之)每当患病,就为自己诵读护佑诸章,"}, {"a": 11.9, "b": 12.57, "ar": "وينفث", "en": "and blow lightly.", "zh": "并轻轻吹气。"}, {"a": 13.14, "b": 14.12, "ar": "فلما اشتدّ وجعه", "en": "When his pain grew severe,", "zh": "当他的疼痛加剧时,"}, {"a": 14.47, "b": 17.45, "ar": "كانت عائشة تجلس عنده فتقرأ عليه بها", "en": "‘A’ishah would sit by him and recite them over him,", "zh": "阿伊莎就坐在他身旁,为他诵读它们,"}, {"a": 17.74, "b": 20.39, "ar": "وتمسح عليه بيده رجاء بركتها", "en": "and wipe him with his own hand, hoping for its blessing.", "zh": "并用他自己的手为他抚摩,希望得到那只手的福佑。"}, {"a": 21.23, "b": 22.47, "ar": "هذا هو نبيُّ الله", "en": "This is the Prophet of Allah —", "zh": "这就是真主的先知——"}, {"a": 22.79, "b": 26.68, "ar": "وهو أعظم الخلق توكّلًا، يلجأ إلى القرآن عند المرض", "en": "the one with the greatest trust in Allah of all creation — turning to the Qur’an in illness.", "zh": "他是万物中最信赖真主的人,生病时依然求助于《古兰经》。"}, {"a": 26.96, "b": 30.61, "ar": "ويرقي نفسه بنفسه، ثم ترقيه زوجته عند اشتداد الألم", "en": "He recited over himself first, and his wife recited over him when the pain intensified.", "zh": "他先自己为自己诵读,疼痛加剧时,才由妻子为他诵读。"}, {"a": 31.34, "b": 33.67, "ar": "فلا تحتاج إلى شيخ أو قارئ مشهور", "en": "So you do not need a sheikh or a famous reciter.", "zh": "所以,你不需要什么谢赫或名气很大的诵经者。"}, {"a": 33.92, "b": 35.71, "ar": "ابدأ بنفسك وبأهل بيتك", "en": "Start with yourself and your family,", "zh": "从你自己和你的家人开始,"}, {"a": 36.01, "b": 39.02, "ar": "كما فعل النبيُّ صلى الله عليه وسلم وأهلُ بيته", "en": "as the Prophet (peace be upon him) and his family did.", "zh": "就像先知(愿主福安之)和他的家人那样。"}, {"a": 39.44, "b": 42.56, "ar": "شارك هذه القصة مع من تحب، وتابع القناة", "en": "Share this story with someone you love, and follow the channel.", "zh": "把这个故事分享给你爱的人,并关注本频道。"}];
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const EZ = { lin: (x) => x, out: (x) => 1 - Math.pow(1 - x, 3), in: (x) => x * x * x, io: (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+  back: (x) => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+  pop: (x) => { const c1 = 2.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); } };
+function tw(t, k) {
+  if (typeof k === "number") return k; if (typeof k === "function") return k(t);
+  if (t <= k[0][0]) return k[0][1];
+  for (let i = 1; i < k.length; i++) if (t <= k[i][0]) { const [t0, v0] = k[i - 1], [t1, v1, e = "out"] = k[i]; return v0 + (v1 - v0) * EZ[e](clamp((t - t0) / ((t1 - t0) || 1))); }
+  return k[k.length - 1][1];
+}
+const rng = (seed) => { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; };
+const NS = "http://www.w3.org/2000/svg";
+const mk = (tag, at, parent) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); parent && parent.appendChild(e); return e; };
+const ITEMS = [], DRAWS = [], WORDS = [], SCN = [], RIPS = [], BURSTS = [], CUST = [], BREATH = [];
+const A = (id, sp) => ITEMS.push([typeof id === "string" ? $(id) : id, sp]);
+const D = (el, k) => DRAWS.push([typeof el === "string" ? $(el) : el, k]);
+const SC = (id, a, b) => SCN.push({ el: $(id), a, b });
+const pop = (t, d = 0.45) => [[t - 0.001, 0.6], [t + d, 1, "pop"]];
+const on = (a, b, d = 0.25) => [[a - 0.001, 0], [a, 1], [b, 1], [b + d, 0, "in"]];
+function spread(text, a, b) {
+  const ws = text.split(/\s+/), cl = (w) => w.replace(/[ً-ْٰ]/g, ""), wt = ws.map((w) => cl(w).length + 0.6), tot = wt.reduce((p, c) => p + c, 0);
+  let c = 0; return ws.map((w, i) => { const t = a + (b - a) * c / tot; c += wt[i]; return [w, t]; });
+}
+function mount(id, items, { keys = [] } = {}) {
+  const box = $(id);
+  box.innerHTML = items.map(([w], i) => `<span class="w${keys.includes(i) ? " k" : ""}">${w}</span>`).join(" ");
+  [...box.querySelectorAll(".w")].forEach((el, i) => WORDS.push({ el, t: items[i][1] }));
+}
+const star = (id, r1, r2, n = 8) => { const pts = []; for (let i = 0; i < n * 2; i++) { const a = i * Math.PI / n - Math.PI / 2, r = i % 2 ? r2 : r1; pts.push(`${(r * Math.cos(a)).toFixed(1)},${(r * Math.sin(a)).toFixed(1)}`); } $(id).setAttribute("points", pts.join(" ")); };
+{ const pts = []; for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8 - Math.PI / 2, r = i % 2 ? 24 : 52; pts.push(`${60 + r * Math.cos(a)},${60 + r * Math.sin(a)}`); } $("lstar").setAttribute("points", pts.join(" ")); const f = pts.map((q) => { const [a, b] = q.split(",").map(Number); return `${70 + (a - 60) * 1.15},${70 + (b - 60) * 1.15}`; }); $("fstar").setAttribute("points", f.join(" ")); }
+star("bigStar", 120, 52); star("hStar", 100, 44);
+{ const g = $("medRays"); for (let i = 0; i < 24; i++) { const a = i * Math.PI / 12; mk("line", { x1: Math.cos(a) * 130, y1: Math.sin(a) * 130, x2: Math.cos(a) * (i % 2 ? 170 : 196), y2: Math.sin(a) * (i % 2 ? 170 : 196) }, g); } }
+
+// ---- the story's clock -----------------------------------------------------------------------
+const C0 = spread("قصة من بيت النبوة", 0.34, 1.53), C1 = spread("كيف رقت عائشة النبي صلى الله عليه وسلم", 1.95, 4.62);
+const C3 = spread("كان النبي صلى الله عليه وسلم إذا اشتكى يقرأ على نفسه بالمعوذات", 7.37, 11.65), C6 = spread("كانت عائشة تجلس عنده", 14.47, 15.92), C7 = spread("فتقرأ عليه بها", 16.26, 17.45);
+const C8 = spread("وتمسح عليه بيده رجاء بركتها", 17.74, 20.39), C9 = spread("هذا هو نبي الله", 21.23, 22.47), C10 = spread("وهو أعظم الخلق توكلا يلجأ إلى القرآن عند المرض", 22.79, 26.68);
+const C11 = spread("ويرقي نفسه بنفسه ثم ترقيه زوجته عند اشتداد الألم", 26.96, 30.61), C12 = spread("فلا تحتاج إلى شيخ أو قارئ مشهور", 31.34, 33.67), C13 = spread("ابدأ بنفسك وبأهل بيتك", 33.92, 35.71);
+const C14 = spread("كما فعل النبي صلى الله عليه وسلم", 36.01, 38.05), C16 = spread("شارك هذه القصة مع من تحب وتابع القناة", 39.44, 42.19);
+
+// ---- the room's light ------------------------------------------------------------------------
+A("wall", { x: 540, y: 960, o: 1 });
+A("sunH", { x: [[0, 800], [4.6, 800], [5.4, 540, "io"]], y: [[0, 360], [4.6, 360], [5.4, 400, "io"]], s: [[0, 1], [4.6, 1.05], [5.4, .8, "io"]], o: [[0, 1], [4.9, 1], [6.0, .35, "io"], [20.4, .35], [21.2, .1], [33.8, .1], [35.0, .45, "io"]] });
+A("beams", { x: 540, y: 960, o: [[5.2, 0], [6.4, 1, "io"], [20.2, 1], [21.4, 0, "io"]] });
+CUST.push((t) => { $("medRays").setAttribute("transform", `rotate(${(t * 9).toFixed(1)})`); });
+CUST.push((t) => { $("beams").style.transform = `translate(${(540 - 540 + 26 * Math.sin(t * 0.45)).toFixed(1)}px, 0) translate(0,0)`; $("latp").setAttribute("patternTransform", `translate(${(t * 5).toFixed(1)} ${(t * 3).toFixed(1)})`); });
+A("floor", { x: 540, y: 1440, o: 1 }); A("floorP", { x: 540, y: 1440, o: .1 });
+{ const tr = $("trim"); for (let i = 0; i < 28; i++) mk("polygon", { points: `${i * 40},0 ${i * 40 + 40},0 ${i * 40 + 20},26`, fill: i % 2 ? "#e0a82e" : "#c8553d" }, tr); }
+A("trim", { x: 540, y: 955, o: 1 });
+
+// ---- SA: the house -----------------------------------------------------------------------------
+SC("SA", 0, 5.2);
+mount("t1", C0, {});
+WORDS.filter((w) => w.el.closest("#t1")).forEach((w) => (w.t = -1));
+A("t1", { x: 540, y: 235, o: [[0, 1], [4.4, 1], [4.9, 0, "in"]] });
+const HS = (t) => tw(t, [[0, 1.1], [4.2, 1.1], [5.3, 2.9, "in"]]);
+A("house", { x: 540, y: (t) => 700 - 175 * (HS(t) - 1.1), s: HS, o: [[0, 1], [4.55, 1], [5.1, 0, "in"]] });
+const tAi = C1[2][1], tNb = C1[3][1];
+A("cAi", { x: 760, y: 370, s: pop(tAi), o: [[tAi - 0.001, 0], [tAi, 1], [4.6, 1], [4.95, 0, "in"]] });
+A("cNb", { x: 320, y: 370, s: pop(tNb), o: [[tNb - 0.001, 0], [tNb, 1], [4.6, 1], [4.95, 0, "in"]] });
+D("thr0", [[tNb - 0.1, 1], [tNb + 0.6, 0, "out"]]);
+A("thread", { x: 540, y: 960, o: [[tNb - 0.11, 0], [tNb - 0.1, 1], [4.6, 1], [4.95, 0, "in"]] });
+BURSTS.push({ t: 0.5, x: 800, y: 300 });
+
+// ---- the room: window, bed, cushion, stand -----------------------------------------------------
+const ROOM_O = [[5.15, 0], [5.9, 1], [20.3, 1], [21.0, 0, "in"]];
+A("win", { x: 540, y: 500, s: [[4.9, 1.1], [5.8, 1, "out"]], o: ROOM_O });
+A("bed", { x: 540, y: 840, s: [[4.9, 1.08], [5.8, 1, "out"]], o: ROOM_O });
+A("cush", { x: 190, y: 900, o: ROOM_O });
+A("stand", { x: 880, y: 800, o: ROOM_O });
+
+// ---- SB: she says, he recites on himself -------------------------------------------------------
+SC("SB", 4.9, 12.9);
+A("bAi", { x: 540, y: 205, s: pop(5.2), o: [[5.14, 0], [5.2, 1], [7.0, 1], [7.4, 0, "in"]] });
+const tSick = C3[7][1], tMu = C3[11][1];
+A("orbG", { x: 600, y: 750, s: [[5.4, .5], [6.4, 1, "out"]], o: [[5.4, 0], [6.0, .95], [tSick - 0.1, .95], [tSick + 0.5, 0], [12.0, 0], [12.8, .8, "io"], [13.1, 0.3], [18.6, .3], [19.8, 1, "io"], [20.4, 1], [20.9, 0, "in"]] });
+A("orbA", { x: 600, y: 750, s: [[tSick, .7], [tSick + 0.7, 1, "out"]], o: [[tSick - 0.001, 0], [tSick + 0.5, .85], [11.8, .85], [12.7, 0, "io"], [13.14, 0], [13.45, 1], [18.2, 1], [19.6, 0, "io"]] });
+[0, 1, 2].forEach((i) => A("m" + i, { x: [400, 540, 680][i], y: [[tMu - 0.001, 520 + 40], [tMu + 0.5, 520 + (i === 1 ? -20 : 0), "out"]], s: [[tMu - 0.001, .5], [tMu + 0.5 + i * 0.12, 1, "pop"]], r: -5 + 5 * i, o: [[tMu - 0.001 + i * 0.12, 0], [tMu + i * 0.12, 1], [12.55, 1], [12.95, 0, "in"]] }));
+const tBr = 11.95; for (let k = 0; k < 20; k++) BREATH.push({ t: tBr + k * 0.035, from: [[400, 540, 680][k % 3] + ((k * 37) % 41 - 20), 640], to: [600 + ((k * 53) % 61 - 30), 760] });
+
+// ---- SC: severe pain, she sits, she recites, she wipes ----------------------------------------------
+SC("SC", 12.7, 20.9);
+[13.15, 13.75, 14.35].forEach((t) => RIPS.push({ t, d: 1.2, r0: 50, r1: 330, c: "224,100,70", pos: () => [600, 750] }));
+const tAis = C6[1][1], tRead = C7[0][1], tMas = C8[0][1], tBrk = C8[4][1];
+A("aisha", { x: 200, y: 790, s: [[tAis, .5], [tAis + 0.7, 1, "out"]], o: [[tAis - 0.001, 0], [tAis + 0.2, .95], [20.4, .95], [20.9, 0, "in"]] });
+A("cAisha", { x: 200, y: 660, s: pop(tAis), o: [[tAis - 0.001, 0], [tAis, 1], [tRead + 1.0, 1], [tRead + 1.3, 0, "in"]] });
+D("th1", [[tRead, 1], [tRead + 0.5, 0, "out"]]); D("th2", [[tRead + 0.15, 1], [tRead + 0.65, 0, "out"]]); D("th3", [[tRead + 0.3, 1], [tRead + 0.8, 0, "out"]]);
+A("thr", { x: 540, y: 930, o: [[tRead - 0.01, 0], [tRead, 1], [tMas + 0.3, 1], [tMas + 0.7, 0, "in"]] });
+const sweep = [[tMas - 0.001, 360], [tMas + 0.5, 600, "io"], [tMas + 1.1, 360, "io"], [tMas + 1.7, 620, "io"], [tMas + 2.3, 560, "io"]];
+A("hand", { x: sweep, y: [[tMas - 0.001, 740], [tMas + 2.3, 720, "io"]], r: -78, s: .78, o: [[tMas - 0.001, 0], [tMas, 1], [tBrk + 0.5, 1], [tBrk + 1.0, 0, "in"]] });
+A("cBar", { x: 760, y: 640, s: pop(tBrk), o: [[tBrk - 0.001, 0], [tBrk, 1], [20.4, 1], [20.9, 0, "in"]] });
+BURSTS.push({ t: tBrk, x: 600, y: 745 }); BURSTS.push({ t: tBrk + 0.25, x: 480, y: 755 });
+RIPS.push({ t: tBrk, d: 1.4, r0: 40, r1: 360, c: "224,168,46", pos: () => [600, 750] });
+
+// ---- SD: the greatest in trust -----------------------------------------------------------------
+SC("SD", 20.7, 26.95);
+{ const g = $("medStars"), r = rng(9); for (let i = 0; i < 70; i++) mk("circle", { cx: (r() - .5) * 440, cy: (r() - .5) * 440, r: .8 + r() * 2.2, fill: "#fff4c8", opacity: .35 + r() * .6 }, g); }
+function book(svg, w, h) { const r = rng(11), cx = w / 2; mk("path", { d: `M${cx},${h * .08} L${w * .02},${h * .02} L${w * .02},${h * .94} L${cx},${h} L${w * .98},${h * .94} L${w * .98},${h * .02} Z`, fill: "#0f5e63" }, svg);
+  for (const side of [-1, 1]) { const x0 = side < 0 ? w * .05 : cx + w * .01, pw = w * .44;
+    mk("path", { d: `M${x0},${h * .07} Q${x0 + pw / 2},${h * .02} ${x0 + pw},${h * .07} L${x0 + pw},${h * .92} Q${x0 + pw / 2},${h * .87} ${x0},${h * .92} Z`, fill: "#fff8ea" }, svg);
+    mk("rect", { x: x0 + pw * .08, y: h * .13, width: pw * .84, height: h * .7, fill: "none", stroke: "#e0a82e", "stroke-width": Math.max(3, w / 160) }, svg);
+    mk("rect", { x: x0 + pw * .2, y: h * .16, width: pw * .6, height: h * .07, rx: h * .035, fill: "#e0a82e", opacity: .85 }, svg);
+    for (let i = 0; i < 8; i++) { const y = h * (.3 + i * .065), len = pw * (.55 + r() * .2), x1 = x0 + pw * .86; mk("line", { x1, y1: y, x2: x1 - len, y2: y, stroke: "#2a1d14", "stroke-width": Math.max(3, w / 110), "stroke-linecap": "round", opacity: .5 }, svg); } }
+  mk("line", { x1: cx, y1: h * .06, x2: cx, y2: h * .97, stroke: "#073c40", "stroke-width": Math.max(3, w / 140) }, svg); }
+book($("mush"), 680, 470);
+const tNb2 = C9[2][1];
+mount("dT", [["أعظم", C10[1][1]], ["الخلق", C10[2][1]], ["توكّلًا", C10[3][1]]], { keys: [2] });
+A("dT", { x: 540, y: 215, o: [[tNb2 - 0.001, 0], [tNb2, 1], [26.5, 1], [26.9, 0, "in"]] });
+A("med", { x: 540, y: 495, s: [[tNb2 - 0.001, .45], [tNb2 + 0.6, .88, "back"]], o: [[tNb2 - 0.001, 0], [tNb2, 1], [26.6, 1], [26.95, 0, "in"]] });
+const tLaj = C10[4][1], tMarad = C10[8][1];
+A("mush", { x: 540, y: 815, s: [[tLaj, .5], [tLaj + 0.6, .78, "back"]], o: [[tLaj - 0.001, 0], [tLaj, 1], [26.6, 1], [26.95, 0, "in"]] });
+A("sick", { x: 150, y: 560, s: pop(tMarad - 0.9), o: [[tMarad - 0.9, 0], [tMarad - 0.85, 1], [26.6, 1], [26.95, 0, "in"]] });
+A("sickL", { x: 150, y: 690, s: pop(tMarad - 0.6), o: [[tMarad - 0.6, 0], [tMarad - 0.55, 1], [26.6, 1], [26.95, 0, "in"]] });
+D("arrP", [[tMarad - 0.4, 1], [tMarad + 0.5, 0, "io"]]); D("arrH", [[tMarad + 0.4, 1], [tMarad + 0.65, 0, "out"]]);
+A("arr", { x: 540, y: 960, o: [[tMarad - 0.41, 0], [tMarad - 0.4, 1], [26.6, 1], [26.95, 0, "in"]] });
+RIPS.push({ t: tNb2, d: 1.5, r0: 40, r1: 520, c: "224,168,46", pos: () => [540, 495] }); BURSTS.push({ t: tNb2, x: 540, y: 495 });
+
+// ---- SE: himself first, then his wife --------------------------------------------------------------------
+SC("SE", 26.75, 31.2);
+const tNfs = C11[1][1], tTh = C11[3][1], tZj = C11[5][1], tAl = C11[6][1];
+A("e1", { x: 780, y: 540, s: [[tNfs - 0.001, .6], [tNfs + 0.45, 1.3, "pop"]], o: [[tNfs - 0.001, 0], [tNfs, 1]] }); A("n1", { x: 780, y: 540, s: [[tNfs - 0.001, .6], [tNfs + 0.45, 1.3, "pop"]], o: [[tNfs - 0.001, 0], [tNfs, 1]] });
+A("l1", { x: 780, y: 745, s: pop(tNfs + 0.1), o: [[tNfs + 0.1 - 0.001, 0], [tNfs + 0.1, 1]] });
+D("eA", [[tTh, 1], [tTh + 0.7, 0, "io"]]); D("eH", [[tTh + 0.6, 1], [tTh + 0.85, 0, "out"]]);
+A("e2", { x: 300, y: 540, s: [[tZj - 0.001, .6], [tZj + 0.45, 1.3, "pop"]], o: [[tZj - 0.001, 0], [tZj, 1]] }); A("n2", { x: 300, y: 540, s: [[tZj - 0.001, .6], [tZj + 0.45, 1.3, "pop"]], o: [[tZj - 0.001, 0], [tZj, 1]] });
+A("l2", { x: 300, y: 745, s: pop(tZj + 0.1), o: [[tZj + 0.1 - 0.001, 0], [tZj + 0.1, 1]] });
+A("lp", { x: 540, y: 330, s: pop(tAl), o: [[tAl - 0.001, 0], [tAl, 1]] });
+BURSTS.push({ t: tZj, x: 300, y: 560 });
+
+// ---- SF: no famous sheikh needed --------------------------------------------------------------------------
+SC("SF", 31.1, 33.85);
+const tSh = C12[3][1], tQr = C12[5][1];
+A("f1", { x: 540, y: 440, s: pop(C12[1][1]), o: [[C12[1][1] - 0.001, 0], [C12[1][1], 1], [33.4, 1], [33.8, 0, "in"]] });
+A("f2", { x: 540, y: 640, s: pop(C12[1][1] + 0.25), o: [[C12[1][1] + 0.25 - 0.001, 0], [C12[1][1] + 0.25, 1], [33.4, 1], [33.8, 0, "in"]] });
+D("x1a", [[tSh + 0.45, 1], [tSh + 0.8, 0, "out"]]); D("x2a", [[tQr + 0.55, 1], [tQr + 0.9, 0, "out"]]);
+
+// ---- SG: begin with yourself and your household --------------------------------------------------------------
+SC("SG", 33.75, 39.3);
+const tBn = C13[1][1], tAhl = C13[3][1], tNab = C14[2][1], tHis = 38.32;
+D("hsA", [[tBn - 0.4, 1], [tBn + 0.5, 0, "io"]]); D("hsB", [[tBn + 0.1, 1], [tBn + 0.9, 0, "io"]]);
+A("hs", { x: 540, y: 600, s: [[tBn - 0.4, .9], [tBn + 0.8, 1, "out"]], o: [[tBn - 0.41, 0], [tBn - 0.4, 1], [39.0, 1], [39.3, 0, "in"]] });
+A("g0", { x: 540, y: 680, s: pop(tBn), o: [[tBn - 0.001, 0], [tBn, 1], [39.0, 1], [39.3, 0, "in"]] });
+A("gAnta", { x: 370, y: 880, s: pop(tBn + 0.1), o: [[tBn + 0.1 - 0.001, 0], [tBn + 0.1, 1], [39.0, 1], [39.3, 0, "in"]] });
+[[1, 410, 610], [2, 670, 610], [3, 420, 740], [4, 660, 740]].forEach(([n, x, y], i) => A("g" + n, { x, y, s: pop(tAhl + i * 0.12), o: [[tAhl + i * 0.12 - 0.001, 0], [tAhl + i * 0.12, 1], [39.0, 1], [39.3, 0, "in"]] }));
+A("gAhl", { x: 730, y: 880, s: pop(tAhl + 0.3), o: [[tAhl + 0.3 - 0.001, 0], [tAhl + 0.3, 1], [39.0, 1], [39.3, 0, "in"]] });
+A("star", { x: 540, y: 300, s: [[tNab, 0], [tNab + 0.7, 1, "pop"]], r: [[tNab, -40], [tNab + 0.7, 0, "out"]], o: [[tNab - 0.001, 0], [tNab, 1], [39.0, 1], [39.3, 0, "in"]] });
+BURSTS.push({ t: tNab, x: 540, y: 300 }); BURSTS.push({ t: tHis, x: 540, y: 640 }); RIPS.push({ t: tHis, d: 1.3, r0: 60, r1: 480, c: "224,168,46", pos: () => [540, 680] });
+RIPS.push({ t: tBn, d: 1.2, r0: 50, r1: 360, c: "255,200,90", pos: () => [540, 680] });
+
+// ---- SH: share, follow, the name -----------------------------------------------------------------------------
+SC("SH", 39.2, 60);
+const tSa = C16[0][1], tFl = C16[6][1];
+A("lamp", { x: 540, y: 330, s: [[39.5, .78], [40.2, .66, "out"]], o: [[39.3, 0], [39.8, 1]] });
+A("name", { x: 540, y: 600, s: [[39.6, 1.1], [40.4, 1, "out"]], o: [[39.6, 0], [40.0, 1]] });
+D("sh1", [[tSa, 1], [tSa + 0.45, 0, "out"]]); D("sh2", [[tSa + 0.3, 1], [tSa + 0.7, 0, "out"]]); D("sh3", [[tSa + 0.6, 1], [tSa + 0.85, 0, "out"]]);
+A("share", { x: 380, y: 830, s: [[tSa - 0.01, .6], [tSa + .5, 1, "back"]], o: [[tSa - 0.01, 0], [tSa, 1]] });
+D("bl1", [[tFl, 1], [tFl + 0.6, 0, "out"]]); D("bl2", [[tFl + 0.5, 1], [tFl + 0.8, 0, "out"]]);
+A("bell", { x: 700, y: 830, s: [[tFl - 0.01, .6], [tFl + .5, 1, "back"]], r: [[tFl + 0.6, 0], [tFl + 0.7, 14, "out"], [tFl + 0.85, -12, "io"], [tFl + 1.0, 8, "io"], [tFl + 1.15, 0, "io"]], o: [[tFl - 0.01, 0], [tFl, 1]] });
+
+// ---- canvas: dust in the light, ripples, breath, bursts --------------------------------------------------------
+const fb = $("fxB").getContext("2d"), dr = rng(5), MOTE = [];
+for (let i = 0; i < 60; i++) MOTE.push({ x: dr() * W, y0: dr() * 1100, v: 6 + dr() * 14, r: 1.5 + dr() * 3.2, a: .25 + dr() * .45, ph: dr() * 6 });
+function drawFX(t) {
+  fb.clearRect(0, 0, W, H);
+  for (const m of MOTE) { const y = ((m.y0 - m.v * t) % 1100 + 1100) % 1100 + 100; fb.globalAlpha = m.a * (.6 + .4 * Math.sin(t * .8 + m.ph)); fb.fillStyle = "#fff8d8"; fb.beginPath(); fb.arc(m.x + Math.sin(t * .3 + m.ph) * 22, y, m.r, 0, 7); fb.fill(); }
+  for (const r of RIPS) { const age = t - r.t; if (age < 0 || age > r.d) continue; const u = age / r.d, [x, y] = r.pos(r.t);
+    fb.globalAlpha = (1 - u) * .7; fb.strokeStyle = `rgb(${r.c})`; fb.lineWidth = 8 * (1 - u) + 2; fb.beginPath(); fb.arc(x, y, r.r0 + (r.r1 - r.r0) * EZ.out(u), 0, 7); fb.stroke(); }
+  for (const b of BREATH) { const p = clamp((t - b.t) / 0.75); if (p <= 0 || p >= 1) continue; const e = EZ.io(p);
+    fb.globalAlpha = Math.sin(p * Math.PI) * .9; fb.fillStyle = "#fffdf2"; fb.beginPath(); fb.arc(b.from[0] + (b.to[0] - b.from[0]) * e + Math.sin(p * 9 + b.t * 7) * 14, b.from[1] + (b.to[1] - b.from[1]) * e, 7 - 3 * p, 0, 7); fb.fill(); }
+  for (const b of BURSTS) { const age = t - b.t; if (age < 0 || age > 0.9) continue; const u = age / 0.9;
+    for (let i = 0; i < 16; i++) { const a = i * Math.PI * 2 / 16 + b.t, v = 130 + (i % 3) * 60, d = v * EZ.out(u); fb.globalAlpha = 1 - u; fb.fillStyle = i % 2 ? "#e0a82e" : "#fff4c8"; fb.beginPath(); fb.arc(b.x + Math.cos(a) * d, b.y + Math.sin(a) * d, 6 * (1 - u) + 1.5, 0, 7); fb.fill(); } }
+  fb.globalAlpha = 1;
+}
+const GR = []; (() => { for (let f = 0; f < 4; f++) { const c = document.createElement("canvas"); c.width = 540; c.height = 960; const g = c.getContext("2d"), im = g.createImageData(540, 960), r = rng(100 + f); for (let i = 0; i < im.data.length; i += 4) { const n = 200 + r() * 55; im.data[i] = im.data[i + 1] = im.data[i + 2] = n; im.data[i + 3] = 26; } g.putImageData(im, 0, 0); GR.push(c); } })();
+
+// ---- captions ---------------------------------------------------------------------------------
+let capIdx = -2;
+function drawCaps(t) {
+  let i = -1; for (let k = 0; k < CAPS.length; k++) if (t >= CAPS[k].a && t < CAPS[k].b + 0.25) i = k;
+  if (i !== capIdx) { capIdx = i; const c = CAPS[i] || { ar: "", en: "", zh: "" }; $("capAr").textContent = c.ar; $("capZh").textContent = c.zh; $("capEn").textContent = c.en; $("capAr").style.display = c.ar ? "block" : "none"; }
+  const c = CAPS[i], box = $("cap"); if (!c) { box.style.opacity = 0; return; }
+  const inP = clamp((t - c.a) / 0.16), outP = clamp((t - (c.b + 0.1)) / 0.15), nxt = CAPS[i + 1] && CAPS[i + 1].a - c.b < 0.2 ? 0 : outP;
+  box.style.opacity = inP * (1 - nxt); box.style.filter = `blur(${((1 - inP) * 7 + nxt * 7).toFixed(1)}px)`;
+}
+
+// ---- the renderer -----------------------------------------------------------------------------
+function render(t) {
+  for (const [el, sp] of ITEMS) {
+    const x = tw(t, sp.x ?? 540), y = tw(t, sp.y ?? 900), s = tw(t, sp.s ?? 1), r = tw(t, sp.r ?? 0), o = tw(t, sp.o ?? 1);
+    el.style.opacity = clamp(o); el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${r}deg) scale(${s})`;
+  }
+  for (const [el, k] of DRAWS) el.setAttribute("stroke-dashoffset", clamp(tw(t, k)).toFixed(4));
+  for (const sc of SCN) { const vis = t >= sc.a - 0.01 && t <= sc.b + 0.01; sc.el.style.display = vis ? "block" : "none"; if (!vis) continue;
+    const inP = sc.a <= 0 ? 1 : clamp((t - sc.a) / 0.35), outP = clamp((t - (sc.b - 0.3)) / 0.3);
+    sc.el.style.opacity = inP * (1 - outP); const bl = 10 * (1 - inP) + 10 * outP; sc.el.style.filter = bl > 0.3 ? `blur(${bl.toFixed(1)}px)` : "none"; }
+  for (const w of WORDS) { const p = clamp((t - w.t) / 0.18); w.el.style.opacity = p; w.el.style.filter = p < 1 ? `blur(${((1 - p) * 8).toFixed(1)}px)` : "none"; }
+  for (const f of CUST) f(t);
+  drawFX(t); drawCaps(t);
+  const g = $("grain").getContext("2d"); g.clearRect(0, 0, 540, 960); g.drawImage(GR[Math.floor(t * 12) % 4], 0, 0);
+}
+window.SFX = [[0.5, "pop-a", .3], [tAi, "pop-a", .35], [tNb, "pop-b", .35], [4.7, "whoosh-a", .4], [5.2, "pop-b", .3], [tSick, "thump", .4], [tMu, "pop-a", .35], [11.95, "puff", .55],
+  [13.15, "thump", .5], [13.75, "thump", .4], [tAis, "pop-b", .35], [tRead, "whoosh-b", .3], [tMas, "whoosh-a", .3], [tMas + 1.1, "whoosh-a", .25], [tBrk, "pop-a", .5],
+  [tNb2, "thump", .55], [tLaj, "pop-b", .35], [tMarad - 0.4, "whoosh-b", .3], [tNfs, "pop-a", .4], [tTh, "whoosh-a", .3], [tZj, "pop-b", .4], [tAl, "pop-a", .3], [tSh, "pop-b", .3], [tSh + 0.45, "thump", .3], [tQr, "pop-a", .3], [tQr + 0.55, "thump", .3],
+  [tBn, "pop-a", .4], [tAhl, "pop-b", .4], [tNab, "thump", .5], [tHis, "pop-a", .4], [39.5, "whoosh-b", .3], [tSa, "pop-b", .4], [tFl, "pop-a", .4], [40.0, "pop-b", .3]];
+window.render = render;
+window.ready = (async () => {
+  await document.fonts.load('900 60px "Cairo"'); await document.fonts.load('700 60px "Amiri"'); await document.fonts.load('700 40px "Noto Sans SC"'); await document.fonts.load('700 60px "Reem Kufi"');
+  await document.fonts.ready; render(0); return true;
+})();
+</script>
+</body>
+</html>
