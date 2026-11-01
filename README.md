@@ -30,8 +30,11 @@ clasp login
 
 ```powershell
 clasp create --type webapp --title "qrfarhangi" --rootDir .
+git checkout appsscript.json
 clasp push
 ```
+
+(`git checkout` چون `clasp create` ممکن است `appsscript.json` را با نسخهٔ پیش‌فرض جایگزین کند.)
 
 ### حالت ۲ — اتصال به اسکریپتی که از قبل دارید
 
