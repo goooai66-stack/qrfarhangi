@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Cairo"; src: url(fonts/Cairo.ttf) format("truetype"); font-weight: 200 1000; }
+@font-face { font-family: "Reem Kufi"; src: url(fonts/ReemKufi.ttf) format("truetype"); font-weight: 400 700; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Regular.woff) format("woff"); font-weight: 400; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Bold.woff) format("woff"); font-weight: 700; }
+@font-face { font-family: "Noto Sans SC"; src: url(fonts/NotoSansSC-subset.woff2) format("woff2"); font-weight: 500 700; }
+:root { --ink: #12404a; --paper: #f6ebd4; --cream: #fff8e8; --gold: #e0a100; --cor: #e4572e; --grn: #2a9d8f; --vio: #7b6cd9; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0c3139; }
+body { font-family: "Cairo", sans-serif; color: var(--ink); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.a { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
+.scn { position: absolute; inset: 0; }
+.amiri { font-family: "Amiri", serif; font-weight: 700; }
+svg { overflow: visible; display: block; }
+.chip { display: inline-block; background: var(--cream); border: 5px solid var(--ink); border-radius: 26px; padding: 2px 36px 10px; font-weight: 800; font-size: 54px; color: var(--ink); box-shadow: 0 9px 0 rgba(18,64,74,.2); }
+.chip.y { background: #ffe9a8; border-color: #b98300; } .chip.c { background: #ffd9cc; border-color: var(--cor); color: #a8320f; } .chip.m { background: #cdeedd; border-color: var(--grn); } .chip.b { background: #d9e8ff; border-color: #3b6fb6; }
+.bub { position: relative; background: var(--cream); border: 6px solid var(--ink); border-radius: 40px; padding: 4px 54px 22px; font-family: "Amiri"; font-weight: 700; font-size: 82px; line-height: 1.3; color: var(--ink); box-shadow: 0 12px 0 rgba(18,64,74,.2); }
+.bub.mid::after { left: calc(50% - 26px); }
+.bub::after { content: ""; position: absolute; bottom: -40px; left: 200px; border-left: 26px solid transparent; border-right: 26px solid transparent; border-top: 40px solid var(--ink); }
+#cap { position: absolute; left: 110px; right: 110px; top: 1002px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+#cap .ar { font-weight: 800; font-size: 54px; line-height: 1.45; color: #3d2a6b; text-shadow: none; }
+#cap .zh { font-family: "Noto Sans SC", "Cairo", sans-serif; font-weight: 700; font-size: 42px; line-height: 1.4; color: #b4451f; direction: ltr; text-shadow: none; }
+#cap .en { font-weight: 600; font-size: 35px; line-height: 1.35; color: #5b4a7a; direction: ltr; text-shadow: none; }
+.chip { background:#fffaf5; border:5px solid #3d2a6b; color:#3d2a6b; box-shadow:0 9px 0 rgba(61,42,107,.25); border-radius:36px; }
+.chip.y { background:#ffe3c2; border-color:#e08a2e; } .chip.c { background:#ffd3de; border-color:#ef6f8b; color:#8e2a45; } .chip.m { background:#c9f0e3; border-color:#2fa58a; } .chip.b { background:#dbe5ff; border-color:#6a8fe8; }
+.bub { background:#fffaf5; border-color:#3d2a6b; color:#3d2a6b; box-shadow:0 12px 0 rgba(61,42,107,.25); border-radius:50px; } .bub::after { border-top-color:#3d2a6b; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper" class="layer" style="background: radial-gradient(ellipse at 50% 30%, #f1e7ff 0%, #d4c1f5 55%, #a98bdc 100%)"></div>
+  <svg id="pat" class="layer" width="1080" height="960" viewBox="0 0 1080 960" aria-hidden="true" style="opacity:0.12"></svg>
+  <canvas id="fxB" class="layer" width="1080" height="1920"></canvas>
+  <div id="low" class="a" style="width:1080px; height:960px; background: linear-gradient(180deg, #fdebe0 0%, #f6d3c2 100%)"></div>
+  <svg id="pat2" class="a" width="1080" height="960" viewBox="0 0 1080 960" aria-hidden="true" style="opacity:.022"></svg>
+  <div id="band" class="a" style="width:1080px; height:14px; background: linear-gradient(90deg, #b98300, #ffd666, #b98300)"></div>
+
+  <div id="orb" class="a" style="width:260px; height:260px; border-radius:50%; background:#ffd9b3"></div>
+  <div id="act" class="layer"></div>
+  <div id="SA" class="scn"></div><div id="SB" class="scn"></div><div id="SC" class="scn"></div><div id="SD" class="scn"></div><div id="SE" class="scn"></div><div id="SF" class="scn"></div><div id="SG" class="scn"></div><div id="SH" class="scn"></div><div id="SI" class="scn"></div><div id="SJ" class="scn"></div><div id="SK" class="scn"></div>
+  <div id="SL" class="scn">
+    <svg id="lamp" class="a" width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+      <line x1="150" y1="0" x2="150" y2="170" stroke="#ffb870" stroke-width="6"/><path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#f6c445" stroke="#ffb870" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="#fff4cf" stroke="#ffb870" stroke-width="8"/>
+      <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#e4572e"/><path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#f6c445" stroke="#ffb870" stroke-width="7" stroke-linejoin="round"/><line x1="150" y1="400" x2="150" y2="440" stroke="#ffb870" stroke-width="6"/>
+    </svg>
+    <div id="name" class="a amiri" style="font-size:150px; line-height:1.2; color:#3d2a6b; text-shadow: 0 6px 0 rgba(255,184,112,.7)">في معيّة الله</div>
+    <svg id="share" class="a" width="190" height="171" viewBox="0 0 240 216" aria-hidden="true">
+      <path id="sh1" d="M30,100 L30,196 L210,196 L210,100" fill="none" stroke="#fff4d6" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh2" d="M120,150 L120,18" fill="none" stroke="#7fe3c3" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh3" d="M72,68 L120,16 L168,68" fill="none" stroke="#7fe3c3" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <svg id="bell" class="a" width="170" height="190" viewBox="0 0 170 190" aria-hidden="true">
+      <path id="bl1" d="M85,18 C45,18 32,56 32,92 C32,120 20,134 12,146 L158,146 C150,134 138,120 138,92 C138,56 125,18 85,18 Z" fill="#ffe9a8" stroke="#ffb870" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="bl2" d="M62,164 C66,182 104,182 108,164" fill="none" stroke="#ffb870" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+  </div>
+
+  <div id="cap"><div class="ar" id="capAr"></div><div class="zh" id="capZh"></div><div class="en" id="capEn"></div></div>
+  <canvas id="grn" class="layer" width="540" height="960" style="width:1080px; height:1920px; opacity:.45"></canvas>
+</div>
+
+<script>
+const W = 1080, H = 1920, CAPS = [{"a": 0.21, "b": 4.37, "ar": "أمٌّ جاءت إلى النبي صلى الله عليه وسلم خائفةً على أولادها", "en": "A mother came to the Prophet (peace be upon him), afraid for her children.", "zh": "一位母亲来到先知(愿主福安之)面前,为她的孩子们担忧。"}, {"a": 4.64, "b": 5.6, "ar": "فماذا قال لها؟", "en": "So what did he say to her?", "zh": "他对她说了什么?"}, {"a": 6.29, "b": 10.53, "ar": "جاءت أسماء بنت عُميس رضي الله عنها إلى النبي صلى الله عليه وسلم وقالت", "en": "Asma’ bint ‘Umays (may Allah be pleased with her) came to the Prophet (peace be upon him) and said:", "zh": "阿斯玛·宾特·欧迈斯(愿真主喜悦她)来见先知(愿主福安之),说:"}, {"a": 10.88, "b": 11.57, "ar": "يا رسول الله", "en": "“O Messenger of Allah,", "zh": "“真主的使者啊,"}, {"a": 12.02, "b": 14.39, "ar": "إنّ بني جعفر تُسرع إليهم العين", "en": "the evil eye afflicts the children of Ja‘far quickly.", "zh": "贾法尔的孩子们很容易被邪眼所伤。"}, {"a": 14.73, "b": 15.77, "ar": "أفأسترقي لهم؟", "en": "Shall I seek ruqyah for them?”", "zh": "我可以为他们诵经祛病吗?”"}, {"a": 16.18, "b": 18.33, "ar": "فقال النبي صلى الله عليه وسلم: نعم", "en": "The Prophet (peace be upon him) said: “Yes.", "zh": "先知(愿主福安之)说:“可以。"}, {"a": 18.66, "b": 20.37, "ar": "لو كان شيءٌ يسبق القدر", "en": "If anything could outrun the decree,", "zh": "若有什么能胜过定命,"}, {"a": 20.58, "b": 21.62, "ar": "لسبقته العين»", "en": "the evil eye would.”", "zh": "那就是邪眼了。”"}, {"a": 21.92, "b": 22.65, "ar": "رواه الترمذي", "en": "(Narrated by al-Tirmidhi)", "zh": "(提尔密济传述)"}, {"a": 23.24, "b": 25.9, "ar": "فالنبي صلى الله عليه وسلم لم يسخر من خوفها", "en": "The Prophet (peace be upon him) did not mock her fear,", "zh": "先知(愿主福安之)没有嘲笑她的担心,"}, {"a": 26.14, "b": 27.74, "ar": "ولم ينكر أن العين حقيقة", "en": "nor deny that the evil eye is real,", "zh": "也没有否认邪眼是真实存在的,"}, {"a": 28.3, "b": 29.96, "ar": "بل أذن لها بالرقية لأولادها", "en": "but permitted her to perform ruqyah for her children.", "zh": "而是允许她为孩子们诵经祛病。"}, {"a": 30.61, "b": 32.34, "ar": "فإن خفت على أولادك من العين", "en": "So if you fear the evil eye for your children,", "zh": "所以,如果你担心孩子们受邪眼伤害,"}, {"a": 32.47, "b": 36.92, "ar": "فعوّذهم بما كان يعوّذ به النبي صلى الله عليه وسلم الحسن والحسين", "en": "seek protection for them as the Prophet (peace be upon him) did for al-Hasan and al-Husayn:", "zh": "就用先知(愿主福安之)为哈桑和侯赛因祈求庇护的话来为他们祈护:"}, {"a": 37.29, "b": 38.95, "ar": "«أعيذكما بكلمات الله التامة", "en": "“I seek refuge for you both in the perfect words of Allah", "zh": "“我借真主完美的言辞,为你们二人祈求庇护,"}, {"a": 39.57, "b": 41.15, "ar": "من كل شيطان وهامّة", "en": "from every devil and every harmful creature,", "zh": "免受一切恶魔和一切毒害之物的伤害,"}, {"a": 41.44, "b": 42.85, "ar": "ومن كل عين لامّة»", "en": "and from every evil eye.”", "zh": "也免受一切邪眼的伤害。”"}, {"a": 43.47, "b": 47.52, "ar": "شارك هذه القصة مع كل أم تخاف على أولادها، وتابع القناة", "en": "Share this story with every mother who fears for her children, and follow the channel.", "zh": "把这个故事分享给每一位担心孩子的母亲,并关注本频道。"}];
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const EZ = { lin: (x) => x, out: (x) => 1 - Math.pow(1 - x, 3), in: (x) => x * x * x, io: (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+  back: (x) => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+  pop: (x) => { const c1 = 2.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); } };
+function tw(t, k) {
+  if (typeof k === "number") return k; if (typeof k === "function") return k(t);
+  if (t <= k[0][0]) return k[0][1];
+  for (let i = 1; i < k.length; i++) if (t <= k[i][0]) { const [t0, v0] = k[i - 1], [t1, v1, e = "out"] = k[i]; return v0 + (v1 - v0) * EZ[e](clamp((t - t0) / ((t1 - t0) || 1))); }
+  return k[k.length - 1][1];
+}
+const rng = (seed) => { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; };
+const NS = "http://www.w3.org/2000/svg";
+const mk = (tag, at, parent) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); parent && parent.appendChild(e); return e; };
+const ITEMS = [], DRAWS = [], SCN = [], BURSTS = [], CUST = [];
+const A = (id, sp) => ITEMS.push([typeof id === "string" ? $(id) : id, sp]);
+const D = (el, k) => DRAWS.push([typeof el === "string" ? $(el) : el, k]);
+const SC = (id, a, b) => SCN.push({ el: $(id), a, b });
+const pop = (t, d = 0.4) => [[t - 0.001, 0.6], [t + d, 1, "pop"]];
+const inc = (t0, t1, k = "out") => [[t0, 1], [t1, 0, k]];
+const on = (a, b, d = 0.2) => [[a - 0.001, 0], [a, 1], [b, 1], [b + d, 0, "in"]];
+function spiral(id, turns, r) { let d = ""; for (let i = 0; i <= 60; i++) { const a = i / 60 * turns * Math.PI * 2, rr = r * (0.18 + 0.82 * i / 60); d += (i ? " L" : "M") + (rr * Math.cos(a)).toFixed(1) + "," + (rr * Math.sin(a)).toFixed(1); } $(id).setAttribute("d", d); }
+function star(id, r, ri) { const pts = []; for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8 - Math.PI / 2, q = i % 2 ? ri : r; pts.push(`${(q * Math.cos(a)).toFixed(1)},${(q * Math.sin(a)).toFixed(1)}`); } $(id).setAttribute("points", pts.join(" ")); }
+
+function spread(text, a, b) {
+  const ws = text.split(/\s+/), cl = (w) => w.replace(/[ً-ْٰ]/g, ""), wt = ws.map((w) => cl(w).length + 0.6), tot = wt.reduce((p, c) => p + c, 0);
+  let c = 0; return ws.map((w, i) => { const t = a + (b - a) * c / tot; c += wt[i]; return [w, t]; });
+}
+// background pattern: 8-point stars
+for (const [svg, w, h] of [[$("pat"), 1080, 960], [$("pat2"), 1080, 960]]) { const col = svg === $("pat") ? "#ffffff" : "#3d2a6b"; for (let y = 0; y < h + 120; y += 120) for (let x = 0; x < w + 120; x += 120) { const o = (y / 120) % 2 ? 60 : 0;
+  mk("rect", { x: x + o - 34, y: y - 34, width: 68, height: 68, fill: "none", stroke: col, "stroke-width": 3 }, svg); mk("rect", { x: x + o - 34, y: y - 34, width: 68, height: 68, fill: "none", stroke: col, "stroke-width": 3, transform: `rotate(45 ${x + o} ${y})` }, svg); } }
+function book(svg, w, h) { const r = rng(11), cx = w / 2; mk("path", { d: `M${cx},${h * .08} L${w * .02},${h * .02} L${w * .02},${h * .94} L${cx},${h} L${w * .98},${h * .94} L${w * .98},${h * .02} Z`, fill: "#cdeedd", stroke: "#2a9d8f", "stroke-width": 14, "stroke-linejoin": "round" }, svg);
+  mk("line", { x1: cx, y1: h * .06, x2: cx, y2: h * .97, stroke: "#2a9d8f", "stroke-width": 10 }, svg);
+  for (const side of [-1, 1]) for (let i = 0; i < 6; i++) { const y = h * (.2 + i * .1), x0 = side < 0 ? w * .08 : cx + w * .06; mk("line", { x1: x0, y1: y, x2: x0 + w * (.3 + r() * .1), y2: y, stroke: "#12404a", "stroke-width": 9, "stroke-linecap": "round", opacity: .75 }, svg); } }
+
+
+const T = {"ink": "#3d2a6b", "fill": "#fffaf5", "gold": "#ffb870", "gold2": "#e08a2e", "red": "#ef6f8b", "green": "#2fa58a", "blue": "#6a8fe8", "violet": "#8d6ad8", "book": "#6a4cb8", "bookText": "#fffaf5", "pink": "#ef6f8b", "cyan": "#6a8fe8"};
+// ---- themed builder kit ----------------------------------------------------------------------------------------------
+const box = (w, h, vb, parent) => mk("svg", { width: w, height: h, viewBox: vb, class: "a" }, parent);
+const INK = T.ink;
+function chipEl(parent, txt, cls = "", size = 54, amiri = true) { const d = document.createElement("div"); d.className = "a"; const s = document.createElement("span"); s.className = "chip " + cls; s.style.fontSize = size + "px"; if (amiri) { s.style.fontFamily = "Amiri"; s.style.fontWeight = 700; } s.textContent = txt; d.appendChild(s); parent.appendChild(d); return d; }
+function textEl(parent, txt, size, color, amiri = true) { const d = document.createElement("div"); d.className = "a" + (amiri ? " amiri" : ""); d.style.cssText = `font-size:${size}px; line-height:1.2; color:${color}; ${amiri ? "" : "font-weight:800;"}`; d.textContent = txt; parent.appendChild(d); return d; }
+function sunEl(p) { const s = box(220, 220, "-110 -110 220 220", p); for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; mk("line", { x1: Math.cos(a) * 70, y1: Math.sin(a) * 70, x2: Math.cos(a) * 100, y2: Math.sin(a) * 100, stroke: T.gold2, "stroke-width": 9, "stroke-linecap": "round" }, s); } mk("circle", { r: 56, fill: T.gold, stroke: T.gold2, "stroke-width": 7 }, s); return s; }
+function moonEl(p) { const s = box(220, 220, "-110 -110 220 220", p); mk("path", { d: "M30,-90 A92,92 0 1 0 30,90 A72,72 0 1 1 30,-90 Z", fill: T.fill, stroke: T.violet, "stroke-width": 7, "stroke-linejoin": "round" }, s); return s; }
+function shieldEl(p) { const s = box(330, 380, "0 0 330 380", p); mk("path", { d: "M165,14 C120,44 70,50 22,50 V190 C22,280 90,336 165,368 C240,336 308,280 308,190 V50 C260,50 210,44 165,14 Z", fill: T.gold + "55", stroke: T.gold2, "stroke-width": 14, "stroke-linejoin": "round" }, s); return s; }
+function eyeEl(p) { const s = box(200, 130, "0 0 200 130", p); mk("path", { d: "M10,65 Q100,-15 190,65 Q100,145 10,65 Z", fill: T.fill, stroke: T.ink, "stroke-width": 8, "stroke-linejoin": "round" }, s); mk("circle", { cx: 100, cy: 65, r: 30, fill: T.violet, stroke: T.ink, "stroke-width": 6 }, s); mk("circle", { cx: 100, cy: 65, r: 12, fill: T.ink }, s); return s; }
+function scrollEl(p, w = 200, dashed = false) { const s = box(w, w * 1.1, "0 0 200 220", p); mk("rect", { x: 20, y: 14, width: 160, height: 192, rx: 20, fill: T.fill, stroke: T.gold2, "stroke-width": 9, "stroke-dasharray": dashed ? "16 12" : "none" }, s); for (let i = 0; i < 5; i++) mk("line", { x1: 46, y1: 52 + i * 34, x2: 154 - (i % 2) * 30, y2: 52 + i * 34, stroke: T.ink, "stroke-width": 8, "stroke-linecap": "round", opacity: .75 }, s); return s; }
+function tickEl(p, w = 200) { const s = box(w, w, "0 0 100 100", p); const t = mk("path", { d: "M18,54 L42,78 L86,24", fill: "none", stroke: T.green, "stroke-width": 13, "stroke-linecap": "round", "stroke-linejoin": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s); return [s, t]; }
+function crossEl(p, w = 220, col) { col = col || T.red; const s = box(w, w, "0 0 100 100", p); const a = mk("path", { d: "M14,14 L86,86", stroke: col, "stroke-width": 11, "stroke-linecap": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s), b = mk("path", { d: "M86,14 L14,86", stroke: col, "stroke-width": 11, "stroke-linecap": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s); return [s, a, b]; }
+function arrowEl(p, x1, y1, x2, y2, col) { col = col || T.gold2; const s = mk("svg", { width: 1080, height: 1920, viewBox: "0 0 1080 1920", class: "layer" }, p); const a = Math.atan2(y2 - y1, x2 - x1), h = 46, d = `M${x1},${y1} L${x2},${y2} M${x2 - h * Math.cos(a - .5)},${y2 - h * Math.sin(a - .5)} L${x2},${y2} L${x2 - h * Math.cos(a + .5)},${y2 - h * Math.sin(a + .5)}`; return mk("path", { d, fill: "none", stroke: col, "stroke-width": 12, "stroke-linecap": "round", "stroke-linejoin": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s); }
+function cupEl(p) { const s = box(180, 220, "0 0 180 220", p); mk("path", { d: "M26,30 H154 L138,196 Q137,208 125,208 H55 Q43,208 42,196 Z", fill: T.fill, stroke: T.ink, "stroke-width": 8, "stroke-linejoin": "round" }, s); mk("path", { d: "M34,92 Q62,76 90,92 T146,92 L138,196 Q137,208 125,208 H55 Q43,208 42,196 Z", fill: T.blue, stroke: T.ink, "stroke-width": 6, "stroke-linejoin": "round" }, s); return s; }
+function mushEl(p, w = 300) { const s = box(w, w * 0.69, "0 0 680 470", p); const r = rng(11), cx = 340, wd = 680, h = 470; mk("path", { d: `M${cx},${h * .08} L${wd * .02},${h * .02} L${wd * .02},${h * .94} L${cx},${h} L${wd * .98},${h * .94} L${wd * .98},${h * .02} Z`, fill: T.fill, stroke: T.gold2, "stroke-width": 14, "stroke-linejoin": "round" }, s); mk("line", { x1: cx, y1: h * .06, x2: cx, y2: h * .97, stroke: T.gold2, "stroke-width": 10 }, s);
+  for (const side of [-1, 1]) for (let i = 0; i < 6; i++) { const y = h * (.2 + i * .1), x0 = side < 0 ? wd * .08 : cx + wd * .06; mk("line", { x1: x0, y1: y, x2: x0 + wd * (.3 + r() * .1), y2: y, stroke: T.ink, "stroke-width": 9, "stroke-linecap": "round", opacity: .75 }, s); } return s; }
+function medEl(p, w = 220) { const s = box(w, w, "0 0 240 240", p); mk("circle", { cx: 120, cy: 120, r: 108, fill: T.fill, stroke: T.red, "stroke-width": 9 }, s); mk("path", { d: "M98,52 H142 V98 H188 V142 H142 V188 H98 V142 H52 V98 H98 Z", fill: T.red, stroke: T.red, "stroke-width": 6, "stroke-linejoin": "round" }, s); return s; }
+function pillEl(p, w = 220) { const s = box(w, w, "0 0 240 240", p); const g = mk("g", { transform: "rotate(-40 120 120)" }, s); mk("rect", { x: 30, y: 78, width: 180, height: 84, rx: 42, fill: T.fill, stroke: T.ink, "stroke-width": 8 }, g); mk("path", { d: "M120,78 H72 A42,42 0 0 0 72,162 H120 Z", fill: T.gold, stroke: T.ink, "stroke-width": 8, "stroke-linejoin": "round" }, g); return s; }
+function circleTick(p, d = 230) { const s = box(d, d, "0 0 100 100", p); mk("circle", { cx: 50, cy: 50, r: 46, fill: T.green + "33", stroke: T.green, "stroke-width": 6 }, s); const t = mk("path", { d: "M26,52 L44,70 L76,32", fill: "none", stroke: T.green, "stroke-width": 10, "stroke-linecap": "round", "stroke-linejoin": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, s); return [s, t]; }
+const star16 = (r, ri) => { const pts = []; for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8 - Math.PI / 2, q = i % 2 ? ri : r; pts.push(`${(q * Math.cos(a)).toFixed(1)},${(q * Math.sin(a)).toFixed(1)}`); } return pts.join(" "); };
+function sealEl(p, txt = "ﷺ") { const s = box(260, 260, "-130 -130 260 260", p); mk("polygon", { fill: T.gold, stroke: T.ink, "stroke-width": 7, "stroke-linejoin": "round", points: star16(122, 90) }, s); mk("circle", { r: 66, fill: T.fill, stroke: T.ink, "stroke-width": 5 }, s); const tx = mk("text", { x: 0, y: 26, "text-anchor": "middle", "font-family": "Amiri", "font-weight": 700, "font-size": 76, fill: T.ink }, s); tx.textContent = txt; return s; }
+function bookEl(p, label) { const s = box(300, 380, "0 0 330 420", p); mk("rect", { x: 22, y: 14, width: 296, height: 392, rx: 22, fill: T.book, stroke: T.gold2, "stroke-width": 10 }, s); mk("path", { d: "M54,14 V406", stroke: T.gold2, "stroke-width": 6 }, s); const lines = label.split("|"); lines.forEach((l, i) => { const t = mk("text", { x: 188, y: 190 + i * 86 - (lines.length - 1) * 30, "text-anchor": "middle", "font-family": "Amiri", "font-weight": 700, "font-size": 74, fill: T.bookText }, s); t.textContent = l; }); return s; }
+function bubbleEl(p, txt, size = 76, color) { const d = document.createElement("div"); d.className = "a"; d.innerHTML = `<div class="bub mid" style="font-size:${size}px; ${color ? "color:" + color : ""}">${txt}</div>`; p.appendChild(d); return d; }
+function cardEl(p, w, h) { const d = document.createElement("div"); d.className = "a"; d.style.cssText = `width:${w}px; height:${h}px; background:${T.fill}; border:9px solid ${T.gold2}; border-radius:44px; box-shadow:0 14px 0 rgba(0,0,0,.18)`; p.appendChild(d); return d; }
+const seg = (a, b, d = .25) => [[a - 0.001, 0], [a, 1], [b, 1], [b + d, 0, "in"]];
+const SS = (el, t, to, d = .25, extra = {}) => A(el, Object.assign({ s: pop(t), o: seg(t, to, d) }, extra));
+const X = (S, x, y, t, to, w = 240) => { const [xs, xa, xb] = crossEl(S, w); A(xs, { x, y, o: seg(t, to, .2) }); D(xa, inc(t, t + 0.25)); D(xb, inc(t + 0.12, t + 0.37)); BURSTS.push({ t: t + 0.4, x, y }); };
+const TICK = (S, x, y, t, to, w = 170) => { const [ts, tt] = tickEl(S, w); A(ts, { x, y, o: seg(t, to, .2) }); D(tt, inc(t, t + 0.4)); BURSTS.push({ t: t + 0.4, x, y }); };
+const ACT = $("act");
+const SH_ = (a, b, c, d) => spread(a, b, c);
+
+function haloEl(p, label, size = 210, fs = 46) { const s = box(size, size, "-105 -105 210 210", p); mk("circle", { r: 84, fill: T.fill, stroke: T.red, "stroke-width": 8, "stroke-dasharray": "16 11" }, s); const t = mk("text", { x: 0, y: fs / 3, "text-anchor": "middle", "font-family": "Cairo", "font-weight": 800, "font-size": fs, fill: T.ink }, s); t.textContent = label; return s; }
+function heartEl(p, w = 120) { const s = box(w, w, "0 0 100 100", p); mk("path", { d: "M50,86 C10,56 14,22 36,20 C44,20 49,26 50,32 C51,26 56,20 64,20 C86,22 90,56 50,86 Z", fill: T.red, stroke: T.ink, "stroke-width": 5, "stroke-linejoin": "round" }, s); return s; }
+const V1 = spread("أم جاءت إلى النبي صلى الله عليه وسلم خائفة على أولادها", 0.21, 4.37), V3 = spread("جاءت أسماء بنت عميس رضي الله عنها إلى النبي صلى الله عليه وسلم", 6.29, 10.53), V5 = spread("إن بني جعفر تسرع إليهم العين", 12.02, 14.39);
+const V7 = spread("فقال النبي صلى الله عليه وسلم نعم", 16.18, 18.33), V8 = spread("لو كان شيء يسبق القدر", 18.66, 20.37), V11 = spread("فالنبي صلى الله عليه وسلم لم يسخر من خوفها", 23.24, 25.9), V12 = spread("ولم ينكر أن العين حقيقة", 26.14, 27.74), V13 = spread("بل أذن لها بالرقية لأولادها", 28.3, 29.96);
+const V15 = spread("فعوذهم بما كان يعوذ به النبي صلى الله عليه وسلم الحسن والحسين", 32.47, 36.92), V16 = spread("أعيذكما بكلمات الله التامة", 37.29, 38.95), V17 = spread("من كل شيطان وهامة", 39.57, 41.15), V18 = spread("ومن كل عين لامة", 41.44, 42.85), V19 = spread("شارك هذه القصة مع كل أم تخاف على أولادها", 43.47, 46.2), tFol = 46.58;
+A("low", { x: 540, y: 1440, o: 1 }); A("pat2", { x: 540, y: 1440, o: .05 }); A("band", { x: 540, y: 967, o: 1 });
+A("orb", { x: 880, y: 250, s: (t) => 1 + .05 * Math.sin(t * 1.5), o: .85 });
+// SA
+SC("SA", 0.15, 5.75); { const S = $("SA"), mo = haloEl(S, "أمّ", 240, 62), sl = sealEl(S), ar = arrowEl(S, 640, 380, 470, 380), hs = [330, 540, 750].map(() => haloEl(S, "", 150)), fe = chipEl(S, "خائفة", "c", 62), q = textEl(S, "؟", 200, T.red);
+  SS(mo, V1[0][1], 5.5, .2, { x: 790, y: 380 }); SS(sl, V1[3][1], 5.5, .2, { x: 290, y: 380 }); D(ar, inc(V1[1][1], V1[3][1] + 0.2)); A(ar.parentNode, { x: 540, y: 960, o: seg(V1[1][1], 5.5, .2) });
+  hs.forEach((h, i) => SS(h, V1[10][1] + i * 0.12 - 0.3, 5.5, .2, { x: 330 + i * 210, y: 760 })); SS(fe, V1[8][1], 5.5, .2, { x: 540, y: 600 }); SS(q, 4.8, 5.5, .2, { x: 540, y: 880 }); BURSTS.push({ t: V1[3][1] + 0.4, x: 290, y: 380 }); }
+// SB
+SC("SB", 6.2, 14.55); { const S = $("SB"), a = chipEl(S, "أسماء بنت عميس", "y", 54), sl = sealEl(S), ar = arrowEl(S, 520, 330, 440, 330), hs = [330, 540, 750].map(() => haloEl(S, "", 150)), jf = chipEl(S, "بنو جعفر", "b", 58), ey = eyeEl(S), ar2 = arrowEl(S, 780, 860, 330, 860);
+  SS(a, V3[1][1], 14.3, .2, { x: 790, y: 330 }); SS(sl, V3[8][1], 14.3, .2, { x: 290, y: 330 }); hs.forEach((h, i) => SS(h, V5[1][1] + i * 0.1, 14.3, .2, { x: 750 - i * 210, y: 600 })); SS(jf, V5[2][1], 14.3, .2, { x: 540, y: 470 });
+  SS(ey, V5[3][1], 14.3, .2, { x: [[V5[3][1], 880], [V5[4][1] + 0.4, 330, "in"]], y: 860 }); D(ar2, inc(V5[3][1], V5[4][1] + 0.4, "in")); A(ar2.parentNode, { x: 540, y: 960, o: seg(V5[3][1], 14.3, .2) }); BURSTS.push({ t: V5[4][1] + 0.5, x: 330, y: 860 }); }
+// SC
+SC("SC", 14.65, 18.55); { const S = $("SC"), b = bubbleEl(S, "أفأسترقي لهم؟", 76), sl = sealEl(S), nm = chipEl(S, "نعم", "m", 84);
+  SS(b, 14.75, 16.0, .2, { x: 540, y: 400 }); SS(sl, 16.2, 18.35, .2, { x: 540, y: 380 }); SS(nm, V7[6][1], 18.35, .2, { x: 540, y: 640 }); TICK(S, 540, 880, V7[6][1] + 0.2, 18.35, 190); BURSTS.push({ t: V7[6][1] + 0.3, x: 540, y: 640 }); }
+// SD
+SC("SD", 18.6, 22.8); { const S = $("SD"), c1 = chipEl(S, "القدر", "y", 66), c2 = chipEl(S, "العين", "c", 66), tr = chipEl(S, "الترمذي", "b", 52), b1 = document.createElement("div"), b2 = document.createElement("div");
+  [b1, b2].forEach((b, i) => { b.className = "a"; b.style.cssText = `width:620px; height:46px; border:6px solid ${T.ink}; border-radius:30px; background:rgba(255,255,255,.35); overflow:hidden`; const f = document.createElement("div"); f.style.cssText = `position:absolute; right:0; top:0; bottom:0; width:0; background:${i ? T.red : T.gold}`; b.appendChild(f); S.appendChild(b); b.f = f; });
+  SS(c1, V8[4][1], 22.6, .2, { x: 860, y: 430 }); SS(c2, V8[4][1] + 0.2, 22.6, .2, { x: 860, y: 640 }); A(b1, { x: 440, y: 430, o: seg(V8[4][1], 22.6, .2) }); A(b2, { x: 440, y: 640, o: seg(V8[4][1] + 0.2, 22.6, .2) });
+  CUST.push((t) => { b1.f.style.width = (92 * clamp((t - V8[4][1]) / 1.4)) + "%"; b2.f.style.width = (100 * EZ.in(clamp((t - V8[4][1] - 0.1) / 1.9))) + "%"; }); BURSTS.push({ t: 21.9 - 0.2, x: 440, y: 640 }); SS(tr, 21.95, 22.6, .2, { x: 540, y: 860 }); }
+// SE
+SC("SE", 23.2, 28.2); { const S = $("SE"), sl = sealEl(S), mo = haloEl(S, "أمّ", 200, 56), sk = chipEl(S, "سخرية", "c", 58), ey = eyeEl(S), hq = chipEl(S, "العين حقيقة", "m", 58);
+  SS(sl, V11[0][1], 28.0, .2, { x: 790, y: 330 }); SS(mo, V11[8][1], 28.0, .2, { x: 290, y: 330 }); SS(sk, V11[6][1], 25.8, .2, { x: 540, y: 600 }); X(S, 540, 600, V11[6][1] + 0.4, 25.8, 300); SS(ey, V12[3][1], 28.0, .2, { x: 790, y: 760 }); SS(hq, V12[4][1], 28.0, .2, { x: 360, y: 760 }); TICK(S, 540, 900, V12[4][1] + 0.3, 28.0, 140); }
+// SF
+SC("SF", 28.25, 30.2); { const S = $("SF"), ms = mushEl(S, 300), hs = [330, 540, 750].map(() => haloEl(S, "", 150)), rq = chipEl(S, "رقية", "m", 66);
+  SS(ms, V13[3][1], 30.0, .2, { x: 540, y: 400 }); SS(rq, V13[3][1] + 0.1, 30.0, .2, { x: 540, y: 600 }); hs.forEach((h, i) => SS(h, V13[4][1] + i * 0.1, 30.0, .2, { x: 750 - i * 210, y: 820 })); }
+// SG
+SC("SG", 30.5, 37.1); { const S = $("SG"), hs = chipEl(S, "الحسن", "y", 60), hn = chipEl(S, "الحسين", "y", 60), sh = shieldEl(S), sl = sealEl(S), co = chipEl(S, "عوّذهم", "m", 66), ey = eyeEl(S);
+  SS(ey, 31.0, 32.4, .2, { x: 540, y: 330 }); SS(sh, 32.8, 36.9, .2, { x: 540, y: 600, s: [[32.8, .5], [33.3, .85, "pop"]] }); SS(co, V15[0][1], 36.9, .2, { x: 540, y: 330 }); SS(sl, V15[5][1], 36.9, .2, { x: 540, y: 900, s: [[V15[5][1], .5], [V15[5][1] + 0.4, .6, "pop"]] }); SS(hs, V15[10][1], 36.9, .2, { x: 790, y: 640 }); SS(hn, V15[11][1], 36.9, .2, { x: 290, y: 640 }); BURSTS.push({ t: 33.4, x: 540, y: 600 }); }
+// SH
+SC("SH", 37.2, 43.0); { const S = $("SH"), card = cardEl(S, 900, 600); A(card, { x: 540, y: 520, s: pop(37.25, .45), o: seg(37.25, 42.9, .2) });
+  const mkL = (txt, y, t) => { const d = textEl(S, txt, 66, T.ink); A(d, { x: 540, y: [[t - 0.001, y + 24], [t + 0.35, y, "out"]], o: [[t - 0.001, 0], [t, 1], [42.9, 1], [43.1, 0, "in"]] }); BURSTS.push({ t: t + 0.1, x: 540, y }); };
+  mkL("أعيذكما بكلمات الله التامة", 400, V16[0][1]); mkL("من كل شيطان وهامّة", 530, V17[0][1]); mkL("ومن كل عين لامّة", 660, V18[0][1]); const h = heartEl(S, 130); SS(h, 38.9, 42.9, .2, { x: 790, y: 880 }); }
+SC("SL", 43.2, 80);
+A("lamp", { x: 540, y: 330, s: [[43.4, .78], [44.1, .66, "out"]], o: [[43.3, 0], [43.7, 1]] }); A("name", { x: 540, y: 600, s: [[43.5, 1.1], [44.3, 1, "out"]], o: [[43.5, 0], [43.9, 1]] });
+D("sh1", inc(V19[0][1], V19[0][1] + 0.45)); D("sh2", inc(V19[0][1] + 0.3, V19[0][1] + 0.7)); D("sh3", inc(V19[0][1] + 0.6, V19[0][1] + 0.85));
+A("share", { x: 380, y: 830, s: [[V19[0][1] + 0.49, .6], [V19[0][1] + 1.0, 1, "back"]], o: [[V19[0][1] + 0.49, 0], [V19[0][1] + 0.5, 1]] });
+A("bell", { x: 700, y: 830, s: [[tFol - 0.01, .6], [tFol + .5, 1, "back"]], r: [[tFol + 0.6, 0], [tFol + 0.7, 14, "out"], [tFol + 0.85, -12, "io"], [tFol + 1.0, 8, "io"], [tFol + 1.15, 0, "io"]], o: [[tFol - 0.01, 0], [tFol, 1]] }); D("bl1", inc(tFol, tFol + 0.6)); D("bl2", inc(tFol + 0.5, tFol + 0.8));
+
+// ---- canvas: rain, bursts, paper grain -------------------------------------------------------------------------------------
+const fb = $("fxB").getContext("2d"), dr = rng(9), RAIN = [];
+for (let i = 0; i < 70; i++) RAIN.push({ x: dr() * 1200 - 60, y0: dr() * 1000, v: 260 + dr() * 220, l: 40 + dr() * 60, a: .05 + dr() * .09 });
+function drawFX(t) {
+  fb.clearRect(0, 0, W, H); fb.lineWidth = 3; fb.lineCap = "round";
+  for (const d of RAIN) { const y = 980 - ((d.y0 + d.v * 0.2 * t) % 1000), x = d.x * 0.9 + Math.sin(t * .6 + d.y0) * 24; fb.globalAlpha = d.a * 2.2; fb.fillStyle = d.l > 70 ? "#ffd9b3" : "#ffffff"; fb.beginPath(); fb.arc(x, y, 3 + d.l / 22, 0, 7); fb.fill(); }
+  for (const b of BURSTS) { const age = t - b.t; if (age < 0 || age > 0.8) continue; const u = age / 0.8;
+    for (let i = 0; i < 14; i++) { const a = i * Math.PI * 2 / 14 + b.t * 3, v = 90 + (i % 3) * 50, d = v * EZ.out(u); fb.globalAlpha = (1 - u) * .95; fb.fillStyle = ["#e0a100", "#e4572e", "#2a9d8f"][i % 3]; fb.beginPath(); fb.arc(b.x + Math.cos(a) * d, b.y + Math.sin(a) * d, 6 * (1 - u) + 1.6, 0, 7); fb.fill(); } }
+  fb.globalAlpha = 1;
+}
+const DU = $("grn").getContext("2d"), GN = []; (() => { for (let f = 0; f < 4; f++) { const c = document.createElement("canvas"); c.width = 540; c.height = 960; const g = c.getContext("2d"), im = g.createImageData(540, 960), r = rng(100 + f); for (let i = 0; i < im.data.length; i += 4) { const n = r() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = n; im.data[i + 3] = 12; } g.putImageData(im, 0, 0); GN.push(c); } })();
+
+// ---- captions ---------------------------------------------------------------------------------
+let capIdx = -2;
+function drawCaps(t) {
+  let i = -1; for (let k = 0; k < CAPS.length; k++) if (t >= CAPS[k].a && t < CAPS[k].b + 0.25) i = k;
+  if (i !== capIdx) { capIdx = i; const c = CAPS[i] || { ar: "", en: "", zh: "" }; $("capAr").textContent = c.ar; $("capZh").textContent = c.zh; $("capEn").textContent = c.en; $("capAr").style.display = c.ar ? "block" : "none"; }
+  const c = CAPS[i], box = $("cap"); if (!c) { box.style.opacity = 0; return; }
+  const inP = clamp((t - c.a) / 0.16), outP = clamp((t - (c.b + 0.1)) / 0.15), nxt = CAPS[i + 1] && CAPS[i + 1].a - c.b < 0.2 ? 0 : outP;
+  box.style.opacity = inP * (1 - nxt); box.style.filter = `blur(${((1 - inP) * 7 + nxt * 7).toFixed(1)}px)`;
+}
+
+// ---- the renderer -----------------------------------------------------------------------------
+function render(t) {
+  for (const [el, sp] of ITEMS) {
+    const x = tw(t, sp.x ?? 540), y = tw(t, sp.y ?? 900), s = tw(t, sp.s ?? 1), r = tw(t, sp.r ?? 0), o = tw(t, sp.o ?? 1);
+    el.style.opacity = clamp(o); el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${r}deg) scale(${s})`;
+  }
+  for (const [el, k] of DRAWS) if (el) el.setAttribute("stroke-dashoffset", clamp(tw(t, k)).toFixed(4));
+  for (const sc of SCN) { const vis = t >= sc.a - 0.01 && t <= sc.b + 0.01; sc.el.style.display = vis ? "block" : "none"; if (!vis) continue;
+    const out = sc.b > 59 ? 0 : clamp((t - (sc.b - 0.4)) / 0.4);
+    if (out > 0) { const X = out * 112; sc.el.style.webkitMaskImage = sc.el.style.maskImage = `linear-gradient(to left, transparent ${X - 14}%, #000 ${X}%)`; }
+    else sc.el.style.webkitMaskImage = sc.el.style.maskImage = "none"; }
+  for (const f of CUST) f(t);
+  drawFX(t); drawCaps(t);
+  DU.clearRect(0, 0, 540, 960); DU.drawImage(GN[Math.floor(t * 12) % 4], 0, 0);
+}
+window.SFX = (() => { const out = []; let n = 0; for (const [el, sp] of ITEMS) { const o = sp.o; if (!Array.isArray(o)) continue; const k = o.find((q) => q[1] > 0.5); if (k && k[0] > 0.05 && el.id !== "orb") out.push([k[0], n++ % 2 ? "pop-b" : "pop-a", .32]); }
+  for (const b of BURSTS) out.push([b.t, "thump", .26]); for (const sc of SCN) if (sc.b < 70) out.push([sc.b - 0.4, "erase", .3]); return out.sort((p, q) => p[0] - q[0]); })();
+window.render = render;
+window.ready = (async () => {
+  await document.fonts.load('900 60px "Cairo"'); await document.fonts.load('700 60px "Amiri"'); await document.fonts.load('700 40px "Noto Sans SC"');
+  await document.fonts.ready; render(0); return true;
+})();
+</script>
+</body>
+</html>
