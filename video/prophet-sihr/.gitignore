@@ -3,3 +3,4 @@ mix.wav
 sfx.json
 *.mp4
 build.log
+__pycache__/
