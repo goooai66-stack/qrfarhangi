@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Cairo"; src: url(fonts/Cairo.ttf) format("truetype"); font-weight: 200 1000; }
+@font-face { font-family: "Reem Kufi"; src: url(fonts/ReemKufi.ttf) format("truetype"); font-weight: 400 700; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Regular.woff) format("woff"); font-weight: 400; }
+@font-face { font-family: "Amiri"; src: url(fonts/Amiri-Bold.woff) format("woff"); font-weight: 700; }
+@font-face { font-family: "Noto Sans SC"; src: url(fonts/NotoSansSC-subset.woff2) format("woff2"); font-weight: 500 700; }
+:root { --ink: #12404a; --paper: #f6ebd4; --cream: #fff8e8; --gold: #e0a100; --cor: #e4572e; --grn: #2a9d8f; --vio: #7b6cd9; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0c3139; }
+body { font-family: "Cairo", sans-serif; color: var(--ink); }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.a { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
+.scn { position: absolute; inset: 0; }
+.amiri { font-family: "Amiri", serif; font-weight: 700; }
+svg { overflow: visible; display: block; }
+.chip { display: inline-block; background: var(--cream); border: 5px solid var(--ink); border-radius: 26px; padding: 2px 36px 10px; font-weight: 800; font-size: 54px; color: var(--ink); box-shadow: 0 9px 0 rgba(18,64,74,.2); }
+.chip.y { background: #ffe9a8; border-color: #b98300; } .chip.c { background: #ffd9cc; border-color: var(--cor); color: #a8320f; } .chip.m { background: #cdeedd; border-color: var(--grn); } .chip.b { background: #d9e8ff; border-color: #3b6fb6; }
+.bub { position: relative; background: var(--cream); border: 6px solid var(--ink); border-radius: 40px; padding: 4px 54px 22px; font-family: "Amiri"; font-weight: 700; font-size: 82px; line-height: 1.3; color: var(--ink); box-shadow: 0 12px 0 rgba(18,64,74,.2); }
+.bub::after { content: ""; position: absolute; bottom: -40px; left: 200px; border-left: 26px solid transparent; border-right: 26px solid transparent; border-top: 40px solid var(--ink); }
+#cap { position: absolute; left: 110px; right: 110px; top: 1002px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+#cap .ar { font-weight: 800; font-size: 54px; line-height: 1.45; color: #fffdf4; text-shadow: 0 2px 8px rgba(0,20,25,.7); }
+#cap .zh { font-family: "Noto Sans SC", "Cairo", sans-serif; font-weight: 700; font-size: 42px; line-height: 1.4; color: #ffd666; direction: ltr; text-shadow: 0 2px 8px rgba(0,20,25,.7); }
+#cap .en { font-weight: 600; font-size: 35px; line-height: 1.35; color: #cfe3df; direction: ltr; text-shadow: 0 2px 8px rgba(0,20,25,.7); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper" class="layer" style="background: radial-gradient(ellipse at 50% 35%, #fbf3df 0%, #f6ebd4 55%, #ecdcb9 100%)"></div>
+  <svg id="pat" class="layer" width="1080" height="960" viewBox="0 0 1080 960" aria-hidden="true" style="opacity:.07"></svg>
+  <canvas id="fxB" class="layer" width="1080" height="1920"></canvas>
+  <div id="low" class="a" style="width:1080px; height:960px; background: linear-gradient(180deg, #14505c 0%, #0b2f37 100%)"></div>
+  <svg id="pat2" class="a" width="1080" height="960" viewBox="0 0 1080 960" aria-hidden="true" style="opacity:.022"></svg>
+  <div id="band" class="a" style="width:1080px; height:14px; background: linear-gradient(90deg, #b98300, #ffd666, #b98300)"></div>
+
+  <!-- actors -->
+  <div id="glow" class="a" style="width:520px; height:520px; border-radius:50%; background: radial-gradient(circle, rgba(255,214,102,.75) 0%, rgba(255,214,102,0) 68%)"></div>
+  <svg id="pr" class="a" width="260" height="260" viewBox="-130 -130 260 260" aria-hidden="true">
+    <polygon id="prP" fill="#f6c445" stroke="#12404a" stroke-width="7" stroke-linejoin="round"/><circle r="66" fill="#fff4cf" stroke="#12404a" stroke-width="5"/>
+    <text x="0" y="26" text-anchor="middle" font-family="Amiri" font-weight="700" font-size="76" fill="#12404a">ﷺ</text>
+  </svg>
+  <svg id="mo" class="a" width="230" height="230" viewBox="-115 -115 230 230" aria-hidden="true"><circle r="100" fill="#cfe9e4" stroke="#12404a" stroke-width="7"/><text x="0" y="30" text-anchor="middle" font-family="Amiri" font-weight="700" font-size="92" fill="#12404a">أمّ</text></svg>
+  <svg id="ch" class="a" width="210" height="210" viewBox="-105 -105 210 210" aria-hidden="true">
+    <circle id="chR" r="84" fill="#ffe3d6" stroke="#e4572e" stroke-width="8" stroke-dasharray="16 11"/>
+    <text x="0" y="18" text-anchor="middle" font-family="Cairo" font-weight="800" font-size="46" fill="#12404a">ابنها</text>
+    <g id="chB"><circle cx="-66" cy="-66" r="26" fill="#e4572e"/><path d="M-66,-80 V-52 M-80,-66 H-52" stroke="#fff" stroke-width="8" stroke-linecap="round"/></g>
+    <path id="chT" d="M-40,-68 L-14,-42 L36,-96" fill="none" stroke="#2a9d8f" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+  </svg>
+  <svg id="sw" class="a" width="260" height="260" viewBox="-130 -130 260 260" aria-hidden="true"><path id="swP" fill="none" stroke="#7b6cd9" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  <svg id="ch2" class="a" width="210" height="210" viewBox="-105 -105 210 210" aria-hidden="true"><circle r="84" fill="#ffe3d6" stroke="#e4572e" stroke-width="8" stroke-dasharray="16 11"/><text x="0" y="18" text-anchor="middle" font-family="Cairo" font-weight="800" font-size="46" fill="#12404a">طفلك</text></svg>
+
+  <!-- SA: the question -->
+  <div id="SA" class="scn"><svg id="arr1" class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="ar1" d="M690,650 L430,650 M470,610 L420,650 L470,690" fill="none" stroke="#12404a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="q" class="a amiri" style="font-size:300px; line-height:1; color:#e4572e">؟</div></div>
+  <!-- SB: source -->
+  <div id="SB" class="scn"><div id="src" class="a"><span class="chip y" style="font-size:60px">رواه أحمد</span></div>
+    <div id="mass" class="a amiri" style="font-size:70px; color:#5b4cc2">مسٌّ من الجن</div></div>
+  <!-- SC: the words -->
+  <div id="SC" class="scn"><div id="b1" class="a"><div class="bub">اخرج عدوَّ الله</div></div><div id="b2" class="a"><div class="bub" style="color:#a8320f">أنا رسول الله</div></div></div>
+  <!-- SD: healed -->
+  <div id="SD" class="scn"><div id="heal" class="a"><span class="chip m" style="font-size:62px">بإذن الله</span></div></div>
+  <!-- SE: graded sound -->
+  <div id="SE" class="scn">
+    <svg id="seal" class="a" width="360" height="360" viewBox="-180 -180 360 360" aria-hidden="true"><circle r="164" fill="#e6f6ee" stroke="#2a9d8f" stroke-width="12"/><circle r="140" fill="none" stroke="#2a9d8f" stroke-width="4" stroke-dasharray="3 9" stroke-linecap="round"/>
+      <text x="0" y="14" text-anchor="middle" font-family="Amiri" font-weight="700" font-size="96" fill="#1b6f64">صحيح</text><text x="0" y="82" text-anchor="middle" font-family="Cairo" font-weight="800" font-size="48" fill="#1b6f64">الإسناد</text></svg>
+    <div id="hk" class="a"><span class="chip y">الحاكم</span></div><div id="dh" class="a"><span class="chip y">الذهبي</span></div>
+    <svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="cn1" d="M470,380 L620,600" fill="none" stroke="#b98300" stroke-width="6" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="cn2" d="M610,380 L460,600" fill="none" stroke="#b98300" stroke-width="6" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  </div>
+  <!-- SF: addressed with the truth -->
+  <div id="SF" class="scn"><svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="bm" d="M380,690 L690,820 M640,780 L700,824 L630,846" fill="none" stroke="#e0a100" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="haq" class="a"><span class="chip y" style="font-size:60px">بالحقّ</span></div></div>
+  <!-- SG: specific -->
+  <div id="SG" class="scn">
+    <div id="khas" class="a amiri" style="font-size:200px; line-height:1.1; color:#e4572e">خاصّ</div>
+    <svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="ul" d="M360,400 Q540,430 720,396" fill="none" stroke="#e0a100" stroke-width="12" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="gx1" d="M390,640 L690,800" fill="none" stroke="#e4572e" stroke-width="18" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path id="gx2" d="M690,640 L390,800" fill="none" stroke="#e4572e" stroke-width="18" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="gP" class="a"><span class="chip y">النبي ﷺ</span></div><div id="gS" class="a"><span class="chip b">أهل العلم</span></div>
+    <div id="gA" class="a"><span class="chip c" style="font-size:58px">مع كل مريض</span></div>
+  </div>
+  <!-- SH: physical or psychological, then protection -->
+  <div id="SH" class="scn">
+    <svg id="k0" class="a" width="130" height="130" viewBox="-65 -65 130 130"><circle r="52" fill="#ffe3d6" stroke="#e4572e" stroke-width="7" stroke-dasharray="13 9"/></svg>
+    <svg id="k1" class="a" width="130" height="130" viewBox="-65 -65 130 130"><circle r="52" fill="#ffe3d6" stroke="#e4572e" stroke-width="7" stroke-dasharray="13 9"/></svg>
+    <svg id="k2" class="a" width="130" height="130" viewBox="-65 -65 130 130"><circle r="52" fill="#ffe3d6" stroke="#e4572e" stroke-width="7" stroke-dasharray="13 9"/></svg>
+    <svg id="cO" class="a" width="320" height="360" viewBox="0 0 320 360"><rect x="8" y="8" width="304" height="344" rx="36" fill="#fff8e8" stroke="#12404a" stroke-width="7"/>
+      <path d="M160,200 C70,140 90,70 140,78 C150,80 156,88 160,96 C164,88 170,80 180,78 C230,70 250,140 160,200 Z" fill="#ffd9cc" stroke="#e4572e" stroke-width="9" stroke-linejoin="round"/>
+      <path id="ecg" d="M52,128 H112 L132,96 L158,166 L178,118 L194,128 H268" fill="none" stroke="#12404a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <text x="160" y="318" text-anchor="middle" font-family="Amiri" font-weight="700" font-size="64" fill="#12404a">عضوي</text></svg>
+    <svg id="cN" class="a" width="320" height="360" viewBox="0 0 320 360"><rect x="8" y="8" width="304" height="344" rx="36" fill="#fff8e8" stroke="#12404a" stroke-width="7"/>
+      <path d="M92,190 C54,190 50,140 86,134 C80,96 130,80 150,106 C172,76 226,92 218,132 C256,134 258,190 220,190 Z" fill="#e4dcff" stroke="#7b6cd9" stroke-width="9" stroke-linejoin="round"/>
+      <circle cx="104" cy="214" r="10" fill="#7b6cd9"/><circle cx="76" cy="240" r="6" fill="#7b6cd9"/>
+      <text x="160" y="318" text-anchor="middle" font-family="Amiri" font-weight="700" font-size="64" fill="#12404a">نفسي</text></svg>
+    <svg id="shield" class="a" width="330" height="380" viewBox="0 0 330 380"><path id="shP" d="M165,14 C120,44 70,50 22,50 V190 C22,280 90,336 165,368 C240,336 308,280 308,190 V50 C260,50 210,44 165,14 Z" fill="rgba(224,161,0,.12)" stroke="#e0a100" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <svg id="mush" class="a" width="300" height="208" viewBox="0 0 680 470" aria-hidden="true"></svg><div id="lQ" class="a"><span class="chip m" style="font-size:48px">القرآن</span></div>
+    <svg id="star2" class="a" width="190" height="190" viewBox="-95 -95 190 190"><polygon id="st2P" fill="#ffe9a8" stroke="#b98300" stroke-width="8" stroke-linejoin="round"/></svg><div id="lA" class="a"><span class="chip y" style="font-size:48px">الأذكار</span></div>
+  </div>
+  <!-- SI: the doctor -->
+  <div id="SI" class="scn">
+    <svg id="med" class="a" width="260" height="260" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="108" fill="#cdeedd" stroke="#2a9d8f" stroke-width="9"/><path id="mc" d="M98,52 H142 V98 H188 V142 H142 V188 H98 V142 H52 V98 H98 Z" fill="#fff" stroke="#12404a" stroke-width="9" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+    <div id="lD" class="a"><span class="chip m" style="font-size:56px">الطبيب</span></div><div id="now" class="a"><span class="chip c" style="font-size:64px; font-family:Amiri; font-weight:700">فورًا</span></div>
+    <svg class="layer" width="1080" height="1920" viewBox="0 0 1080 1920" aria-hidden="true"><path id="ar2" d="M670,540 L470,540 M510,500 L460,540 L510,580" fill="none" stroke="#12404a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  </div>
+  <!-- SJ: close -->
+  <div id="SJ" class="scn">
+    <svg id="lamp" class="a" width="300" height="470" viewBox="0 0 300 470" aria-hidden="true">
+      <line x1="150" y1="0" x2="150" y2="170" stroke="#12404a" stroke-width="6"/><path d="M108,170 L192,170 L176,198 L124,198 Z" fill="#f6c445" stroke="#12404a" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M124,198 C70,230 70,330 112,372 L188,372 C230,330 230,230 176,198 Z" fill="#fff4cf" stroke="#12404a" stroke-width="8"/>
+      <path d="M150,236 C134,262 134,292 150,312 C166,292 166,262 150,236 Z" fill="#e4572e"/><path d="M112,372 L188,372 L170,400 L130,400 Z" fill="#f6c445" stroke="#12404a" stroke-width="7" stroke-linejoin="round"/><line x1="150" y1="400" x2="150" y2="440" stroke="#12404a" stroke-width="6"/>
+    </svg>
+    <div id="name" class="a amiri" style="font-size:150px; line-height:1.2; color:#12404a; text-shadow: 0 6px 0 rgba(224,161,0,.55)">في معيّة الله</div>
+    <svg id="share" class="a" width="190" height="171" viewBox="0 0 240 216" aria-hidden="true">
+      <path id="sh1" d="M30,100 L30,196 L210,196 L210,100" fill="none" stroke="#12404a" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh2" d="M120,150 L120,18" fill="none" stroke="#2a9d8f" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="sh3" d="M72,68 L120,16 L168,68" fill="none" stroke="#2a9d8f" stroke-width="14" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <svg id="bell" class="a" width="170" height="190" viewBox="0 0 170 190" aria-hidden="true">
+      <path id="bl1" d="M85,18 C45,18 32,56 32,92 C32,120 20,134 12,146 L158,146 C150,134 138,120 138,92 C138,56 125,18 85,18 Z" fill="#ffe9a8" stroke="#b98300" stroke-width="12" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="bl2" d="M62,164 C66,182 104,182 108,164" fill="none" stroke="#b98300" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+  </div>
+
+  <div id="cap"><div class="ar" id="capAr"></div><div class="zh" id="capZh"></div><div class="en" id="capEn"></div></div>
+  <canvas id="grn" class="layer" width="540" height="960" style="width:1080px; height:1920px; opacity:.45"></canvas>
+</div>
+
+<script>
+const W = 1080, H = 1920, CAPS = [{"a": 0.05, "b": 3.46, "ar": "أتت أمٌّ إلى النبيِّ صلى الله عليه وسلم بابنها المريض", "en": "A mother brought her sick son to the Prophet (peace be upon him).", "zh": "一位母亲带着生病的儿子来见先知(愿主福安之)。"}, {"a": 3.8, "b": 4.49, "ar": "فماذا قال له؟", "en": "So what did he say to him?", "zh": "他对那孩子说了什么?"}, {"a": 5.25, "b": 9.9, "ar": "روى أحمد أن النبيَّ صلى الله عليه وسلم أُتيَ بصبيٍّ مصابٍ بمسٍّ من الجن", "en": "Ahmad narrated that the Prophet (peace be upon him) was brought a boy afflicted by jinn possession.", "zh": "艾哈迈德传述:有人把一个被精灵附体的男孩带到先知(愿主福安之)面前。"}, {"a": 10.42, "b": 12.54, "ar": "فجعل النبيُّ صلى الله عليه وسلم يقول:", "en": "The Prophet (peace be upon him) began to say:", "zh": "先知(愿主福安之)开始说:"}, {"a": 12.94, "b": 14.35, "ar": "«اخرج عدوَّ الله", "en": "“Come out, enemy of Allah!", "zh": "“出来,真主的敌人!"}, {"a": 14.69, "b": 15.75, "ar": "أنا رسول الله»", "en": "I am the Messenger of Allah.”", "zh": "我是真主的使者。”"}, {"a": 16.02, "b": 17.76, "ar": "فبرأ الصبيُّ بإذن الله", "en": "and the boy recovered, by Allah’s permission.", "zh": "凭真主的许可,那男孩痊愈了。"}, {"a": 18.13, "b": 21.25, "ar": "وهذا حديثٌ صحّح إسنادَه الحاكم ووافقه الذهبي", "en": "This is a hadith whose chain al-Hakim graded sound, and al-Dhahabi agreed.", "zh": "这段圣训,哈基姆认定其传述系统可靠,扎哈比也表示同意。"}, {"a": 21.71, "b": 25.84, "ar": "وفيه أن النبيَّ صلى الله عليه وسلم خاطب ما في الصبي من الأذى بالحق", "en": "In it, the Prophet (peace be upon him) addressed the harm within the boy with the truth,", "zh": "其中,先知(愿主福安之)用真理对男孩体内的邪害说话,"}, {"a": 26.18, "b": 28.03, "ar": "ولم يترك الأمَّ وابنها وحدهما", "en": "and did not leave the mother and her son alone.", "zh": "并没有把母子二人单独丢下。"}, {"a": 28.3, "b": 32.6, "ar": "لكن هذا خاصٌّ بما ثبت عن النبي صلى الله عليه وسلم وبأهل العلم", "en": "But this is specific to what is established from the Prophet (peace be upon him), and to people of knowledge,", "zh": "但这仅限于有确证出自先知(愿主福安之)的做法,以及有学识的人,"}, {"a": 32.98, "b": 34.85, "ar": "وليس لك أن تصنع مثله مع كل مريض", "en": "and it is not for you to do the same with every sick person.", "zh": "你不应对每一个病人都这样做。"}, {"a": 35.24, "b": 38.6, "ar": "فكثيرٌ من الأطفال مرضُه عضويٌّ أو نفسيّ", "en": "For many children, the illness is physical or psychological.", "zh": "因为许多孩子的病是身体上的或心理上的。"}, {"a": 38.6, "b": 41.29, "ar": "فإذا مرض طفلك فعوِّذه بالقرآن والأذكار", "en": "So if your child falls ill, protect him with the Qur’an and the adhkar,", "zh": "所以,如果你的孩子生病了,用《古兰经》和祈祷词为他祈求庇护,"}, {"a": 41.66, "b": 43.37, "ar": "واذهب به إلى الطبيب فورًا", "en": "and take him to the doctor right away.", "zh": "并立即带他去看医生。"}, {"a": 44.13, "b": 47.0, "ar": "شارك هذه القصة مع من تحب، وتابع القناة", "en": "Share this story with someone you love, and follow the channel.", "zh": "把这个故事分享给你爱的人,并关注本频道。"}];
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const EZ = { lin: (x) => x, out: (x) => 1 - Math.pow(1 - x, 3), in: (x) => x * x * x, io: (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+  back: (x) => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); },
+  pop: (x) => { const c1 = 2.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); } };
+function tw(t, k) {
+  if (typeof k === "number") return k; if (typeof k === "function") return k(t);
+  if (t <= k[0][0]) return k[0][1];
+  for (let i = 1; i < k.length; i++) if (t <= k[i][0]) { const [t0, v0] = k[i - 1], [t1, v1, e = "out"] = k[i]; return v0 + (v1 - v0) * EZ[e](clamp((t - t0) / ((t1 - t0) || 1))); }
+  return k[k.length - 1][1];
+}
+const rng = (seed) => { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; };
+const NS = "http://www.w3.org/2000/svg";
+const mk = (tag, at, parent) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); parent && parent.appendChild(e); return e; };
+const ITEMS = [], DRAWS = [], SCN = [], BURSTS = [], CUST = [];
+const A = (id, sp) => ITEMS.push([typeof id === "string" ? $(id) : id, sp]);
+const D = (el, k) => DRAWS.push([typeof el === "string" ? $(el) : el, k]);
+const SC = (id, a, b) => SCN.push({ el: $(id), a, b });
+const pop = (t, d = 0.4) => [[t - 0.001, 0.6], [t + d, 1, "pop"]];
+const inc = (t0, t1, k = "out") => [[t0, 1], [t1, 0, k]];
+const on = (a, b, d = 0.2) => [[a - 0.001, 0], [a, 1], [b, 1], [b + d, 0, "in"]];
+function spiral(id, turns, r) { let d = ""; for (let i = 0; i <= 60; i++) { const a = i / 60 * turns * Math.PI * 2, rr = r * (0.18 + 0.82 * i / 60); d += (i ? " L" : "M") + (rr * Math.cos(a)).toFixed(1) + "," + (rr * Math.sin(a)).toFixed(1); } $(id).setAttribute("d", d); }
+function star(id, r, ri) { const pts = []; for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8 - Math.PI / 2, q = i % 2 ? ri : r; pts.push(`${(q * Math.cos(a)).toFixed(1)},${(q * Math.sin(a)).toFixed(1)}`); } $(id).setAttribute("points", pts.join(" ")); }
+spiral("swP", 2.6, 118); star("prP", 122, 90); star("st2P", 86, 62);
+function spread(text, a, b) {
+  const ws = text.split(/\s+/), cl = (w) => w.replace(/[ً-ْٰ]/g, ""), wt = ws.map((w) => cl(w).length + 0.6), tot = wt.reduce((p, c) => p + c, 0);
+  let c = 0; return ws.map((w, i) => { const t = a + (b - a) * c / tot; c += wt[i]; return [w, t]; });
+}
+// background pattern: 8-point stars
+for (const [svg, w, h] of [[$("pat"), 1080, 960], [$("pat2"), 1080, 960]]) { const col = svg === $("pat") ? "#12404a" : "#ffffff"; for (let y = 0; y < h + 120; y += 120) for (let x = 0; x < w + 120; x += 120) { const o = (y / 120) % 2 ? 60 : 0;
+  mk("rect", { x: x + o - 34, y: y - 34, width: 68, height: 68, fill: "none", stroke: col, "stroke-width": 3 }, svg); mk("rect", { x: x + o - 34, y: y - 34, width: 68, height: 68, fill: "none", stroke: col, "stroke-width": 3, transform: `rotate(45 ${x + o} ${y})` }, svg); } }
+function book(svg, w, h) { const r = rng(11), cx = w / 2; mk("path", { d: `M${cx},${h * .08} L${w * .02},${h * .02} L${w * .02},${h * .94} L${cx},${h} L${w * .98},${h * .94} L${w * .98},${h * .02} Z`, fill: "#cdeedd", stroke: "#2a9d8f", "stroke-width": 14, "stroke-linejoin": "round" }, svg);
+  mk("line", { x1: cx, y1: h * .06, x2: cx, y2: h * .97, stroke: "#2a9d8f", "stroke-width": 10 }, svg);
+  for (const side of [-1, 1]) for (let i = 0; i < 6; i++) { const y = h * (.2 + i * .1), x0 = side < 0 ? w * .08 : cx + w * .06; mk("line", { x1: x0, y1: y, x2: x0 + w * (.3 + r() * .1), y2: y, stroke: "#12404a", "stroke-width": 9, "stroke-linecap": "round", opacity: .75 }, svg); } }
+book($("mush"), 680, 470);
+
+// ---- anchors from the voice ------------------------------------------------------------------------
+const T1 = spread("أتت أم إلى النبي صلى الله عليه وسلم بابنها المريض", 0.05, 3.46);
+const T3 = spread("روى أحمد أن النبي صلى الله عليه وسلم أتي بصبي مصاب بمس من الجن", 5.25, 9.9);
+const T4 = spread("وهذا حديث صحح إسناده الحاكم ووافقه الذهبي", 18.13, 21.25);
+const T5 = spread("وفيه أن النبي صلى الله عليه وسلم خاطب ما في الصبي من الأذى بالحق", 21.71, 25.84);
+const T7 = spread("لكن هذا خاص بما ثبت عن النبي صلى الله عليه وسلم وبأهل العلم", 28.3, 32.6);
+const T8 = spread("وليس لك أن تصنع مثله مع كل مريض", 32.98, 34.85);
+const T9 = spread("فكثير من الأطفال مرضه عضوي أو نفسي", 35.24, 38.6);
+const T10 = spread("فإذا مرض طفلك فعوذه بالقرآن والأذكار", 38.6, 41.29);
+const T11 = spread("واذهب به إلى الطبيب فورا", 41.66, 43.37);
+const T12 = spread("شارك هذه القصة مع من تحب وتابع القناة", 44.13, 46.72);
+const tMom = T1[1][1], tPro = T1[3][1], tKid = T1[8][1], tSwirl = T3[10][1] - 0.1, tHeal = 16.02 + 0.9;
+
+// ---- the paper bottom --------------------------------------------------------------------------------------
+A("low", { x: 540, y: 1440, o: 1 }); A("pat2", { x: 540, y: 1440, o: 1 }); A("band", { x: 540, y: 967, o: 1 });
+
+// ---- actors: the Prophet (a gold star), the mother, the child ----------------------------------------------------
+A("pr", { x: 290, y: 650, s: [[tPro - 0.001, .6], [tPro + 0.45, 1, "pop"], [17.8, 1], [21.89, .6], [22.3, 1, "pop"]], o: [[tPro - 0.001, 0], [tPro, 1], [17.8, 1], [18.05, 0, "in"], [21.9, 0], [21.91, 1], [28.1, 1], [28.35, 0, "in"]] });
+A("mo", { x: 800, y: 650, s: [[tMom - 0.001, .6], [tMom + 0.45, 1, "pop"], [17.8, 1], [26.29, .6], [26.7, 1, "pop"]], o: [[tMom - 0.001, 0], [tMom, 1], [17.8, 1], [18.05, 0, "in"], [26.2, 0], [26.21, 1], [28.1, 1], [28.35, 0, "in"]] });
+A("ch", { x: 800, y: 850, s: [[tKid - 0.001, .6], [tKid + 0.45, 1, "pop"], [17.8, 1], [21.99, .6], [22.4, 1, "pop"]], o: [[tKid - 0.001, 0], [tKid, 1], [17.8, 1], [18.05, 0, "in"], [21.9, 0], [21.91, 1], [28.1, 1], [28.35, 0, "in"]] });
+D("ar1", inc(tPro + 0.1, tPro + 0.6, "io")); A("arr1", { x: 540, y: 960, o: on(tPro + 0.1, 4.6, .3) });
+CUST.push((t) => { const sick = !((t >= tHeal - 0.25 && t < 21.9) || t >= 25.7); const R = $("chR");
+  R.setAttribute("fill", sick ? "#ffe3d6" : "#cdeedd"); R.setAttribute("stroke", sick ? "#e4572e" : "#2a9d8f"); R.setAttribute("stroke-dasharray", sick ? "16 11" : "none"); $("chB").setAttribute("opacity", sick ? 1 : 0); });
+D("chT", [[tHeal - 0.2, 1], [tHeal + 0.35, 0, "out"], [21.9, 0], [21.91, 1], [25.8, 1], [26.3, 0, "out"]]);
+BURSTS.push({ t: tHeal + 0.35, x: 800, y: 850 }, { t: 26.3, x: 800, y: 850 });
+// the soft swirl
+A("sw", { x: 800, y: 850, s: (t) => t < 16.5 ? tw(t, [[tSwirl, .4], [tSwirl + 0.5, 1, "back"], [15.2, 1], [15.9, .05, "in"]]) : tw(t, [[22.39, .4], [22.9, 1, "back"], [25.4, 1], [25.7, .05, "in"]]), r: (t) => t * 40,
+  o: [[tSwirl - 0.001, 0], [tSwirl, 1], [15.8, 1], [15.95, 0], [22.38, 0], [22.4, 1], [25.6, 1], [25.7, 0]] });
+D("swP", [[tSwirl, 1], [tSwirl + 0.7, 0, "io"], [22.38, 0], [22.39, 1], [23.0, 0, "io"]]);
+A("glow", { x: 800, y: 760, s: (t) => 1 + 0.06 * Math.sin(t * 5), o: [[26.19, 0], [26.5, .9], [27.8, .9], [28.2, 0, "in"]] });
+
+// ---- SA ------------------------------------------------------------------------------------------------------------------
+SC("SA", 0, 5.2);
+A("q", { x: 540, y: 360, s: pop(4.0, .5), o: [[3.999, 0], [4.0, 1], [5.0, 1], [5.2, 0, "in"]] }); BURSTS.push({ t: 4.1, x: 540, y: 360 });
+// ---- SB ------------------------------------------------------------------------------------------------------------------
+SC("SB", 5.2, 10.3);
+A("src", { x: 540, y: 380, s: pop(T3[1][1] - 0.2), o: [[T3[1][1] - 0.21, 0], [T3[1][1] - 0.2, 1], [10.0, 1], [10.25, 0, "in"]] });
+A("mass", { x: 470, y: 905, s: pop(T3[11][1]), o: [[T3[11][1] - 0.001, 0], [T3[11][1], 1], [10.0, 1], [10.25, 0, "in"]] });
+// ---- SC ------------------------------------------------------------------------------------------------------------------
+SC("SC", 10.3, 16.0);
+A("b1", { x: 360, y: 400, s: pop(12.94, .45), o: [[12.939, 0], [12.94, 1], [14.5, 1], [14.65, 0, "in"]] });
+A("b2", { x: 360, y: 400, s: pop(14.69, .45), o: [[14.689, 0], [14.69, 1], [15.8, 1], [16.0, 0, "in"]] });
+BURSTS.push({ t: 13.15, x: 360, y: 400 }, { t: 14.9, x: 360, y: 400 });
+// ---- SD ------------------------------------------------------------------------------------------------------------------
+SC("SD", 16.0, 17.95);
+A("heal", { x: 540, y: 400, s: pop(16.9, .45), o: [[16.899, 0], [16.9, 1], [17.7, 1], [17.9, 0, "in"]] });
+// ---- SE ------------------------------------------------------------------------------------------------------------------
+SC("SE", 18.0, 21.65);
+A("seal", { x: 540, y: 420, s: [[T4[3][1] - 0.001, 1.9], [T4[3][1] + 0.35, 1, "out"]], r: -8, o: [[T4[3][1] - 0.001, 0], [T4[3][1], 1], [21.2, 1], [21.5, 0, "in"]] });
+BURSTS.push({ t: T4[3][1] + 0.35, x: 540, y: 420 });
+A("hk", { x: 790, y: 730, s: pop(T4[4][1]), o: [[T4[4][1] - 0.001, 0], [T4[4][1], 1], [21.2, 1], [21.5, 0, "in"]] });
+A("dh", { x: 290, y: 730, s: pop(T4[6][1]), o: [[T4[6][1] - 0.001, 0], [T4[6][1], 1], [21.2, 1], [21.5, 0, "in"]] });
+// ---- SF ------------------------------------------------------------------------------------------------------------------
+SC("SF", 21.6, 28.3);
+D("bm", inc(T5[7][1], T5[10][1] + 0.3, "io"));
+A("haq", { x: 470, y: 740, r: -8, s: pop(T5[13][1]), o: [[T5[13][1] - 0.001, 0], [T5[13][1], 1], [25.9, 1], [26.1, 0, "in"]] }); BURSTS.push({ t: T5[13][1] + 0.3, x: 470, y: 740 });
+// ---- SG ------------------------------------------------------------------------------------------------------------------
+SC("SG", 28.3, 34.95);
+A("khas", { x: 540, y: 290, s: [[T7[2][1] - 0.001, 1.6], [T7[2][1] + 0.4, 1, "out"]], r: -3, o: [[T7[2][1] - 0.001, 0], [T7[2][1], 1], [32.75, 1], [33.0, 0, "in"]] }); D("ul", [[T7[2][1] + 0.3, 1], [T7[2][1] + 0.7, 0], [32.7, 0], [32.9, 1]]);
+BURSTS.push({ t: T7[2][1] + 0.4, x: 540, y: 290 });
+A("gP", { x: 770, y: 610, s: pop(T7[6][1]), o: [[T7[6][1] - 0.001, 0], [T7[6][1], 1], [32.75, 1], [33.0, 0, "in"]] });
+A("gS", { x: 310, y: 610, s: pop(T7[11][1]), o: [[T7[11][1] - 0.001, 0], [T7[11][1], 1], [32.75, 1], [33.0, 0, "in"]] });
+A("gA", { x: 540, y: 720, s: pop(T8[5][1]), o: [[T8[5][1] - 0.001, 0], [T8[5][1], 1], [34.7, 1], [34.95, 0, "in"]] });
+D("gx1", inc(T8[6][1], T8[6][1] + 0.3)); D("gx2", inc(T8[6][1] + 0.15, T8[6][1] + 0.45)); BURSTS.push({ t: T8[6][1] + 0.5, x: 540, y: 720 });
+// ---- SH ------------------------------------------------------------------------------------------------------------------
+SC("SH", 35.2, 41.55);
+[400, 540, 680].forEach((x, i) => { const t = T9[2][1] + i * 0.18; A("k" + i, { x, y: 290, s: pop(t, .35), o: [[t - 0.001, 0], [t, 1], [38.4, 1], [38.65, 0, "in"]] }); });
+A("cO", { x: 770, y: 620, s: pop(T9[4][1]), o: [[T9[4][1] - 0.001, 0], [T9[4][1], 1], [38.4, 1], [38.65, 0, "in"]] }); D("ecg", inc(T9[4][1] + 0.1, T9[4][1] + 0.7, "lin"));
+A("cN", { x: 310, y: 620, s: pop(T9[6][1]), o: [[T9[6][1] - 0.001, 0], [T9[6][1], 1], [38.4, 1], [38.65, 0, "in"]] });
+A("ch2", { x: [[T10[2][1], 540], [41.5, 540], [41.95, 770, "io"]], y: [[T10[2][1], 320], [41.5, 320], [41.95, 540, "io"]], s: [[T10[2][1] - 0.001, .6], [T10[2][1] + 0.45, 1.25, "pop"], [41.5, 1.25], [41.95, 1, "io"]], o: [[T10[2][1] - 0.001, 0], [T10[2][1], 1], [43.6, 1], [43.85, 0, "in"]] });
+A("shield", { x: 540, y: 340, s: .84, o: [[T10[3][1] - 0.001, 0], [T10[3][1], 1], [41.3, 1], [41.55, 0, "in"]] }); D("shP", inc(T10[3][1], T10[3][1] + 0.7, "io"));
+A("mush", { x: 770, y: 720, s: [[T10[4][1], .6], [T10[4][1] + 0.5, 1, "back"]], o: [[T10[4][1] - 0.001, 0], [T10[4][1], 1], [41.3, 1], [41.55, 0, "in"]] });
+A("lQ", { x: 770, y: 860, s: pop(T10[4][1] + 0.25), o: [[T10[4][1] + 0.249, 0], [T10[4][1] + 0.25, 1], [41.3, 1], [41.55, 0, "in"]] });
+A("star2", { x: 310, y: 720, s: [[T10[5][1], .6], [T10[5][1] + 0.5, 1, "back"]], r: (t) => t * 20, o: [[T10[5][1] - 0.001, 0], [T10[5][1], 1], [41.3, 1], [41.55, 0, "in"]] });
+A("lA", { x: 310, y: 860, s: pop(T10[5][1] + 0.25), o: [[T10[5][1] + 0.249, 0], [T10[5][1] + 0.25, 1], [41.3, 1], [41.55, 0, "in"]] });
+BURSTS.push({ t: T10[3][1] + 0.7, x: 540, y: 340 });
+// ---- SI ------------------------------------------------------------------------------------------------------------------
+SC("SI", 41.55, 43.95);
+A("med", { x: 310, y: 540, s: [[T11[3][1] - 0.4, .6], [T11[3][1] + 0.2, 1.15, "back"]], o: [[T11[3][1] - 0.401, 0], [T11[3][1] - 0.4, 1], [43.7, 1], [43.95, 0, "in"]] }); D("mc", inc(T11[3][1] - 0.2, T11[3][1] + 0.4, "io"));
+A("lD", { x: 310, y: 740, s: pop(T11[3][1] + 0.1), o: [[T11[3][1] + 0.099, 0], [T11[3][1] + 0.1, 1], [43.7, 1], [43.95, 0, "in"]] });
+D("ar2", inc(T11[1][1], T11[1][1] + 0.5, "io"));
+A("now", { x: 540, y: 340, s: pop(T11[4][1]), o: [[T11[4][1] - 0.001, 0], [T11[4][1], 1], [43.7, 1], [43.95, 0, "in"]] });
+BURSTS.push({ t: T11[4][1] + 0.3, x: 540, y: 340 });
+// ---- SJ ------------------------------------------------------------------------------------------------------------------
+SC("SJ", 43.9, 60);
+A("lamp", { x: 540, y: 330, s: [[44.1, .78], [44.8, .66, "out"]], o: [[44.0, 0], [44.4, 1]] });
+A("name", { x: 540, y: 600, s: [[44.2, 1.1], [45.0, 1, "out"]], o: [[44.2, 0], [44.6, 1]] });
+D("sh1", inc(T12[0][1], T12[0][1] + 0.45)); D("sh2", inc(T12[0][1] + 0.3, T12[0][1] + 0.7)); D("sh3", inc(T12[0][1] + 0.6, T12[0][1] + 0.85));
+A("share", { x: 380, y: 830, s: [[T12[0][1] - 0.01, .6], [T12[0][1] + .5, 1, "back"]], o: [[T12[0][1] - 0.01, 0], [T12[0][1], 1]] });
+A("bell", { x: 700, y: 830, s: [[T12[6][1] - 0.01, .6], [T12[6][1] + .5, 1, "back"]], r: [[T12[6][1] + 0.6, 0], [T12[6][1] + 0.7, 14, "out"], [T12[6][1] + 0.85, -12, "io"], [T12[6][1] + 1.0, 8, "io"], [T12[6][1] + 1.15, 0, "io"]], o: [[T12[6][1] - 0.01, 0], [T12[6][1], 1]] });
+D("bl1", inc(T12[6][1], T12[6][1] + 0.6)); D("bl2", inc(T12[6][1] + 0.5, T12[6][1] + 0.8));
+
+// ---- canvas: rain, bursts, paper grain -------------------------------------------------------------------------------------
+const fb = $("fxB").getContext("2d"), dr = rng(9), RAIN = [];
+for (let i = 0; i < 70; i++) RAIN.push({ x: dr() * 1200 - 60, y0: dr() * 1000, v: 260 + dr() * 220, l: 40 + dr() * 60, a: .05 + dr() * .09 });
+function drawFX(t) {
+  fb.clearRect(0, 0, W, H); fb.lineWidth = 3; fb.lineCap = "round";
+  for (const d of RAIN) { const y = (d.y0 + d.v * t) % 1060 - 60, x = d.x - y * 0.18; fb.globalAlpha = d.a; fb.strokeStyle = "#12404a"; fb.beginPath(); fb.moveTo(x, y); fb.lineTo(x - d.l * 0.18, y + d.l); fb.stroke(); }
+  for (const b of BURSTS) { const age = t - b.t; if (age < 0 || age > 0.8) continue; const u = age / 0.8;
+    for (let i = 0; i < 14; i++) { const a = i * Math.PI * 2 / 14 + b.t * 3, v = 90 + (i % 3) * 50, d = v * EZ.out(u); fb.globalAlpha = (1 - u) * .95; fb.fillStyle = ["#e0a100", "#e4572e", "#2a9d8f"][i % 3]; fb.beginPath(); fb.arc(b.x + Math.cos(a) * d, b.y + Math.sin(a) * d, 6 * (1 - u) + 1.6, 0, 7); fb.fill(); } }
+  fb.globalAlpha = 1;
+}
+const DU = $("grn").getContext("2d"), GN = []; (() => { for (let f = 0; f < 4; f++) { const c = document.createElement("canvas"); c.width = 540; c.height = 960; const g = c.getContext("2d"), im = g.createImageData(540, 960), r = rng(100 + f); for (let i = 0; i < im.data.length; i += 4) { const n = r() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = n; im.data[i + 3] = 12; } g.putImageData(im, 0, 0); GN.push(c); } })();
+
+// ---- captions ---------------------------------------------------------------------------------
+let capIdx = -2;
+function drawCaps(t) {
+  let i = -1; for (let k = 0; k < CAPS.length; k++) if (t >= CAPS[k].a && t < CAPS[k].b + 0.25) i = k;
+  if (i !== capIdx) { capIdx = i; const c = CAPS[i] || { ar: "", en: "", zh: "" }; $("capAr").textContent = c.ar; $("capZh").textContent = c.zh; $("capEn").textContent = c.en; $("capAr").style.display = c.ar ? "block" : "none"; }
+  const c = CAPS[i], box = $("cap"); if (!c) { box.style.opacity = 0; return; }
+  const inP = clamp((t - c.a) / 0.16), outP = clamp((t - (c.b + 0.1)) / 0.15), nxt = CAPS[i + 1] && CAPS[i + 1].a - c.b < 0.2 ? 0 : outP;
+  box.style.opacity = inP * (1 - nxt); box.style.filter = `blur(${((1 - inP) * 7 + nxt * 7).toFixed(1)}px)`;
+}
+
+// ---- the renderer -----------------------------------------------------------------------------
+function render(t) {
+  for (const [el, sp] of ITEMS) {
+    const x = tw(t, sp.x ?? 540), y = tw(t, sp.y ?? 900), s = tw(t, sp.s ?? 1), r = tw(t, sp.r ?? 0), o = tw(t, sp.o ?? 1);
+    el.style.opacity = clamp(o); el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${r}deg) scale(${s})`;
+  }
+  for (const [el, k] of DRAWS) if (el) el.setAttribute("stroke-dashoffset", clamp(tw(t, k)).toFixed(4));
+  for (const sc of SCN) { const vis = t >= sc.a - 0.01 && t <= sc.b + 0.01; sc.el.style.display = vis ? "block" : "none"; if (!vis) continue;
+    const out = sc.b > 59 ? 0 : clamp((t - (sc.b - 0.4)) / 0.4);
+    if (out > 0) { const X = out * 112; sc.el.style.webkitMaskImage = sc.el.style.maskImage = `linear-gradient(to left, transparent ${X - 14}%, #000 ${X}%)`; }
+    else sc.el.style.webkitMaskImage = sc.el.style.maskImage = "none"; }
+  for (const f of CUST) f(t);
+  drawFX(t); drawCaps(t);
+  DU.clearRect(0, 0, 540, 960); DU.drawImage(GN[Math.floor(t * 12) % 4], 0, 0);
+}
+window.SFX = [[tMom, "pop-a", .35], [tPro, "pop-b", .35], [tKid, "pop-a", .35], [tPro + 0.15, "whoosh-a", .25], [4.0, "thump", .5], [5.0, "erase", .35], [T3[1][1] - 0.2, "pop-b", .4], [T3[11][1], "pop-a", .35], [tSwirl, "puff", .4],
+  [10.0, "erase", .35], [12.94, "pop-b", .5], [14.69, "pop-a", .5], [15.8, "erase", .3], [tHeal + 0.35, "pop-b", .5], [16.9, "pop-a", .4], [17.7, "erase", .3], [T4[3][1], "thump", .55], [T4[4][1], "pop-a", .4], [T4[6][1], "pop-b", .4], [21.3, "erase", .35],
+  [22.4, "puff", .35], [T5[7][1], "whoosh-b", .3], [T5[13][1], "pop-a", .45], [26.3, "pop-b", .5], [28.1, "erase", .35], [T7[2][1], "thump", .55], [T7[6][1], "pop-a", .4], [T7[11][1], "pop-b", .4], [32.8, "erase", .3],
+  [T8[5][1], "pop-a", .4], [T8[6][1], "thump", .4], [34.75, "erase", .35], [T9[2][1], "pop-a", .3], [T9[2][1] + 0.18, "pop-b", .3], [T9[2][1] + 0.36, "pop-a", .3], [T9[4][1], "pop-b", .4], [T9[6][1], "pop-a", .4], [38.4, "erase", .3],
+  [T10[2][1], "pop-b", .4], [T10[3][1], "chalk", .45], [T10[4][1], "pop-a", .4], [T10[5][1], "pop-b", .4], [41.3, "erase", .3], [T11[3][1] - 0.4, "pop-a", .4], [T11[4][1], "thump", .5], [43.7, "erase", .3], [T12[0][1], "pop-b", .4], [T12[6][1], "pop-a", .4], [44.4, "pop-b", .3]];
+window.render = render;
+window.ready = (async () => {
+  await document.fonts.load('900 60px "Cairo"'); await document.fonts.load('700 60px "Amiri"'); await document.fonts.load('700 40px "Noto Sans SC"');
+  await document.fonts.ready; render(0); return true;
+})();
+</script>
+</body>
+</html>
