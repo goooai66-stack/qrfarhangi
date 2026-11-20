@@ -74,10 +74,10 @@ const layout = (S: Sec): Card[] => {
         out.push({ kind: "q", t0: it.t, t1: nextQ ? nextQ.t : gEnd, text: it.text, col: it.col, ic: null, x: COL_L, y: 120, w: FULL, h: 320, fs: len <= 30 ? 68 : len <= 60 ? 56 : len <= 100 ? 46 : 40 });
         return;
       }
-      const wide = it.text.length > 20;
+      const wide = it.text.length > 14;
       if (wide && half === "L") { y += 150; half = "R"; }
       const x = wide ? COL_L : half === "R" ? COL_R : COL_L;
-      out.push({ kind: "c", t0: it.t, t1: gEnd, text: it.text, col: it.col, ic: it.ic, x, y, w: wide ? FULL : CW, h: 130, fs: it.text.length > 34 ? 38 : 44 });
+      out.push({ kind: "c", t0: it.t, t1: gEnd, text: it.text, col: it.col, ic: it.ic, x, y, w: wide ? FULL : CW, h: 130, fs: it.text.length > 34 ? 38 : wide ? 44 : 42 });
       if (wide || half === "L") { y += 150; half = "R"; } else half = "L";
     });
   });
@@ -192,7 +192,7 @@ const Caption: React.FC<{ c: Cue }> = ({ c }) => {
     <div style={{ position: "absolute", left: 120, right: 120, bottom: 22, borderRadius: 34, background: "rgba(255,255,255,.88)", boxShadow: "0 20px 50px rgba(43,35,80,.16)",
       padding: "18px 40px 18px", textAlign: "center", border: "3px solid #fff",
       opacity: Math.min(interpolate(t, [0, 0.12], [0, 1], clamp), interpolate(t, [d - 0.1, d], [1, 0], clamp)), translate: `0px ${interpolate(t, [0, 0.15], [20, 0], clamp)}px` }}>
-      <div style={{ direction: "rtl", fontFamily: "Changa", fontWeight: 800, fontSize: fa, lineHeight: 1.55 }}>
+      <div style={{ direction: "rtl", fontFamily: "Cairo", fontWeight: 800, fontSize: fa, lineHeight: 1.6 }}>
         {words.map((w, k) => {
           const s = acc; acc += weights[k];
           const state = p >= acc ? 2 : p >= s ? 1 : 0;
@@ -223,14 +223,14 @@ export const Kinetic: React.FC<{ data: VoxData }> = ({ data }) => {
           <SectionStage S={S} si={si} />
         </Sequence>
       ))}
-      {data.caps.map((c, i) => (
-        <Sequence key={`c${i}`} name={`Caption ${i + 1}`} from={f(c.a)} durationInFrames={Math.max(1, f(c.b - c.a))} layout="absolute-fill">
-          <Caption c={c} />
-        </Sequence>
-      ))}
       {data.secs.map((S, si) => (
         <Sequence key={`w${si}`} name={`Chapter wipe ${si + 1}`} from={f(S.a)} durationInFrames={f(1.65)} layout="absolute-fill">
           <ChapterWipe S={S} />
+        </Sequence>
+      ))}
+      {data.caps.map((c, i) => (
+        <Sequence key={`c${i}`} name={`Caption ${i + 1}`} from={f(c.a)} durationInFrames={Math.max(1, f(c.b - c.a))} layout="absolute-fill">
+          <Caption c={c} />
         </Sequence>
       ))}
       <Audio src={staticFile(data.voice)} />
