@@ -7,7 +7,7 @@ def load(name):
     s = importlib.util.spec_from_file_location(name, os.path.join(HERE, name + ".py")); m = importlib.util.module_from_spec(s); s.loader.exec_module(m); return m
 caps, secs = load("caps"), load("secs")
 asr = json.load(open(os.path.join(HERE, "asr.json")))["segs"]
-DUR = 498.04
+DUR = 395.6
 CUES = [{"a": round(asr[a]["start"] + 0.03, 2), "b": round(asr[b]["end"] - 0.06, 2), "ar": ar, "en": en, "zh": zh} for a, b, ar, en, zh in caps.CAPS]
 def tm(t):
     ms = int(round(t * 1000)); return f"{ms//3600000:02d}:{ms//60000%60:02d}:{ms//1000%60:02d},{ms%1000:03d}"

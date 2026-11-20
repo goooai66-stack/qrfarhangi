@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Builds the horizontal trilingual long-form video (vox torn-paper style) from the Arabic voice.
+# Builds the horizontal trilingual long-form video (children's night fears) (vox torn-paper style) from the Arabic voice.
 # Usage: ./build.sh /path/to/voice.wav [output-name]     Needs node + playwright (Chromium), ffmpeg, python3.  One file out: the MP4.
 set -euo pipefail
 cd "$(dirname "$0")"
-VOICE="$1"; OUT="${2:-evil-eye-kids-vox-ar-en-zh}"; FPS=30; export DUR=498.04; N=14942
+VOICE="$1"; OUT="${2:-night-fears-kids-vox-ar-en-zh}"; FPS=30; export DUR=395.6; N=11868
 python3 -I gen.py --no-font
 rm -rf seg && mkdir seg
 for i in 0 1 2 3; do node render.js "$PWD/comp.html" "$PWD/seg/p$i.mp4" $((i*N/4)) $(((i+1)*N/4)) $FPS & done; wait
