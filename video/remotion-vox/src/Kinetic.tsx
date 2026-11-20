@@ -5,7 +5,6 @@ import { ICONS, INK } from "./icons";
 import type { Cue, Sec, VoxData } from "./Vox";
 
 // "Kinetic pop" style: bright drifting gradients, chapter colour wipes, bento cards, karaoke Arabic captions.
-const W = 1920;
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const outExpo = Easing.bezier(0.16, 1, 0.3, 1);
 const inOut = Easing.bezier(0.65, 0, 0.35, 1);
