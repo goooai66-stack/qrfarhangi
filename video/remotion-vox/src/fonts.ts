@@ -8,4 +8,6 @@ export const fontsReady = Promise.all([
   loadFont({ family: "Amiri", url: staticFile("fonts/Amiri-Regular.woff"), weight: "400", format: "woff" }),
   loadFont({ family: "Amiri", url: staticFile("fonts/Amiri-Bold.woff"), weight: "700", format: "woff" }),
   loadFont({ family: "Noto Sans SC", url: staticFile("fonts/NotoSansSC-subset.woff2"), weight: "500", format: "woff2" }),
+  loadFont({ family: "Changa", url: staticFile("fonts/Changa-500.ttf"), weight: "500", format: "truetype" }),
+  loadFont({ family: "Changa", url: staticFile("fonts/Changa-800.ttf"), weight: "800", format: "truetype" }),
 ]);
