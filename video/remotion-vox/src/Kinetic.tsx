@@ -67,7 +67,9 @@ const layout = (S: Sec): Card[] => {
     const gItems = its.filter((i) => i.g === g).sort((a, b) => a.t - b.t);
     const gEnd = gi + 1 < gs.length ? Math.min(...its.filter((i) => i.g === gs[gi + 1]).map((i) => i.t)) : S.b;
     const gq = gItems.filter((i) => i.kind === "q");
-    let y = gq.length ? 470 : 130, half: "R" | "L" = "R";
+    // first pass: rows; second pass: fit the rows into the free band above the captions
+    const placed: { it: (typeof gItems)[number]; row: number; side: "R" | "L" | "F" }[] = [];
+    let row = 0, half: "R" | "L" = "R";
     gItems.forEach((it) => {
       if (it.kind === "q") {
         const nextQ = gq.find((q) => q.t > it.t), len = it.text.length;
@@ -75,10 +77,17 @@ const layout = (S: Sec): Card[] => {
         return;
       }
       const wide = it.text.length > 14;
-      if (wide && half === "L") { y += 150; half = "R"; }
-      const x = wide ? COL_L : half === "R" ? COL_R : COL_L;
-      out.push({ kind: "c", t0: it.t, t1: gEnd, text: it.text, col: it.col, ic: it.ic, x, y, w: wide ? FULL : CW, h: 130, fs: it.text.length > 34 ? 38 : wide ? 44 : 42 });
-      if (wide || half === "L") { y += 150; half = "R"; } else half = "L";
+      if (wide && half === "L") { row++; half = "R"; }
+      placed.push({ it, row, side: wide ? "F" : half });
+      if (wide || half === "L") { row++; half = "R"; } else half = "L";
+    });
+    const rows = Math.max(1, ...placed.map((p) => p.row + 1));
+    const top = gq.length ? 470 : 130, band = gq.length ? 280 : 600;
+    const step = Math.min(150, band / rows), h = Math.min(130, step - 14);
+    placed.forEach(({ it, row: r, side }) => {
+      const x = side === "L" ? COL_L : side === "R" ? COL_R : COL_L;
+      out.push({ kind: "c", t0: it.t, t1: gEnd, text: it.text, col: it.col, ic: it.ic, x, y: top + r * step, w: side === "F" ? FULL : CW, h,
+        fs: Math.min(it.text.length > 34 ? 38 : side === "F" ? 44 : 42, Math.round(h * 0.36)) });
     });
   });
   return out;
@@ -139,7 +148,7 @@ const SectionStage: React.FC<{ S: Sec; si: number }> = ({ S, si }) => {
             <div style={{ position: "absolute", inset: 0, borderRadius: 30, background: TINT[c.col] ?? "#fff", boxShadow: "0 18px 40px rgba(43,35,80,.14)", border: "3px solid rgba(255,255,255,.9)",
               display: "flex", flexDirection: "row", direction: "rtl", alignItems: "center", gap: 22, padding: "0 30px",
               translate: `0px ${(1 - sp) * 80}px`, rotate: `y ${(1 - sp) * -40}deg`, scale: `${0.85 + 0.15 * sp}` }}>
-              {c.ic ? <div style={{ width: 92, height: 92, flex: "none", borderRadius: 26, background: "#fff", padding: 12, boxSizing: "border-box", rotate: `${Math.sin(t * 1.3 + i) * 5}deg` }}><Icon name={c.ic} /></div> : null}
+              {c.ic ? <div style={{ width: Math.min(92, c.h - 26), height: Math.min(92, c.h - 26), flex: "none", borderRadius: 26, background: "#fff", padding: 12, boxSizing: "border-box", rotate: `${Math.sin(t * 1.3 + i) * 5}deg` }}><Icon name={c.ic} /></div> : null}
               <div style={{ fontFamily: "Changa", fontWeight: 800, fontSize: c.fs, color: c.col === "r" ? darken(DOT.r, 0.8) : "#2b2350", lineHeight: 1.25 }} dangerouslySetInnerHTML={{ __html: sal(c.text) }} />
               <div style={{ position: "absolute", left: 18, top: 18, width: 16, height: 16, borderRadius: 8, background: DOT[c.col] ?? DOT.w }} />
             </div>
