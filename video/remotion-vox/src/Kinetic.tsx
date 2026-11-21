@@ -38,7 +38,7 @@ const Backdrop: React.FC<{ col: string }> = ({ col }) => {
 };
 
 // ---------- top bar: channel tag + chapter dots + progress
-const TopBar: React.FC<{ data: VoxData }> = ({ data }) => {
+export const TopBar: React.FC<{ data: VoxData }> = ({ data }) => {
   const frame = useCurrentFrame();
   const t = frame / 30;
   const cur = data.secs.findIndex((s) => t >= s.a && t < s.b);
@@ -187,7 +187,7 @@ const ChapterWipe: React.FC<{ S: Sec }> = ({ S }) => {
 };
 
 // ---------- karaoke caption: Arabic words light up in turn, English + Chinese beneath
-const Caption: React.FC<{ c: Cue }> = ({ c }) => {
+export const KCaption: React.FC<{ c: Cue }> = ({ c }) => {
   const frame = useCurrentFrame();
   const t = frame / 30, d = c.b - c.a;
   const words = c.ar.split(" ");
@@ -239,7 +239,7 @@ export const Kinetic: React.FC<{ data: VoxData }> = ({ data }) => {
       ))}
       {data.caps.map((c, i) => (
         <Sequence key={`c${i}`} name={`Caption ${i + 1}`} from={f(c.a)} durationInFrames={Math.max(1, f(c.b - c.a))} layout="absolute-fill">
-          <Caption c={c} />
+          <KCaption c={c} />
         </Sequence>
       ))}
       <Audio src={staticFile(data.voice)} />
