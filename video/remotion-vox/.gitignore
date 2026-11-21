@@ -11,3 +11,4 @@ public/voice*.wav
 render.log
 content/__pycache__/
 render-kinetic.log
+render-*.log
